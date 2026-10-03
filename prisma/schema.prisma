@@ -16,3 +16,16 @@ model User {
   id    String @id @default(cuid())
   email String @unique
 }
+
+model Destination {
+  id String   @id @default(cuid())
+  slug String   @unique
+  name String
+  country String
+  city String?
+  description String?
+  heroImage String
+  altText String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

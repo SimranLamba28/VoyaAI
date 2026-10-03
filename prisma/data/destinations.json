@@ -1,0 +1,66 @@
+[
+    {
+      "name": "Japan",
+      "slug": "japan",
+      "country": "Japan",
+      "description": "A blend of ancient traditions, vibrant cities, and beautiful landscapes.",
+      "heroImage": "/images/destinations/japan.jpg",
+      "altText": "Japanese temple and traditional architecture"
+    },
+    {
+      "name": "Switzerland",
+      "slug": "switzerland",
+      "country": "Switzerland",
+      "description": "Snow-capped mountains, peaceful lakes, and charming alpine towns.",
+      "heroImage": "/images/destinations/switzerland.jpg",
+      "altText": "Swiss Alps surrounding a mountain lake"
+    },
+    {
+      "name": "Greece",
+      "slug": "greece",
+      "country": "Greece",
+      "description": "Beautiful islands, ancient history, and Mediterranean landscapes.",
+      "heroImage": "/images/destinations/greece.jpg",
+      "altText": "White buildings overlooking the sea in Greece"
+    },
+    {
+      "name": "Iceland",
+      "slug": "iceland",
+      "country": "Iceland",
+      "description": "Dramatic waterfalls, glaciers, volcanic landscapes, and the northern lights.",
+      "heroImage": "/images/destinations/iceland.jpg",
+      "altText": "Icelandic landscape with mountains and water"
+    },
+    {
+      "name": "Italy",
+      "slug": "italy",
+      "country": "Italy",
+      "description": "Historic cities, incredible food, art, architecture, and coastal escapes.",
+      "heroImage": "/images/destinations/italy.jpg",
+      "altText": "Italian coastal town overlooking the Mediterranean"
+    },
+    {
+      "name": "Thailand",
+      "slug": "thailand",
+      "country": "Thailand",
+      "description": "Tropical beaches, vibrant cities, temples, and rich local culture.",
+      "heroImage": "/images/destinations/thailand.jpg",
+      "altText": "Tropical beach in Thailand"
+    },
+    {
+      "name": "France",
+      "slug": "france",
+      "country": "France",
+      "description": "Iconic cities, beautiful countryside, art, architecture, and cuisine.",
+      "heroImage": "/images/destinations/france.jpg",
+      "altText": "Paris skyline with the Eiffel Tower"
+    },
+    {
+      "name": "New Zealand",
+      "slug": "new-zealand",
+      "country": "New Zealand",
+      "description": "Epic mountains, dramatic coastlines, and incredible outdoor adventures.",
+      "heroImage": "/images/destinations/new-zealand.jpg",
+      "altText": "Mountain landscape in New Zealand"
+    }
+  ]
