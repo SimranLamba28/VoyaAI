@@ -9,6 +9,7 @@ import {
   Menu01Icon,
 } from "@hugeicons/core-free-icons";
 
+import { NavbarAuth } from "@/components/auth/navbar-auth";
 import { Button } from "@/components/ui/button";
 import { DESIGN } from "@/constants/design";
 
@@ -58,14 +59,7 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center justify-self-end gap-2">
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className="h-7 rounded-full border-foreground/15 bg-transparent px-5 text-[13px] font-normal tracking-[0.02em] hover:border-foreground/35 hover:bg-transparent hover:text-foreground"
-          >
-            <Link href="/signin">Sign In</Link>
-          </Button>
+          <NavbarAuth />
 
           <Button
             type="button"
