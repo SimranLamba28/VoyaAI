@@ -86,4 +86,33 @@ model Destination {
   altText     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  curatedTrips CuratedTrip[]
+}
+
+model CuratedTrip {
+  id            String      @id @default(cuid())
+  slug          String      @unique
+  title         String
+
+  destinationId String
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+
+  location      String?
+  description   String?
+  image         String
+  altText       String?
+
+  duration      Int
+
+  budgetMin     Int?
+  budgetMax     Int?
+  currency      String      @default("INR")
+
+  featured      Boolean     @default(false)
+  displayOrder  Int         @default(0)
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([destinationId])
 }
