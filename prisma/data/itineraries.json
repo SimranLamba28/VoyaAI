@@ -1,0 +1,273 @@
+[
+    {
+      "tripSlug": "japan-explorer",
+      "title": "Japan Explorer",
+      "description": "A 7-day journey through Tokyo, Kyoto, and Osaka.",
+      "days": [
+        {
+          "dayNumber": 1,
+          "title": "Arrive in Tokyo",
+          "description": "Settle into Tokyo and experience the energy of Shibuya.",
+          "image": "/images/trips/japan/japan explorer/day1japanexplorer.jpg",
+          "activities": [
+            {
+              "title": "Arrive and check in",
+              "description": "Travel from the airport to your hotel and settle in.",
+              "location": "Tokyo",
+              "startTime": "14:00",
+              "type": "Arrival",
+              "displayOrder": 1
+            },
+            {
+              "title": "Explore Shibuya",
+              "description": "Walk through Shibuya and experience the famous crossing.",
+              "location": "Shibuya, Tokyo",
+              "startTime": "17:00",
+              "type": "Sightseeing",
+              "displayOrder": 2
+            },
+            {
+              "title": "Shibuya Sky",
+              "description": "Enjoy panoramic views of Tokyo from the observation deck.",
+              "location": "Shibuya, Tokyo",
+              "startTime": "19:00",
+              "type": "Experience",
+              "displayOrder": 3
+            }
+          ]
+        },
+        {
+            "dayNumber": 2,
+            "title": "Discover Traditional Tokyo",
+            "description": "Explore Tokyo's historic neighborhoods, peaceful shrines, and lively local streets.",
+            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Meiji Shrine",
+                "description": "Start the morning at one of Tokyo's most peaceful and iconic Shinto shrines.",
+                "location": "Shibuya, Tokyo",
+                "startTime": "09:00",
+                "type": "Sightseeing",
+                "displayOrder": 1
+              },
+              {
+                "title": "Explore Harajuku",
+                "description": "Walk through Harajuku's colorful streets and discover its shops, cafés, and local culture.",
+                "location": "Harajuku, Tokyo",
+                "startTime": "11:00",
+                "type": "Explore",
+                "displayOrder": 2
+              },
+              {
+                "title": "Visit Asakusa",
+                "description": "Experience one of Tokyo's oldest districts and wander through the historic streets surrounding Senso-ji.",
+                "location": "Asakusa, Tokyo",
+                "startTime": "15:00",
+                "type": "Sightseeing",
+                "displayOrder": 3
+              },
+              {
+                "title": "Senso-ji Temple",
+                "description": "Visit Tokyo's famous Buddhist temple and explore Nakamise-dori's traditional shops.",
+                "location": "Asakusa, Tokyo",
+                "startTime": "16:00",
+                "type": "Experience",
+                "displayOrder": 4
+              }
+            ]
+          },
+          {
+            "dayNumber": 3,
+            "title": "From Tokyo to Kyoto",
+            "description": "Leave Tokyo behind and begin the next chapter of the journey in Kyoto, Japan's cultural heart.",
+            "image": "/images/trips/japan/japan explorer/day3japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Shinkansen to Kyoto",
+                "description": "Take the high-speed train from Tokyo to Kyoto and enjoy the changing scenery along the way.",
+                "location": "Tokyo → Kyoto",
+                "startTime": "09:00",
+                "type": "Transport",
+                "displayOrder": 1
+              },
+              {
+                "title": "Check in and settle in",
+                "description": "Arrive in Kyoto, check into your accommodation, and take some time to settle into the city.",
+                "location": "Kyoto",
+                "startTime": "13:00",
+                "type": "Arrival",
+                "displayOrder": 2
+              },
+              {
+                "title": "Explore Gion",
+                "description": "Wander through Kyoto's atmospheric historic district, known for traditional wooden machiya houses and narrow streets.",
+                "location": "Gion, Kyoto",
+                "startTime": "16:00",
+                "type": "Explore",
+                "displayOrder": 3
+              },
+              {
+                "title": "Evening in Kyoto",
+                "description": "Enjoy a relaxed evening discovering local food and the atmosphere of Kyoto after sunset.",
+                "location": "Kyoto",
+                "startTime": "19:00",
+                "type": "Experience",
+                "displayOrder": 4
+              }
+            ]
+          },
+          {
+            "dayNumber": 4,
+            "title": "Kyoto's Timeless Temples",
+            "description": "Discover some of Kyoto's most iconic temples and wander through its historic eastern neighborhoods.",
+            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Fushimi Inari Shrine",
+                "description": "Walk beneath the thousands of vermilion torii gates winding up the mountain.",
+                "location": "Fushimi, Kyoto",
+                "startTime": "08:00",
+                "type": "Sightseeing",
+                "displayOrder": 1
+              },
+              {
+                "title": "Kiyomizu-dera",
+                "description": "Visit one of Kyoto's most celebrated temples and take in views across the city.",
+                "location": "Higashiyama, Kyoto",
+                "startTime": "11:00",
+                "type": "Sightseeing",
+                "displayOrder": 2
+              },
+              {
+                "title": "Explore Higashiyama",
+                "description": "Walk through the atmospheric historic streets surrounding Kiyomizu-dera.",
+                "location": "Higashiyama, Kyoto",
+                "startTime": "14:00",
+                "type": "Explore",
+                "displayOrder": 3
+              },
+              {
+                "title": "Evening in Pontocho",
+                "description": "End the day with dinner and an evening stroll through one of Kyoto's atmospheric dining districts.",
+                "location": "Pontocho, Kyoto",
+                "startTime": "19:00",
+                "type": "Food",
+                "displayOrder": 4
+              }
+            ]
+          },
+          {
+            "dayNumber": 5,
+            "title": "Arashiyama & Kyoto Culture",
+            "description": "Slow down and experience Kyoto's bamboo groves, gardens, and traditional neighborhoods.",
+            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Arashiyama Bamboo Grove",
+                "description": "Walk through the famous bamboo forest and enjoy the peaceful atmosphere of the surrounding area.",
+                "location": "Arashiyama, Kyoto",
+                "startTime": "08:00",
+                "type": "Sightseeing",
+                "displayOrder": 1
+              },
+              {
+                "title": "Tenryu-ji Temple",
+                "description": "Explore the historic Zen temple and its beautifully landscaped gardens.",
+                "location": "Arashiyama, Kyoto",
+                "startTime": "10:00",
+                "type": "Culture",
+                "displayOrder": 2
+              },
+              {
+                "title": "Explore Arashiyama",
+                "description": "Take your time discovering local cafés, shops, and riverside views.",
+                "location": "Arashiyama, Kyoto",
+                "startTime": "13:00",
+                "type": "Explore",
+                "displayOrder": 3
+              },
+              {
+                "title": "Traditional Kyoto Dinner",
+                "description": "Enjoy a relaxed evening with local Kyoto cuisine.",
+                "location": "Kyoto",
+                "startTime": "19:00",
+                "type": "Food",
+                "displayOrder": 4
+              }
+            ]
+          },
+          {
+            "dayNumber": 6,
+            "title": "Kyoto to Osaka",
+            "description": "Continue to Osaka and trade Kyoto's quiet streets for the energy, food, and nightlife of Japan's lively second city.",
+            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Travel to Osaka",
+                "description": "Take the train from Kyoto to Osaka and begin the final chapter of the journey.",
+                "location": "Kyoto → Osaka",
+                "startTime": "09:00",
+                "type": "Transport",
+                "displayOrder": 1
+              },
+              {
+                "title": "Osaka Castle",
+                "description": "Explore one of Osaka's most recognizable landmarks and learn about the city's history.",
+                "location": "Osaka",
+                "startTime": "11:00",
+                "type": "Sightseeing",
+                "displayOrder": 2
+              },
+              {
+                "title": "Dotonbori",
+                "description": "Discover Osaka's colorful entertainment district and its famous riverside streets.",
+                "location": "Dotonbori, Osaka",
+                "startTime": "17:00",
+                "type": "Explore",
+                "displayOrder": 3
+              },
+              {
+                "title": "Osaka Street Food",
+                "description": "Try some of Osaka's famous local specialties during an evening food adventure.",
+                "location": "Dotonbori, Osaka",
+                "startTime": "19:00",
+                "type": "Food",
+                "displayOrder": 4
+              }
+            ]
+          },
+          {
+            "dayNumber": 7,
+            "title": "Osaka & Farewell",
+            "description": "Spend a relaxed final morning in Osaka before wrapping up your Japan adventure.",
+            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+            "activities": [
+              {
+                "title": "Morning in Osaka",
+                "description": "Enjoy a relaxed final morning exploring the city at your own pace.",
+                "location": "Osaka",
+                "startTime": "09:00",
+                "type": "Explore",
+                "displayOrder": 1
+              },
+              {
+                "title": "Last-minute shopping",
+                "description": "Pick up souvenirs and enjoy a final wander through Osaka's lively shopping streets.",
+                "location": "Osaka",
+                "startTime": "11:00",
+                "type": "Shopping",
+                "displayOrder": 2
+              },
+              {
+                "title": "Departure",
+                "description": "Head to the airport and begin your journey home.",
+                "location": "Osaka",
+                "startTime": "15:00",
+                "type": "Departure",
+                "displayOrder": 3
+              }
+            ]
+          }
+      ]
+    }
+  ]

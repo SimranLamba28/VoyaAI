@@ -4,6 +4,7 @@ const pg = require("pg");
 
 const destinations = require("./data/destinations.json");
 const curatedTrips = require("./data/curated-trips.json");
+const itineraries = require("./data/itineraries.json");
 
 async function main() {
   const { PrismaClient } = await import("../generated/prisma/client.ts");
@@ -74,6 +75,63 @@ async function main() {
       });
     }
     console.log("Curated trips seeded successfully!");
+
+    for (const itinerary of itineraries) {
+      const trip = await prisma.curatedTrip.findUnique({
+        where: {
+          slug: itinerary.tripSlug,
+        },
+      });
+    
+      if (!trip) {
+        throw new Error(
+          `Curated trip not found: ${itinerary.tripSlug}`,
+        );
+      }
+    
+      const savedItinerary = await prisma.itinerary.upsert({
+        where: {
+          curatedTripId: trip.id,
+        },
+        update: {
+          title: itinerary.title,
+          description: itinerary.description,
+        },
+        create: {
+          curatedTripId: trip.id,
+          title: itinerary.title,
+          description: itinerary.description,
+        },
+      });
+    
+      for (const day of itinerary.days) {
+        await prisma.itineraryDay.upsert({
+          where: {
+            itineraryId_dayNumber: {
+              itineraryId: savedItinerary.id,
+              dayNumber: day.dayNumber,
+            },
+          },
+          update: {
+            title: day.title,
+            description: day.description,
+            image: day.image,
+            activities: day.activities,
+          },
+          create: {
+            itineraryId: savedItinerary.id,
+            dayNumber: day.dayNumber,
+            title: day.title,
+            description: day.description,
+            image: day.image,
+            activities: day.activities,
+          },
+        });
+      }
+    }
+    
+    console.log("Itineraries seeded successfully!");
+
   } finally {
     await prisma.$disconnect();
     await pool.end();

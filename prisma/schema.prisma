@@ -82,7 +82,8 @@ model Destination {
   country     String
   city        String?
   description String?
-  heroImage   String
+  heroImageUrl      String?
+  heroImagePublicId String?
   altText     String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -114,5 +115,58 @@ model CuratedTrip {
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 
+  itinerary     Itinerary?
+  media         TripMedia[]
+
   @@index([destinationId])
+}
+
+model Itinerary {
+  id            String      @id @default(cuid())
+  curatedTripId String      @unique
+  curatedTrip   CuratedTrip @relation(fields: [curatedTripId], references: [id], onDelete: Cascade)
+
+  title         String?
+  description   String?
+
+  days          ItineraryDay[]
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model ItineraryDay {
+  id          String    @id @default(cuid())
+  itineraryId String
+  itinerary   Itinerary @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+
+  dayNumber   Int
+  title       String
+  description String?
+  imageUrl      String?
+  imagePublicId String?
+  activities  Json
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([itineraryId, dayNumber])
+  @@index([itineraryId])
+}
+
+model TripMedia {
+  id            String      @id @default(cuid())
+  curatedTripId String
+  curatedTrip   CuratedTrip @relation(fields: [curatedTripId], references: [id], onDelete: Cascade)
+
+  type          String
+  placement     String
+  url           String
+  publicId      String?
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([curatedTripId])
+  @@index([curatedTripId, placement])
 }
