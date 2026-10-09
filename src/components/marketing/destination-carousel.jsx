@@ -61,7 +61,7 @@ export function DestinationCarousel({ destinations }) {
                       className="relative aspect-[3.5/5] w-full overflow-hidden rounded-[20px] bg-muted shadow-sm transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transition-none group-hover/card:-translate-y-1 group-hover/card:shadow-md group-active/card:scale-[0.98] motion-reduce:group-hover/card:translate-y-0 motion-reduce:group-active/card:scale-100"
                     >
                       <Image
-                        src={destination.heroImage}
+                        src={destination.heroImageUrl}
                         alt={destination.altText ?? destination.name}
                         fill
                         sizes="(min-width: 1024px) 188px, (min-width: 768px) 172px, (min-width: 640px) 156px, 132px"

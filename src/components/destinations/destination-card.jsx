@@ -19,7 +19,7 @@ export function DestinationCard({ destination, className, priority=false }) {
       >
         <div className="relative aspect-[5/6] overflow-hidden">
           <Image
-            src={destination.heroImage}
+            src={destination.heroImageUrl}
             alt={destination.altText ?? destination.country}
             loading={priority?"eager":"lazy"}
             fill

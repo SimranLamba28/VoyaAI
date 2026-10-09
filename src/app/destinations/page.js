@@ -1,5 +1,4 @@
 import { DestinationGrid } from "@/components/destinations/destination-grid";
-import { DESIGN } from "@/constants/design";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
