@@ -23,6 +23,8 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  trips Trip[]
+
   @@unique([email])
   @@map("user")
 }
@@ -118,6 +120,8 @@ model CuratedTrip {
   itinerary     Itinerary?
   media         TripMedia[]
 
+  userTrips Trip[]
+
   @@index([destinationId])
 }
 
@@ -169,4 +173,61 @@ model TripMedia {
 
   @@index([curatedTripId])
   @@index([curatedTripId, placement])
+}
+
+model Trip {
+  id            String       @id @default(cuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  curatedTripId String?
+  curatedTrip   CuratedTrip? @relation(fields: [curatedTripId], references: [id], onDelete: SetNull)
+
+  title         String
+  destination   String
+  duration      Int
+  travelers     Int
+  budgetMin     Int?
+  budgetMax     Int?
+  currency      String       @default("INR")
+  preferences   Json?
+  status        String       @default("saved")
+
+  itinerary     TripItinerary?
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([curatedTripId])
+}
+
+model TripItinerary {
+  id          String             @id @default(cuid())
+  tripId      String             @unique
+  trip        Trip               @relation(fields: [tripId], references: [id], onDelete: Cascade)
+
+  title       String?
+  description String?
+  days        TripItineraryDay[]
+
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model TripItineraryDay {
+  id          String        @id @default(cuid())
+  itineraryId String
+  itinerary   TripItinerary @relation(fields: [itineraryId], references: [id], onDelete: Cascade)
+
+  dayNumber   Int
+  title       String
+  description String?
+  imageUrl    String?
+  activities  Json
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@unique([itineraryId, dayNumber])
+  @@index([itineraryId])
 }

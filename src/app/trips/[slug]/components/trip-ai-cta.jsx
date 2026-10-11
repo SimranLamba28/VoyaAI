@@ -30,7 +30,14 @@ export function TripAiCta({ trip, budgetText }) {
             budget, and preferences—we&apos;ll shape a personalized itinerary
             around {trip.title}.
           </p>
-          <div className="mt-6 hidden lg:block">
+          <div className="mt-6">
+            <Button asChild>
+              <Link href={`/plan?trip=${encodeURIComponent(trip.slug)}`}>
+                Customize with questionnaire
+              </Link>
+            </Button>
+          </div>
+          <div className="mt-4 hidden lg:block">
             <Button asChild variant="outline">
               <Link href="/trips">Browse more trips</Link>
             </Button>
