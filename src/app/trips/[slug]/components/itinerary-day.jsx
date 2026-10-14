@@ -3,14 +3,21 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon } from "@hugeicons/core-free-icons";
 
 import { cn } from "@/lib/utils";
+import {
+  parseDayActivities,
+  parseDayMealSuggestions,
+} from "@/lib/trips/itinerary-day-data";
 
 function getActivities(day) {
-  const raw = day.activities;
-  if (!Array.isArray(raw)) return [];
+  const raw = parseDayActivities(day.activities);
 
   return [...raw].sort(
     (a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0)
   );
+}
+
+function getMealSuggestions(day) {
+  return parseDayMealSuggestions(day.activities);
 }
 
 /** 0 = content + image (image right), 1 = reversed, 2 = cinematic */
@@ -103,11 +110,11 @@ function ItineraryDayActivities({ day, activities }) {
             aria-hidden="true"
           />
 
-          {activity.type ? (
+          {activity.type || activity.timeOfDay?.trim() ? (
             <span
               className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-primary"
             >
-              {activity.type}
+              {activity.type ?? activity.timeOfDay}
             </span>
           ) : null}
 
@@ -135,6 +142,37 @@ function ItineraryDayActivities({ day, activities }) {
         </li>
       ))}
     </ul>
+  );
+}
+
+function ItineraryDayMeals({ meals }) {
+  if (!meals?.length) return null;
+
+  return (
+    <div className="mt-8 border-t border-border/35 pt-6 sm:mt-9 sm:pt-7">
+      <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-muted-foreground">
+        Meal ideas
+      </p>
+      <ul className="mt-4 space-y-3">
+        {meals.map((meal, index) => (
+          <li
+            key={`${meal.name}-${index}`}
+            className="text-sm leading-relaxed text-foreground sm:text-[15px]"
+          >
+            <span className="font-medium capitalize text-primary">
+              {meal.mealType}
+            </span>
+            <span className="text-muted-foreground"> · </span>
+            <span className="font-medium">{meal.name}</span>
+            {meal.description ? (
+              <p className="mt-1 text-sm text-muted-foreground sm:text-[15px]">
+                {meal.description}
+              </p>
+            ) : null}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -178,6 +216,7 @@ function getEditorialVideoUrl(dayNumber, media) {
 
 export function ItineraryDay({ day, dayIndex, media }) {
   const activities = getActivities(day);
+  const mealSuggestions = getMealSuggestions(day);
   const layout = getDayLayoutVariant(day.dayNumber);
   const imageAlt = `${day.title} — day ${day.dayNumber}`;
   const videoUrl = getEditorialVideoUrl(day.dayNumber, media);
@@ -206,6 +245,7 @@ export function ItineraryDay({ day, dayIndex, media }) {
             <div className="mx-auto max-w-3xl">
               <ItineraryDayHeader day={day} />
               <ItineraryDayActivities day={day} activities={activities} />
+              <ItineraryDayMeals meals={mealSuggestions} />
             </div>
           </div>
         ) : (
@@ -225,6 +265,7 @@ export function ItineraryDay({ day, dayIndex, media }) {
             >
               <ItineraryDayHeader day={day} />
               <ItineraryDayActivities day={day} activities={activities} />
+              <ItineraryDayMeals meals={mealSuggestions} />
             </div>
 
             {hasDayVisual ? (

@@ -9,7 +9,14 @@ import {
 
 import { DESIGN } from "@/constants/design";
 
-export function TripHero({ trip, destination, budgetText }) {
+export function TripHero({
+  trip,
+  destination,
+  budgetText,
+  backHref = "/trips",
+  backLabel = "← Curated trips",
+  destinationEyebrow,
+}) {
   return (
     <section className="px-4 pt-3 sm:px-6 sm:pt-4 lg:px-8">
       <div
@@ -35,16 +42,16 @@ export function TripHero({ trip, destination, budgetText }) {
         <div className="relative z-10 flex min-h-[26rem] flex-col justify-between px-5 py-6 sm:min-h-[30rem] sm:px-8 sm:py-8 lg:min-h-[36rem] lg:px-12 lg:py-10">
           <div>
             <Link
-              href="/trips"
+              href={backHref}
               className="inline-flex items-center text-[13px] font-medium text-background/75 transition-colors hover:text-background"
             >
-              ← Curated trips
+              {backLabel}
             </Link>
           </div>
 
           <div className="mt-auto max-w-3xl">
             <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-background/75 sm:text-xs">
-              {destination?.name ?? "Curated journey"}
+              {destinationEyebrow ?? destination?.name ?? "Curated journey"}
             </p>
 
             <h1 className="mt-3 text-[2rem] font-semibold leading-[1.08] tracking-tight text-background sm:text-4xl lg:text-[2.75rem] lg:leading-[1.06]">
