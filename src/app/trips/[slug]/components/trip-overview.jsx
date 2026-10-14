@@ -164,9 +164,9 @@ export function TripOverview({
         </div>
       </section>
 
-      {destination?.heroImage ? (
+      {destination?.heroImageUrl ? (
         <EditorialImageBreak
-          src={destination.heroImage}
+          src={destination.heroImageUrl}
           alt={destination.altText ?? destination.name}
           eyebrow={destination.country ?? destination.name}
           title={destination.name}
