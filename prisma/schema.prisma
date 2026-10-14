@@ -190,7 +190,7 @@ model Trip {
   budgetMax     Int?
   currency      String       @default("INR")
   preferences   Json?
-  status        String       @default("saved")
+  status        String       @default("draft")
 
   itinerary     TripItinerary?
 
@@ -208,6 +208,7 @@ model TripItinerary {
 
   title       String?
   description String?
+  metadata    Json?
   days        TripItineraryDay[]
 
   createdAt   DateTime           @default(now())
