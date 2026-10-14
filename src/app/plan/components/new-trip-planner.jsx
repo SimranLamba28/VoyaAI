@@ -12,17 +12,15 @@ import {
   PACE_OPTIONS,
   TRAVELER_TYPES,
 } from "../config/questionnaire";
-import { formatInr } from "../lib/format-inr";
+import { formatInr } from "@/lib/format-inr";
 import {
-  arePreferencesStale,
-  finishPlannerAndNavigate,
   formFromSavedPreferences,
-  prepareTripPreferencesForGeneration,
-} from "../lib/planner-shared";
-import {
+  generateItineraryAndGoToDraft,
+  havePreferencesChangedSinceGeneration,
   normalizeTripPreferencesForApi,
-  useItineraryGeneration,
-} from "../hooks/use-itinerary-generation";
+  prepareTripPreferencesForGeneration,
+} from "@/lib/trips/trip-preferences";
+import { useItineraryGeneration } from "../hooks/use-itinerary-generation";
 import { PlannerQuestionnaireFrame } from "./planner-questionnaire-frame";
 import { PlannerReview } from "./planner-review";
 import { PlannerStepContent } from "./planner-step-content";
@@ -103,7 +101,7 @@ export function NewTripPlanner({
     [form],
   );
 
-  const preferencesStale = arePreferencesStale(
+  const preferencesStale = havePreferencesChangedSinceGeneration(
     generatedPreferencesSnapshot,
     preferencesSnapshot,
   );
@@ -160,7 +158,7 @@ export function NewTripPlanner({
   }
 
   async function handleFinish() {
-    await finishPlannerAndNavigate({
+    await generateItineraryAndGoToDraft({
       generate,
       preferences: normalizeTripPreferencesForApi(form),
       options: { tripId: activeTripId ?? undefined },

@@ -1,47 +1,15 @@
 import { notFound } from "next/navigation";
 
 import { TripAiCta } from "./components/trip-ai-cta";
-import { TripHero } from "./components/trip-hero";
-import { TripItinerary } from "./components/trip-itinerary";
-import { TripOverview } from "./components/trip-overview";
-import { prisma } from "@/lib/prisma";
-
-function formatBudget(trip) {
-  const formatter = new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: trip.currency ?? "INR",
-    maximumFractionDigits: 0,
-  });
-
-  if (trip.budgetMin != null && trip.budgetMax != null) {
-    return `${formatter.format(trip.budgetMin)} - ${formatter.format(
-      trip.budgetMax
-    )}`;
-  }
-
-  return "Budget varies";
-}
-
-async function getTripBySlug(slug) {
-  return prisma.curatedTrip.findUnique({
-    where: { slug },
-    include: {
-      destination: true,
-      media: true,
-      itinerary: {
-        include: {
-          days: {
-            orderBy: { dayNumber: "asc" },
-          },
-        },
-      },
-    },
-  });
-}
+import { TripHero } from "@/components/itinerary/trip-hero";
+import { TripItinerary } from "@/components/itinerary/trip-itinerary";
+import { TripOverview } from "@/components/itinerary/trip-overview";
+import { formatCuratedTripBudgetText } from "@/lib/format-trip-budget";
+import { getCuratedTripBySlug } from "@/lib/trips/curated-trip-queries";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const trip = await getTripBySlug(slug);
+  const trip = await getCuratedTripBySlug(slug);
 
   if (!trip) {
     return { title: "Trip not found" };
@@ -55,13 +23,13 @@ export async function generateMetadata({ params }) {
 
 export default async function CuratedTripDetailPage({ params }) {
   const { slug } = await params;
-  const trip = await getTripBySlug(slug);
+  const trip = await getCuratedTripBySlug(slug);
 
   if (!trip) {
     notFound();
   }
 
-  const budgetText = formatBudget(trip);
+  const budgetText = formatCuratedTripBudgetText(trip);
   const itineraryDays = trip.itinerary?.days ?? [];
   const destination = trip.destination;
 

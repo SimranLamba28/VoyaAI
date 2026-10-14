@@ -26,10 +26,6 @@ Rules:
 - Respect pace (relaxed / balanced / packed), interests, must-sees, and constraints.
 - importantNotes: practical tips (may be [] if none).`;
 
-/**
- * @param {unknown} responseBody
- * @returns {string}
- */
 function getOpenRouterErrorMessage(responseBody) {
   const body =
     responseBody && typeof responseBody === "object" && !Array.isArray(responseBody)
@@ -84,10 +80,6 @@ function getOpenRouterErrorMessage(responseBody) {
   return providerName ? `[${providerName}] ${detail}` : detail;
 }
 
-/**
- * @param {unknown} responseBody
- * @returns {string | number | null}
- */
 function getOpenRouterErrorCode(responseBody) {
   const error =
     responseBody &&
@@ -102,11 +94,6 @@ function getOpenRouterErrorCode(responseBody) {
   return error?.code ?? null;
 }
 
-/**
- * @param {Record<string, unknown>} preferences Questionnaire-shaped trip fields
- * @param {object | null} curatedContext Curated trip template from the database
- * @returns {string}
- */
 function buildUserPrompt(preferences, curatedContext, resolvedDurationDays) {
   const payload = {
     destination: preferences.destination ?? "",
@@ -141,25 +128,11 @@ ${JSON.stringify(payload, null, 2)}`;
   return `Plan a new trip using these preferences (JSON):\n${JSON.stringify(payload, null, 2)}`;
 }
 
-/**
- * @param {string} code
- * @param {string} message
- * @param {Record<string, unknown>} [details]
- */
 function failure(code, message, details) {
   return { ok: false, code, message, ...(details ? { details } : {}) };
 }
 
-/**
- * Generate a structured itinerary via OpenRouter (server-only).
- *
- * @param {Record<string, unknown>} preferences Trip questionnaire fields
- * @param {object | null} [curatedContext] Curated trip template when personalizing
- * @returns {Promise<
- *   | { ok: true, itinerary: object }
- *   | { ok: false, code: string, message: string, details?: Record<string, unknown> }
- * >}
- */
+/** Generate a structured itinerary via OpenRouter (server-only). */
 export async function generateItinerary(preferences, curatedContext = null) {
   const resolvedPreferences = preferences ?? {};
   const resolvedDurationDays = Number(resolvedPreferences.durationDays);

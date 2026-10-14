@@ -1,10 +1,6 @@
 import { requireAuthedUser } from "@/lib/api/require-auth";
 import { prisma } from "@/lib/prisma";
 
-/**
- * @param {Request} request
- * @param {{ params: Promise<{ tripId: string }> }} context
- */
 export async function DELETE(request, { params }) {
   const authResult = await requireAuthedUser(request);
   if (authResult instanceof Response) {

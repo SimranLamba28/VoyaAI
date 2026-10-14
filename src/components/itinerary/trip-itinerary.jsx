@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-import { ItineraryDay } from "./itinerary-day";
+import { ItineraryDay } from "@/components/itinerary/itinerary-day";
 
 const pageWrap = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 

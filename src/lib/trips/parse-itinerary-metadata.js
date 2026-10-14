@@ -1,6 +1,3 @@
-/**
- * @param {unknown} metadata
- */
 export function parseTripItineraryMetadata(metadata) {
   if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
     return {

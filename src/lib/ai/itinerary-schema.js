@@ -142,11 +142,6 @@ function validateDay(day, index, expectedDayNumber) {
   return null;
 }
 
-/**
- * @param {unknown} data Parsed JSON from the model
- * @param {number} [expectedDurationDays] Resolved trip length from traveler preferences
- * @returns {{ valid: true, itinerary: object } | { valid: false, error: string }}
- */
 export function validateItinerary(data, expectedDurationDays) {
   if (!data || typeof data !== "object" || Array.isArray(data)) {
     return { valid: false, error: "Itinerary must be a JSON object" };

@@ -2,39 +2,17 @@ import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
 import { ImportantNotesSection } from "@/app/plan/components/important-notes-section";
-import { ItineraryDay } from "@/app/trips/[slug]/components/itinerary-day";
-import { TripHero } from "@/app/trips/[slug]/components/trip-hero";
-import { TripOverview } from "@/app/trips/[slug]/components/trip-overview";
+import { ItineraryDay } from "@/components/itinerary/itinerary-day";
+import { TripHero } from "@/components/itinerary/trip-hero";
+import { TripOverview } from "@/components/itinerary/trip-overview";
 import { auth } from "@/lib/auth";
+import { formatUserTripBudgetText } from "@/lib/format-trip-budget";
 import { prisma } from "@/lib/prisma";
 import { parseTripItineraryMetadata } from "@/lib/trips/parse-itinerary-metadata";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_HERO_IMAGE = "/images/Destinations/Italy.jpg";
 const pageWrap = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
-
-function formatBudget(trip, metadata) {
-  const formatter = new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: trip.currency ?? "INR",
-    maximumFractionDigits: 0,
-  });
-
-  if (metadata.estimatedTotalBudgetInr != null) {
-    return formatter.format(metadata.estimatedTotalBudgetInr);
-  }
-
-  if (trip.budgetMin != null && trip.budgetMax != null) {
-    if (trip.budgetMin === trip.budgetMax) {
-      return formatter.format(trip.budgetMin);
-    }
-    return `${formatter.format(trip.budgetMin)} - ${formatter.format(
-      trip.budgetMax,
-    )}`;
-  }
-
-  return "Budget varies";
-}
 
 async function getOwnedTripDraft(tripId, userId) {
   return prisma.trip.findFirst({
@@ -109,7 +87,7 @@ export default async function DraftItineraryPage({ params }) {
   }
 
   const metadata = parseTripItineraryMetadata(trip.itinerary.metadata);
-  const budgetText = formatBudget(trip, metadata);
+  const budgetText = formatUserTripBudgetText(trip, metadata);
   const curated = trip.curatedTrip;
   const curatedDestination = curated?.destination ?? null;
 

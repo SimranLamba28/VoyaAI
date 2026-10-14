@@ -1,8 +1,8 @@
-import { CuratedTripCard } from "@/components/trips/curated-trip-card";
 import {
-  MobileTripFilters,
-  TripFilters,
-} from "@/components/trips/trip-filters";
+  CuratedTripFilterSidebar,
+  CuratedTripFilterSidebarMobile,
+} from "@/components/trips/curated-trip-filter-sidebar";
+import { TripCatalogCard } from "@/components/trips/trip-catalog-card";
 
 export function CuratedTripGrid({
   trips,
@@ -17,7 +17,7 @@ export function CuratedTripGrid({
   return (
     <div className="w-full">
       <div className="mb-6 lg:hidden">
-        <MobileTripFilters
+        <CuratedTripFilterSidebarMobile
           destination={destination}
           destinations={destinations}
           onDestinationChange={onDestinationChange}
@@ -29,7 +29,7 @@ export function CuratedTripGrid({
       </div>
 
       <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-10">
-        <TripFilters
+        <CuratedTripFilterSidebar
           className="hidden lg:block"
           destinations={destinations}
           destination={destination}
@@ -43,7 +43,7 @@ export function CuratedTripGrid({
         <div className="flex min-w-0 flex-1 flex-col gap-6">
           {trips.length > 0 ? (
             trips.map((trip) => (
-              <CuratedTripCard
+              <TripCatalogCard
                 key={trip.id}
                 trip={trip}
                 variant="list"

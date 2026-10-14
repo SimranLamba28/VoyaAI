@@ -3,10 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 
-import { CuratedTripCard } from "@/components/trips/curated-trip-card";
+import { TripCatalogCard } from "@/components/trips/trip-catalog-card";
 import { DeleteTripButton } from "@/components/trips/delete-trip-button";
 
-export function MyTripsList({ initialTrips }) {
+export function UserTripsList({ initialTrips }) {
   const [trips, setTrips] = useState(initialTrips);
 
   function handleTripDeleted(tripId) {
@@ -40,7 +40,7 @@ export function MyTripsList({ initialTrips }) {
       {trips.map((trip) => (
         <li key={trip.id}>
           <div className="relative">
-            <CuratedTripCard
+            <TripCatalogCard
               trip={trip.cardTrip}
               variant="list"
               href={trip.href}

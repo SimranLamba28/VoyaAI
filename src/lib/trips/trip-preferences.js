@@ -1,4 +1,6 @@
-import { INITIAL_TRIP_PREFERENCES } from "../config/questionnaire";
+import { INITIAL_TRIP_PREFERENCES } from "@/app/plan/config/questionnaire";
+
+const NUMERIC_PREFERENCE_FIELDS = ["durationDays", "budgetInr", "travelerCount"];
 
 function trimDate(value) {
   return typeof value === "string" && value.trim() ? value.trim() : "";
@@ -13,11 +15,6 @@ function daysBetweenInclusive(startDate, endDate) {
   return Math.floor((endMs - startMs) / (24 * 60 * 60 * 1000)) + 1;
 }
 
-/**
- * @param {Record<string, unknown>} preferences
- * @param {number | string | null} [defaultDurationDays] Curated catalog default
- * @returns {number | null}
- */
 export function resolveTripDurationDays(preferences, defaultDurationDays = null) {
   if (!preferences || typeof preferences !== "object") {
     return null;
@@ -43,13 +40,7 @@ export function resolveTripDurationDays(preferences, defaultDurationDays = null)
   return null;
 }
 
-/**
- * Resolve duration for API / generation. Returns an error message when invalid.
- *
- * @param {Record<string, unknown>} preferences
- * @param {{ defaultDurationDays?: number | string | null }} [options]
- * @returns {{ ok: true, preferences: Record<string, unknown> } | { ok: false, message: string }}
- */
+/** Resolve duration for API / generation. Returns an error message when invalid. */
 export function prepareTripPreferencesForGeneration(preferences, options = {}) {
   const defaultDurationDays = options.defaultDurationDays ?? null;
   const start = trimDate(preferences.startDate);
@@ -73,6 +64,31 @@ export function prepareTripPreferencesForGeneration(preferences, options = {}) {
     ok: true,
     preferences: { ...preferences, durationDays: resolved },
   };
+}
+
+export function normalizeTripPreferencesForApi(preferences, options = {}) {
+  const normalized = { ...preferences };
+
+  for (const field of NUMERIC_PREFERENCE_FIELDS) {
+    const value = normalized[field];
+    if (value === "" || value == null) {
+      continue;
+    }
+    const asNumber = Number(value);
+    if (!Number.isNaN(asNumber)) {
+      normalized[field] = asNumber;
+    }
+  }
+
+  const resolvedDuration = resolveTripDurationDays(
+    normalized,
+    options.defaultDurationDays ?? null,
+  );
+  if (resolvedDuration != null) {
+    normalized.durationDays = resolvedDuration;
+  }
+
+  return normalized;
 }
 
 export function formFromSavedPreferences(saved, defaults = {}) {
@@ -109,10 +125,6 @@ export function formFromSavedPreferences(saved, defaults = {}) {
   return base;
 }
 
-/**
- * @param {{ budgetMin?: number | null, budgetMax?: number | null, currency?: string }} trip
- * @returns {string | null}
- */
 export function formatCuratedBudgetHint(trip) {
   const formatter = new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -125,27 +137,16 @@ export function formatCuratedBudgetHint(trip) {
   return null;
 }
 
-/**
- * @param {string | null} generatedSnapshot
- * @param {string} currentSnapshot
- */
-export function arePreferencesStale(generatedSnapshot, currentSnapshot) {
+export function havePreferencesChangedSinceGeneration(
+  generatedSnapshot,
+  currentSnapshot,
+) {
   return (
     generatedSnapshot !== null && currentSnapshot !== generatedSnapshot
   );
 }
 
-/**
- * @param {{
- *   generate: (preferences: object, options?: object) => Promise<{ ok: boolean, tripId?: string | null }>,
- *   preferences: object,
- *   options?: object,
- *   preferencesSnapshot: string,
- *   setGeneratedSnapshot: (value: string) => void,
- *   router: { push: (path: string) => void },
- * }} params
- */
-export async function finishPlannerAndNavigate({
+export async function generateItineraryAndGoToDraft({
   generate,
   preferences,
   options,

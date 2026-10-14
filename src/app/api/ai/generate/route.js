@@ -1,17 +1,13 @@
-import { prepareTripPreferencesForGeneration } from "@/app/plan/lib/planner-shared";
+import { prepareTripPreferencesForGeneration } from "@/lib/trips/trip-preferences";
 import { generateItinerary } from "@/lib/ai/generate-itinerary";
 import { requireAuthedUser } from "@/lib/api/require-auth";
 import {
-  commitGeneratedItinerary,
-  loadCuratedTripForGeneration,
-  splitTripRequestBody,
-  upsertTripDraftForGeneration,
-} from "@/lib/trips/trip-draft";
+  loadCuratedTemplateForAi,
+  parseGenerateItineraryRequest,
+  saveGeneratedItinerary,
+  saveUserTripBeforeGeneration,
+} from "@/lib/trips/user-trip-generation";
 
-/**
- * @param {string} code
- * @returns {number}
- */
 function statusForGenerationFailure(code) {
   switch (code) {
     case "MISSING_API_KEY":
@@ -64,13 +60,13 @@ export async function POST(request) {
   }
 
   const { tripId: requestedTripId, preferences: rawPreferences, curatedTripSlug } =
-    splitTripRequestBody(body);
+    parseGenerateItineraryRequest(body);
 
   let curatedContext = null;
   let curatedTripId = null;
   let catalogDefaultDuration = null;
   if (curatedTripSlug) {
-    const curated = await loadCuratedTripForGeneration(curatedTripSlug);
+    const curated = await loadCuratedTemplateForAi(curatedTripSlug);
     if (!curated) {
       return Response.json(
         {
@@ -103,7 +99,7 @@ export async function POST(request) {
 
   let draft;
   try {
-    draft = await upsertTripDraftForGeneration(
+    draft = await saveUserTripBeforeGeneration(
       requestedTripId,
       user.id,
       preferences,
@@ -146,7 +142,7 @@ export async function POST(request) {
   }
 
   try {
-    const committed = await commitGeneratedItinerary(
+    const committed = await saveGeneratedItinerary(
       activeTripId,
       user.id,
       result.itinerary,

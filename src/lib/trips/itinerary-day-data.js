@@ -1,7 +1,3 @@
-/**
- * @param {unknown} raw
- * @returns {object[]}
- */
 export function parseDayActivities(raw) {
   if (Array.isArray(raw)) {
     return raw;
@@ -12,10 +8,6 @@ export function parseDayActivities(raw) {
   return [];
 }
 
-/**
- * @param {unknown} raw
- * @returns {object[]}
- */
 export function parseDayMealSuggestions(raw) {
   if (raw && typeof raw === "object" && Array.isArray(raw.mealSuggestions)) {
     return raw.mealSuggestions;
@@ -23,9 +15,6 @@ export function parseDayMealSuggestions(raw) {
   return [];
 }
 
-/**
- * @param {{ activities?: unknown[], mealSuggestions?: unknown[] }} day
- */
 export function serializeDayActivitiesPayload(day) {
   const activities = Array.isArray(day.activities) ? day.activities : [];
   const mealSuggestions = Array.isArray(day.mealSuggestions)

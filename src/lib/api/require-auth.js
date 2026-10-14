@@ -1,9 +1,5 @@
 import { auth } from "@/lib/auth";
 
-/**
- * @param {Request} request
- * @returns {Promise<Response | { user: { id: string, name: string, email: string, image?: string | null } }>}
- */
 export async function requireAuthedUser(request) {
   const session = await auth.api.getSession({
     headers: request.headers,

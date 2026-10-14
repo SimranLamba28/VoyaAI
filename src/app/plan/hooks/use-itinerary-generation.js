@@ -2,40 +2,8 @@
 
 import { useCallback, useRef, useState } from "react";
 
-import { resolveTripDurationDays } from "../lib/planner-shared";
+import { normalizeTripPreferencesForApi } from "@/lib/trips/trip-preferences";
 
-const NUMERIC_PREFERENCE_FIELDS = ["durationDays", "budgetInr", "travelerCount"];
-
-
-export function normalizeTripPreferencesForApi(preferences, options = {}) {
-  const normalized = { ...preferences };
-
-  for (const field of NUMERIC_PREFERENCE_FIELDS) {
-    const value = normalized[field];
-    if (value === "" || value == null) {
-      continue;
-    }
-    const asNumber = Number(value);
-    if (!Number.isNaN(asNumber)) {
-      normalized[field] = asNumber;
-    }
-  }
-
-  const resolvedDuration = resolveTripDurationDays(
-    normalized,
-    options.defaultDurationDays ?? null,
-  );
-  if (resolvedDuration != null) {
-    normalized.durationDays = resolvedDuration;
-  }
-
-  return normalized;
-}
-
-/**
- * @param {unknown} body
- * @returns {string}
- */
 function messageFromErrorBody(body) {
   if (body && typeof body === "object" && !Array.isArray(body)) {
     const message = body.message;
@@ -46,10 +14,6 @@ function messageFromErrorBody(body) {
   return "Itinerary generation failed. Please try again.";
 }
 
-/**
- * @param {Record<string, unknown>} preferences
- * @param {{ tripId?: string, curatedTripSlug?: string }} [options]
- */
 function buildGenerateRequestBody(preferences, options = {}) {
   const normalized = normalizeTripPreferencesForApi(preferences);
   const body = { ...normalized };

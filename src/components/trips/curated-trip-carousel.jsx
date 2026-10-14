@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import { CuratedTripCard } from "@/components/trips/curated-trip-card";
+import { TripCatalogCard } from "@/components/trips/trip-catalog-card";
 
 export function CuratedTripCarousel({ trips }) {
   const [api, setApi] = useState();
@@ -67,7 +67,7 @@ export function CuratedTripCarousel({ trips }) {
                 key={trip.id}
                 className="basis-[250px] pl-4 md:basis-[290px]"
               >
-                <CuratedTripCard
+                <TripCatalogCard
                   trip={trip}
                   active={index === selectedIndex}
                 />

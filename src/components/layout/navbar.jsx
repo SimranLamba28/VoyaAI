@@ -16,7 +16,7 @@ import { DESIGN } from "@/constants/design";
 const NAV_LINKS = [
   { href: "/#explore", label: "Explore" },
   { href: "/destinations", label: "Destinations" },
-  { href: "/trips", label: "Trips" },
+  { href: "/trips", label: "Curated trips" },
   { href: "/plan", label: "Plan" },
   { href: "/my-trips", label: "My Trips" },
   { href: "/#about", label: "About" },

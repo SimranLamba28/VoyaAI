@@ -178,7 +178,7 @@ function FilterPanel({
   );
 }
 
-export function TripFilters({
+export function CuratedTripFilterSidebar({
   className,
   destinations,
   destination,
@@ -210,7 +210,7 @@ export function TripFilters({
   );
 }
 
-export function MobileTripFilters({
+export function CuratedTripFilterSidebarMobile({
   className,
   destinations,
   destination,

@@ -13,18 +13,16 @@ import {
   TRAVELER_TYPES,
 } from "../config/questionnaire";
 
-import { formatInr } from "../lib/format-inr";
+import { formatInr } from "@/lib/format-inr";
 import {
-  arePreferencesStale,
-  finishPlannerAndNavigate,
-  formatCuratedBudgetHint,
   formFromSavedPreferences,
-  prepareTripPreferencesForGeneration,
-} from "../lib/planner-shared";
-import {
+  formatCuratedBudgetHint,
+  generateItineraryAndGoToDraft,
+  havePreferencesChangedSinceGeneration,
   normalizeTripPreferencesForApi,
-  useItineraryGeneration,
-} from "../hooks/use-itinerary-generation";
+  prepareTripPreferencesForGeneration,
+} from "@/lib/trips/trip-preferences";
+import { useItineraryGeneration } from "../hooks/use-itinerary-generation";
 import { PlannerQuestionnaireFrame } from "./planner-questionnaire-frame";
 import { PlannerReview } from "./planner-review";
 import { PlannerStepContent } from "./planner-step-content";
@@ -114,7 +112,7 @@ export function CuratedTripPlanner({
     [form, catalogDurationDays],
   );
 
-  const preferencesStale = arePreferencesStale(
+  const preferencesStale = havePreferencesChangedSinceGeneration(
     generatedPreferencesSnapshot,
     preferencesSnapshot,
   );
@@ -187,7 +185,7 @@ export function CuratedTripPlanner({
     const payload = normalizeTripPreferencesForApi(form, {
       defaultDurationDays: catalogDurationDays,
     });
-    await finishPlannerAndNavigate({
+    await generateItineraryAndGoToDraft({
       generate,
       preferences: payload,
       options: {

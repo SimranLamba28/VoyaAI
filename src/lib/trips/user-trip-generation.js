@@ -1,4 +1,4 @@
-import { resolveTripDurationDays } from "@/app/plan/lib/planner-shared";
+import { resolveTripDurationDays } from "@/lib/trips/trip-preferences";
 import { prisma } from "@/lib/prisma";
 import { serializeDayActivitiesPayload } from "@/lib/trips/itinerary-day-data";
 
@@ -7,11 +7,7 @@ import { serializeDayActivitiesPayload } from "@/lib/trips/itinerary-day-data";
  * parse request → upsert Trip row → generate AI → commit TripItinerary + days on Trip.
  */
 
-/**
- * @param {Record<string, unknown>} body
- * @returns {{ tripId: string | undefined, preferences: Record<string, unknown>, curatedTripSlug: string | undefined }}
- */
-export function splitTripRequestBody(body) {
+export function parseGenerateItineraryRequest(body) {
   const { tripId, curatedTripSlug, ...rest } = body;
   return {
     tripId: typeof tripId === "string" && tripId.trim() ? tripId.trim() : undefined,
@@ -23,10 +19,7 @@ export function splitTripRequestBody(body) {
   };
 }
 
-/**
- * @param {Record<string, unknown>} preferences
- */
-export function deriveTripScalarsFromPreferences(preferences) {
+export function userTripFieldsFromPreferences(preferences) {
   const destinationRaw = preferences.destination;
   const destination =
     typeof destinationRaw === "string" ? destinationRaw.trim() : "";
@@ -61,13 +54,8 @@ export function deriveTripScalarsFromPreferences(preferences) {
   };
 }
 
-/**
- * One curated-trip query for both DB id and AI context.
- *
- * @param {string} curatedTripSlug
- * @returns {Promise<{ curatedTripId: string, context: object } | null>}
- */
-export async function loadCuratedTripForGeneration(curatedTripSlug) {
+/** One curated-trip query for both DB id and AI context. */
+export async function loadCuratedTemplateForAi(curatedTripSlug) {
   const trip = await prisma.curatedTrip.findUnique({
     where: { slug: curatedTripSlug },
     include: {
@@ -113,19 +101,14 @@ export async function loadCuratedTripForGeneration(curatedTripSlug) {
   };
 }
 
-/**
- * Prepare the user's Trip draft before the AI runs.
- *
- * @returns {Promise<{ trip: import("@prisma/client").Trip } | null>} null when tripId was sent but not owned by userId
- */
-export async function upsertTripDraftForGeneration(
+/** Prepare the user's Trip draft before the AI runs. Returns null when tripId was sent but not owned by userId. */
+export async function saveUserTripBeforeGeneration(
   tripId,
   userId,
   preferences,
   curatedTripId = null,
 ) {
-
-  const scalars = deriveTripScalarsFromPreferences(preferences);
+  const scalars = userTripFieldsFromPreferences(preferences);
   const tripData = {
     preferences,
     ...scalars,
@@ -164,12 +147,8 @@ export async function upsertTripDraftForGeneration(
 /**
  * Maps a validated AI itinerary to Prisma rows and saves in one transaction.
  * Only call with output from validateItinerary / generateItinerary.
- *
- * @param {string} tripId
- * @param {string} userId
- * @param {object} itinerary
  */
-export async function commitGeneratedItinerary(tripId, userId, itinerary) {
+export async function saveGeneratedItinerary(tripId, userId, itinerary) {
   const trip = await prisma.trip.findFirst({
     where: { id: tripId, userId },
     select: { id: true },
