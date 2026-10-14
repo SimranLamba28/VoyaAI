@@ -2,17 +2,27 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
 import {
-  INITIAL_TRIP_PREFERENCES,
   INTEREST_OPTIONS,
   NEW_TRIP_STEPS,
   PACE_OPTIONS,
   TRAVELER_TYPES,
 } from "../config/questionnaire";
 import { formatInr } from "../lib/format-inr";
+import {
+  arePreferencesStale,
+  finishPlannerAndNavigate,
+  formFromSavedPreferences,
+  prepareTripPreferencesForGeneration,
+} from "../lib/planner-shared";
+import {
+  normalizeTripPreferencesForApi,
+  useItineraryGeneration,
+} from "../hooks/use-itinerary-generation";
 import { PlannerQuestionnaireFrame } from "./planner-questionnaire-frame";
 import { PlannerReview } from "./planner-review";
 import { PlannerStepContent } from "./planner-step-content";
@@ -29,14 +39,9 @@ function validateNewTripStep(stepId, form) {
       return "";
     }
     case "duration-travelers": {
-      const days = Number(form.durationDays);
-      if (
-        form.durationDays === "" ||
-        Number.isNaN(days) ||
-        days < 1 ||
-        !Number.isInteger(days)
-      ) {
-        return "Enter trip length in whole days (at least 1).";
+      const prepared = prepareTripPreferencesForGeneration(form);
+      if (!prepared.ok) {
+        return prepared.message;
       }
       if (!form.travelerType) return "Select who is traveling.";
       const count = Number(form.travelerCount);
@@ -64,24 +69,51 @@ function validateNewTripStep(stepId, form) {
   }
 }
 
-export function NewTripPlanner() {
+export function NewTripPlanner({
+  draftResume = null,
+  signInReturnUrl = "/plan/new",
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
   const steps = NEW_TRIP_STEPS;
 
   const [stepIndex, setStepIndex] = useState(0);
   const [attemptedNext, setAttemptedNext] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [generatedPreferencesSnapshot, setGeneratedPreferencesSnapshot] =
+    useState(null);
 
-  const [form, setForm] = useState(() => ({
-    ...INITIAL_TRIP_PREFERENCES,
-    interests: [...INITIAL_TRIP_PREFERENCES.interests],
-  }));
+  const initialTripId = draftResume?.tripId ?? null;
+
+  const {
+    loading: generating,
+    error: generationError,
+    needsSignIn,
+    tripId: generationTripId,
+    generate,
+  } = useItineraryGeneration();
+
+  const activeTripId = generationTripId ?? initialTripId;
+
+  const [form, setForm] = useState(() =>
+    formFromSavedPreferences(draftResume?.preferences),
+  );
+
+  const preferencesSnapshot = useMemo(
+    () => JSON.stringify(normalizeTripPreferencesForApi(form)),
+    [form],
+  );
+
+  const preferencesStale = arePreferencesStale(
+    generatedPreferencesSnapshot,
+    preferencesSnapshot,
+  );
 
   const destinationLabel = form.destination.trim() || "—";
 
-  const durationLabel =
-    form.durationDays !== "" && !Number.isNaN(Number(form.durationDays))
-      ? `${form.durationDays} days`
-      : "—";
+  const durationLabel = useMemo(() => {
+    const days = normalizeTripPreferencesForApi(form).durationDays;
+    return days != null ? `${days} days` : "—";
+  }, [form]);
 
   const stepError = useMemo(() => {
     if (!attemptedNext) return "";
@@ -127,8 +159,15 @@ export function NewTripPlanner() {
     setStepIndex(index);
   }
 
-  function handleFinish() {
-    setSubmitted(true);
+  async function handleFinish() {
+    await finishPlannerAndNavigate({
+      generate,
+      preferences: normalizeTripPreferencesForApi(form),
+      options: { tripId: activeTripId ?? undefined },
+      preferencesSnapshot,
+      setGeneratedSnapshot: setGeneratedPreferencesSnapshot,
+      router,
+    });
   }
 
   const currentStep = steps[stepIndex];
@@ -175,6 +214,9 @@ export function NewTripPlanner() {
     </Button>
   );
 
+  const reviewSignInUrl =
+    signInReturnUrl || pathname || "/plan/new";
+
   return (
     <PlannerQuestionnaireFrame
       steps={steps}
@@ -183,7 +225,8 @@ export function NewTripPlanner() {
       onGoBack={goBack}
       onGoNext={goNext}
       onFinish={handleFinish}
-      submitted={submitted}
+      submitted={false}
+      generating={generating}
       header={header}
       firstStepBack={firstStepBack}
     >
@@ -199,7 +242,11 @@ export function NewTripPlanner() {
           paceLabel={paceLabel}
           mustSeeDisplay={form.mustSee.trim() || "—"}
           constraintsDisplay={form.constraints.trim() || "—"}
-          submitted={submitted}
+          generating={generating}
+          generationError={generationError}
+          needsSignIn={needsSignIn}
+          signInReturnUrl={reviewSignInUrl}
+          preferencesStale={preferencesStale}
         />
       ) : (
         <PlannerStepContent

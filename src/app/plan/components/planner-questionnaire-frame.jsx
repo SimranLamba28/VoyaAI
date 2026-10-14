@@ -12,6 +12,7 @@ export function PlannerQuestionnaireFrame({
   onGoNext,
   onFinish,
   submitted,
+  generating = false,
   header,
   firstStepBack,
   children,
@@ -99,9 +100,13 @@ export function PlannerQuestionnaireFrame({
               <Button
                 type="button"
                 onClick={onFinish}
-                disabled={submitted}
+                disabled={submitted || generating}
               >
-                {submitted ? "Done" : "Confirm preferences"}
+                {generating
+                  ? "Generating itinerary…"
+                  : submitted
+                    ? "Done"
+                    : "Confirm preferences"}
               </Button>
             )}
           </div>

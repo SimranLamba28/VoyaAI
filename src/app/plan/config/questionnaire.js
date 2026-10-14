@@ -30,9 +30,6 @@ export const NEW_TRIP_STEPS = [
   { id: "review", title: "Review" },
 ];
 
-/** @deprecated Use CURATED_STEPS or NEW_TRIP_STEPS */
-export const STEPS = CURATED_STEPS;
-
 export const TRAVELER_TYPES = [
   { value: "solo", label: "Solo" },
   { value: "couple", label: "Couple" },

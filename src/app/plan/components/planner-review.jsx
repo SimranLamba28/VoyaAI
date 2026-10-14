@@ -1,4 +1,5 @@
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { SignInButton } from "@/components/auth/sign-in-button";
 
 function ReviewRow({ label, value }) {
   return (
@@ -14,7 +15,6 @@ function ReviewRow({ label, value }) {
 export function PlannerReview({
   isNewTrip = false,
   tripTitle,
-  tripSlug,
   destinationLabel,
   durationLabel,
   datesSummary,
@@ -24,7 +24,11 @@ export function PlannerReview({
   paceLabel,
   mustSeeDisplay,
   constraintsDisplay,
-  submitted,
+  generating = false,
+  generationError = null,
+  needsSignIn = false,
+  signInReturnUrl = "/plan/new",
+  preferencesStale = false,
 }) {
   return (
     <div className="max-w-2xl space-y-6">
@@ -38,10 +42,7 @@ export function PlannerReview({
       </div>
       <dl className="rounded-[12px] border border-border/50 bg-card/80 px-4 sm:px-5">
         {!isNewTrip ? (
-          <>
-            <ReviewRow label="Curated trip" value={tripTitle} />
-            <ReviewRow label="Source slug" value={tripSlug} />
-          </>
+          <ReviewRow label="Curated trip" value={tripTitle} />
         ) : null}
         <ReviewRow label="Destination" value={destinationLabel} />
         <ReviewRow label="Duration" value={durationLabel} />
@@ -53,14 +54,38 @@ export function PlannerReview({
         <ReviewRow label="Must-sees" value={mustSeeDisplay} />
         <ReviewRow label="Constraints" value={constraintsDisplay} />
       </dl>
-      {submitted ? (
+      {generating ? (
         <Alert
           role="status"
           className="rounded-[12px] border-primary/30 bg-primary/5 px-4 py-3"
         >
           <AlertDescription className="text-sm text-foreground">
-            Your answers are held for this session. AI itinerary generation
-            isn&apos;t connected yet.
+            Generating your personalized itinerary. This may take a moment…
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {needsSignIn && !generating ? (
+        <Alert className="rounded-[12px] border-border/50 bg-card/80 px-4 py-3">
+          <AlertDescription className="space-y-3 text-sm text-foreground">
+            <p>{generationError ?? "Sign in to generate an itinerary."}</p>
+            <SignInButton
+              callbackURL={signInReturnUrl}
+              size="default"
+              className="h-9 rounded-full px-5"
+            />
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {generationError && !generating && !needsSignIn ? (
+        <Alert variant="destructive" className="rounded-[12px] px-4 py-3">
+          <AlertDescription className="text-sm">{generationError}</AlertDescription>
+        </Alert>
+      ) : null}
+      {preferencesStale && !generating ? (
+        <Alert className="rounded-[12px] border-amber-500/30 bg-amber-500/5 px-4 py-3">
+          <AlertDescription className="text-sm text-foreground">
+            Your answers changed after the last generation. Generate again to
+            update your itinerary.
           </AlertDescription>
         </Alert>
       ) : null}

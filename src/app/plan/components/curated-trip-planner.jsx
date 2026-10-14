@@ -2,28 +2,40 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
 import {
   CURATED_STEPS,
-  INITIAL_TRIP_PREFERENCES,
   INTEREST_OPTIONS,
   PACE_OPTIONS,
   TRAVELER_TYPES,
 } from "../config/questionnaire";
+
 import { formatInr } from "../lib/format-inr";
+import {
+  arePreferencesStale,
+  finishPlannerAndNavigate,
+  formatCuratedBudgetHint,
+  formFromSavedPreferences,
+  prepareTripPreferencesForGeneration,
+} from "../lib/planner-shared";
+import {
+  normalizeTripPreferencesForApi,
+  useItineraryGeneration,
+} from "../hooks/use-itinerary-generation";
 import { PlannerQuestionnaireFrame } from "./planner-questionnaire-frame";
 import { PlannerReview } from "./planner-review";
 import { PlannerStepContent } from "./planner-step-content";
 
-function validateCuratedStep(stepId, form) {
+function validateCuratedStep(stepId, form, catalogDurationDays) {
   switch (stepId) {
     case "dates": {
-      if (form.startDate && form.endDate && form.startDate > form.endDate) {
-        return "End date must be on or after the start date.";
-      }
-      return "";
+      const prepared = prepareTripPreferencesForGeneration(form, {
+        defaultDurationDays: catalogDurationDays,
+      });
+      return prepared.ok ? "" : prepared.message;
     }
     case "travelers": {
       if (!form.travelerType) return "Select who is traveling.";
@@ -52,42 +64,85 @@ function validateCuratedStep(stepId, form) {
   }
 }
 
-export function CuratedTripPlanner({ trip }) {
+export function CuratedTripPlanner({
+  trip,
+  draftResume = null,
+  signInReturnUrl: signInReturnUrlProp,
+}) {
+  const router = useRouter();
   const steps = CURATED_STEPS;
+  const signInReturnUrl =
+    signInReturnUrlProp ?? `/plan?trip=${encodeURIComponent(trip.slug)}`;
+
+  const initialTripId = draftResume?.tripId ?? null;
 
   const [stepIndex, setStepIndex] = useState(0);
   const [attemptedNext, setAttemptedNext] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [generatedPreferencesSnapshot, setGeneratedPreferencesSnapshot] =
+    useState(null);
 
-  const [form, setForm] = useState(() => ({
-    ...INITIAL_TRIP_PREFERENCES,
-    interests: [...INITIAL_TRIP_PREFERENCES.interests],
-  }));
+  const {
+    loading: generating,
+    error: generationError,
+    needsSignIn,
+    tripId: generationTripId,
+    generate,
+  } = useItineraryGeneration();
+
+  const activeTripId = generationTripId ?? initialTripId;
+
+  const catalogDurationDays =
+    trip.duration != null && trip.duration !== "" ? trip.duration : null;
+
+  const [form, setForm] = useState(() =>
+    formFromSavedPreferences(draftResume?.preferences, {
+      destination: trip.location?.trim() || trip.title?.trim() || "",
+      durationDays:
+        trip.duration != null && trip.duration !== ""
+          ? String(trip.duration)
+          : "",
+    }),
+  );
+
+  const preferencesSnapshot = useMemo(
+    () =>
+      JSON.stringify(
+        normalizeTripPreferencesForApi(form, {
+          defaultDurationDays: catalogDurationDays,
+        }),
+      ),
+    [form, catalogDurationDays],
+  );
+
+  const preferencesStale = arePreferencesStale(
+    generatedPreferencesSnapshot,
+    preferencesSnapshot,
+  );
 
   const destinationLabel =
     trip.location?.trim() || trip.title?.trim() || "This trip";
 
-  const durationLabel =
+  const catalogDurationLabel =
     trip.duration != null && trip.duration !== ""
       ? `${trip.duration} days`
       : "Duration from curated trip";
 
-  const curatedBudgetHint = useMemo(() => {
-    const formatter = new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: trip.currency ?? "INR",
-      maximumFractionDigits: 0,
-    });
-    if (trip.budgetMin != null && trip.budgetMax != null) {
-      return `${formatter.format(trip.budgetMin)} - ${formatter.format(trip.budgetMax)}`;
-    }
-    return null;
-  }, [trip.budgetMin, trip.budgetMax, trip.currency]);
+  const durationLabel = useMemo(() => {
+    const days = normalizeTripPreferencesForApi(form, {
+      defaultDurationDays: catalogDurationDays,
+    }).durationDays;
+    return days != null ? `${days} days` : "—";
+  }, [form, catalogDurationDays]);
+
+  const curatedBudgetHint = useMemo(
+    () => formatCuratedBudgetHint(trip),
+    [trip],
+  );
 
   const stepError = useMemo(() => {
     if (!attemptedNext) return "";
-    return validateCuratedStep(steps[stepIndex].id, form);
-  }, [stepIndex, form, attemptedNext, steps]);
+    return validateCuratedStep(steps[stepIndex].id, form, catalogDurationDays);
+  }, [stepIndex, form, attemptedNext, steps, catalogDurationDays]);
 
   const validationError = attemptedNext ? stepError : "";
 
@@ -109,7 +164,7 @@ export function CuratedTripPlanner({ trip }) {
 
   function goNext() {
     const step = steps[stepIndex];
-    const error = validateCuratedStep(step.id, form);
+    const error = validateCuratedStep(step.id, form, catalogDurationDays);
     if (error) {
       setAttemptedNext(true);
       return;
@@ -128,8 +183,21 @@ export function CuratedTripPlanner({ trip }) {
     setStepIndex(index);
   }
 
-  function handleFinish() {
-    setSubmitted(true);
+  async function handleFinish() {
+    const payload = normalizeTripPreferencesForApi(form, {
+      defaultDurationDays: catalogDurationDays,
+    });
+    await finishPlannerAndNavigate({
+      generate,
+      preferences: payload,
+      options: {
+        tripId: activeTripId ?? undefined,
+        curatedTripSlug: trip.slug,
+      },
+      preferencesSnapshot,
+      setGeneratedSnapshot: setGeneratedPreferencesSnapshot,
+      router,
+    });
   }
 
   const currentStep = steps[stepIndex];
@@ -166,12 +234,9 @@ export function CuratedTripPlanner({ trip }) {
       <p className="mt-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
         Based on <span className="text-foreground">{destinationLabel}</span>
         {" · "}
-        <span className="text-foreground">{durationLabel}</span>. Your answers
-        stay tied to this curated route (
-        <span className="font-mono text-xs text-muted-foreground">
-          {trip.slug}
-        </span>
-        ).
+        <span className="text-foreground">{catalogDurationLabel}</span>. We&apos;ll
+        personalize this curated route using your answers—the original trip in
+        our catalog stays unchanged.
       </p>
     </>
   );
@@ -190,7 +255,8 @@ export function CuratedTripPlanner({ trip }) {
       onGoBack={goBack}
       onGoNext={goNext}
       onFinish={handleFinish}
-      submitted={submitted}
+      submitted={false}
+      generating={generating}
       header={header}
       firstStepBack={firstStepBack}
     >
@@ -198,7 +264,6 @@ export function CuratedTripPlanner({ trip }) {
         <PlannerReview
           isNewTrip={false}
           tripTitle={trip.title}
-          tripSlug={trip.slug}
           destinationLabel={destinationLabel}
           durationLabel={durationLabel}
           datesSummary={datesSummary}
@@ -208,7 +273,11 @@ export function CuratedTripPlanner({ trip }) {
           paceLabel={paceLabel}
           mustSeeDisplay={form.mustSee.trim() || "—"}
           constraintsDisplay={form.constraints.trim() || "—"}
-          submitted={submitted}
+          generating={generating}
+          generationError={generationError}
+          needsSignIn={needsSignIn}
+          signInReturnUrl={signInReturnUrl}
+          preferencesStale={preferencesStale}
         />
       ) : (
         <PlannerStepContent
@@ -219,7 +288,7 @@ export function CuratedTripPlanner({ trip }) {
           onToggleInterest={toggleInterest}
           validationError={validationError}
           curatedBudgetHint={curatedBudgetHint}
-          durationLabel={durationLabel}
+          durationLabel={catalogDurationLabel}
         />
       )}
     </PlannerQuestionnaireFrame>

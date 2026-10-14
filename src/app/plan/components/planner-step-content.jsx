@@ -181,6 +181,21 @@ export function PlannerStepContent({
             />
           </div>
         </div>
+        {!isNewTrip ? (
+          <div className="max-w-[10rem]">
+            <Label htmlFor="duration-days-curated">Trip length (days)</Label>
+            <Input
+              id="duration-days-curated"
+              type="number"
+              min={1}
+              step={1}
+              className="mt-2"
+              placeholder="e.g. 5"
+              value={answers.durationDays}
+              onChange={(e) => onUpdateField("durationDays", e.target.value)}
+            />
+          </div>
+        ) : null}
         <FieldError message={validationError} />
       </div>
     );
