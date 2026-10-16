@@ -94,7 +94,37 @@ function getOpenRouterErrorCode(responseBody) {
   return error?.code ?? null;
 }
 
-function buildUserPrompt(preferences, curatedContext, resolvedDurationDays) {
+function normalizeRevisionContext(revision) {
+  if (!revision || typeof revision !== "object" || Array.isArray(revision)) {
+    return null;
+  }
+
+  const revisionInstructions =
+    typeof revision.revisionInstructions === "string"
+      ? revision.revisionInstructions.trim()
+      : "";
+
+  const currentItinerary = revision.currentItinerary;
+  const hasItinerary =
+    currentItinerary &&
+    typeof currentItinerary === "object" &&
+    !Array.isArray(currentItinerary) &&
+    Array.isArray(currentItinerary.days) &&
+    currentItinerary.days.length > 0;
+
+  if (!revisionInstructions || !hasItinerary) {
+    return null;
+  }
+
+  return { revisionInstructions, currentItinerary };
+}
+
+function buildUserPrompt(
+  preferences,
+  curatedContext,
+  resolvedDurationDays,
+  revision = null,
+) {
   const payload = {
     destination: preferences.destination ?? "",
     durationDays: resolvedDurationDays,
@@ -108,6 +138,33 @@ function buildUserPrompt(preferences, curatedContext, resolvedDurationDays) {
     mustSee: preferences.mustSee ?? "",
     constraints: preferences.constraints ?? "",
   };
+
+  if (revision) {
+    const curatedSection = curatedContext
+      ? `
+This trip was originally based on a curated template (for context only; follow the revision instructions and preferences first):
+${JSON.stringify(curatedContext, null, 2)}
+`
+      : "";
+
+    return `Revise the traveler's existing itinerary according to their instructions.
+
+Rules:
+- The itinerary MUST have exactly ${resolvedDurationDays} day(s): durationDays must be ${resolvedDurationDays} and days.length must be ${resolvedDurationDays}.
+- Keep honoring the traveler preferences (destination, pace, budget, interests, must-sees, constraints) unless the revision instructions clearly require a conflicting change.
+- Apply the revision instructions; leave other days and details stable when the user only asked to change part of the trip.
+- Return one complete updated itinerary JSON object (not a partial diff or patch).
+- Do not invent a completely unrelated trip.
+
+Revision instructions:
+${revision.revisionInstructions}
+
+Current itinerary (JSON):
+${JSON.stringify(revision.currentItinerary, null, 2)}
+
+Traveler preferences (JSON):
+${JSON.stringify(payload, null, 2)}${curatedSection}`;
+  }
 
   if (curatedContext) {
     return `Personalize a trip for this traveler using the curated template below as inspiration only—not as a fixed schedule.
@@ -132,10 +189,25 @@ function failure(code, message, details) {
   return { ok: false, code, message, ...(details ? { details } : {}) };
 }
 
-/** Generate a structured itinerary via OpenRouter (server-only). */
-export async function generateItinerary(preferences, curatedContext = null) {
+/**
+ * Generate a structured itinerary via OpenRouter (server-only).
+ *
+ * @param {object} preferences - Trip questionnaire fields; durationDays must be resolved.
+ * @param {object|null} [curatedContext] - Optional curated template context from loadCuratedTemplateForAi.
+ * @param {object|null} [revisionContext] - Optional regeneration input. When both fields are valid,
+ *   the model revises the stored plan instead of planning from scratch:
+ *   - revisionInstructions: non-empty string describing what to change.
+ *   - currentItinerary: existing itinerary in the same JSON shape as the model output
+ *     (e.g. from loadUserTripForItineraryRegeneration).
+ */
+export async function generateItinerary(
+  preferences,
+  curatedContext = null,
+  revisionContext = null,
+) {
   const resolvedPreferences = preferences ?? {};
   const resolvedDurationDays = Number(resolvedPreferences.durationDays);
+  const revision = normalizeRevisionContext(revisionContext);
   if (!Number.isInteger(resolvedDurationDays) || resolvedDurationDays < 1) {
     return failure(
       "INVALID_DURATION",
@@ -161,6 +233,7 @@ export async function generateItinerary(preferences, curatedContext = null) {
           resolvedPreferences,
           curatedContext,
           resolvedDurationDays,
+          revision,
         ),
       },
     ],
