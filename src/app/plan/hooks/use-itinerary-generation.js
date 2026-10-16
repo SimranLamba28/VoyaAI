@@ -14,6 +14,29 @@ function messageFromErrorBody(body) {
   return "Itinerary generation failed. Please try again.";
 }
 
+function buildRevisionPreviewRequestBody(options = {}) {
+  const tripId =
+    typeof options.tripId === "string" && options.tripId.trim()
+      ? options.tripId.trim()
+      : "";
+  const revisionInstructions =
+    typeof options.revisionInstructions === "string" &&
+    options.revisionInstructions.trim()
+      ? options.revisionInstructions.trim()
+      : "";
+
+  return {
+    tripId,
+    revisionInstructions,
+    preview: true,
+  };
+}
+
+function isRevisionPreviewRequest(options = {}) {
+  const body = buildRevisionPreviewRequestBody(options);
+  return Boolean(body.tripId && body.revisionInstructions);
+}
+
 function buildGenerateRequestBody(preferences, options = {}) {
   const normalized = normalizeTripPreferencesForApi(preferences);
   const body = { ...normalized };
@@ -48,11 +71,17 @@ export function useItineraryGeneration() {
     setError(null);
     setNeedsSignIn(false);
 
+    const revisionPreview = isRevisionPreviewRequest(options);
+
     try {
+      const requestBody = revisionPreview
+        ? buildRevisionPreviewRequestBody(options)
+        : buildGenerateRequestBody(preferences, options);
+
       const response = await fetch("/api/ai/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(buildGenerateRequestBody(preferences, options)),
+        body: JSON.stringify(requestBody),
       });
 
       let body;
@@ -121,6 +150,24 @@ export function useItineraryGeneration() {
           "The server returned an unexpected success response. Please try again.";
         setError(message);
         return { ok: false, reason: "unexpected_response", message };
+      }
+
+      if (revisionPreview) {
+        const itinerary =
+          body.itinerary &&
+          typeof body.itinerary === "object" &&
+          !Array.isArray(body.itinerary)
+            ? body.itinerary
+            : null;
+
+        if (!itinerary) {
+          const message =
+            "The server returned an unexpected success response. Please try again.";
+          setError(message);
+          return { ok: false, reason: "unexpected_response", message };
+        }
+
+        return { ok: true, tripId: responseTripId, itinerary };
       }
 
       return { ok: true, tripId: responseTripId };

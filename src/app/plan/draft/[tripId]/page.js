@@ -1,8 +1,7 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { ImportantNotesSection } from "@/app/plan/components/important-notes-section";
-import { ItineraryDay } from "@/components/itinerary/itinerary-day";
+import { DraftItinerarySection } from "@/app/plan/draft/[tripId]/draft-itinerary-section";
 import { TripHero } from "@/components/itinerary/trip-hero";
 import { TripOverview } from "@/components/itinerary/trip-overview";
 import { auth } from "@/lib/auth";
@@ -131,42 +130,13 @@ export default async function DraftItineraryPage({ params }) {
         overviewLead={overviewLead}
         overviewSecondary={overviewSecondary}
       />
-      <section
-        className={cn(pageWrap, "mt-2 sm:mt-4")}
-        aria-labelledby="draft-itinerary-heading"
-      >
-        <header className="max-w-3xl border-b border-border/35 pb-7 sm:pb-8">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary sm:text-xs">
-            Itinerary
-          </p>
-          <h2
-            id="draft-itinerary-heading"
-            className="mt-2 text-2xl font-semibold tracking-tight text-foreground sm:text-3xl lg:text-[2rem]"
-          >
-            {trip.itinerary.title ?? "Day by day"}
-          </h2>
-          <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:text-[15px] sm:leading-[1.75]">
-            Your AI-generated plan—refresh this page anytime to pick up where
-            you left off.
-          </p>
-        </header>
-
-        <ol className="mt-8 sm:mt-10">
-          {itineraryDays.map((day, dayIndex) => (
-            <ItineraryDay
-              key={day.id}
-              day={day}
-              dayIndex={dayIndex}
-              media={media}
-            />
-          ))}
-        </ol>
-
-        <ImportantNotesSection
-          notes={metadata.importantNotes}
-          className="mt-12 sm:mt-14"
-        />
-      </section>
+      <DraftItinerarySection
+        tripId={trip.id}
+        itineraryTitle={trip.itinerary.title ?? "Day by day"}
+        savedDays={itineraryDays}
+        importantNotes={metadata.importantNotes}
+        media={media}
+      />
     </main>
   );
 }

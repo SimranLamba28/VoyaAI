@@ -3,6 +3,7 @@ import { generateItinerary } from "@/lib/ai/generate-itinerary";
 import { requireAuthedUser } from "@/lib/api/require-auth";
 import {
   loadCuratedTemplateForAi,
+  loadUserTripForItineraryRegeneration,
   parseGenerateItineraryRequest,
   saveGeneratedItinerary,
   saveUserTripBeforeGeneration,
@@ -59,8 +60,138 @@ export async function POST(request) {
     );
   }
 
-  const { tripId: requestedTripId, preferences: rawPreferences, curatedTripSlug } =
-    parseGenerateItineraryRequest(body);
+  const {
+    tripId: requestedTripId,
+    preferences: rawPreferences,
+    curatedTripSlug,
+    revisionInstructions,
+    preview,
+  } = parseGenerateItineraryRequest(body);
+
+  if (preview && !revisionInstructions) {
+    return Response.json(
+      {
+        ok: false,
+        code: "INVALID_PREVIEW",
+        message: "Preview mode requires revision instructions.",
+      },
+      { status: 400 },
+    );
+  }
+
+  if (revisionInstructions) {
+    if (!preview) {
+      return Response.json(
+        {
+          ok: false,
+          code: "PREVIEW_REQUIRED",
+          message:
+            "Itinerary revision requests must set preview to true.",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (!requestedTripId) {
+      return Response.json(
+        {
+          ok: false,
+          code: "MISSING_TRIP_ID",
+          message: "A trip id is required to revise an itinerary.",
+        },
+        { status: 400 },
+      );
+    }
+
+    const loaded = await loadUserTripForItineraryRegeneration(
+      requestedTripId,
+      user.id,
+    );
+
+    if (!loaded) {
+      return Response.json(
+        {
+          ok: false,
+          code: "TRIP_NOT_FOUND",
+          message: "Trip not found.",
+        },
+        { status: 404 },
+      );
+    }
+
+    if (!loaded.currentItinerary) {
+      return Response.json(
+        {
+          ok: false,
+          code: "MISSING_ITINERARY",
+          message: "This trip does not have an itinerary to revise.",
+          tripId: loaded.trip.id,
+        },
+        { status: 400 },
+      );
+    }
+
+    if (!loaded.preferences) {
+      return Response.json(
+        {
+          ok: false,
+          code: "MISSING_PREFERENCES",
+          message: "Stored trip preferences are missing or invalid.",
+          tripId: loaded.trip.id,
+        },
+        { status: 400 },
+      );
+    }
+
+    const catalogDefaultDuration =
+      loaded.curatedContext?.templateDurationDays ??
+      loaded.currentItinerary.durationDays ??
+      null;
+
+    const preparedRevision = prepareTripPreferencesForGeneration(
+      loaded.preferences,
+      { defaultDurationDays: catalogDefaultDuration },
+    );
+    if (!preparedRevision.ok) {
+      return Response.json(
+        {
+          ok: false,
+          code: "INVALID_PREFERENCES",
+          message: preparedRevision.message,
+          tripId: loaded.trip.id,
+        },
+        { status: 400 },
+      );
+    }
+
+    const revisionResult = await generateItinerary(
+      preparedRevision.preferences,
+      loaded.curatedContext,
+      {
+        revisionInstructions,
+        currentItinerary: loaded.currentItinerary,
+      },
+    );
+
+    if (!revisionResult.ok) {
+      console.error(
+        "Itinerary revision failed:",
+        revisionResult.code,
+        revisionResult.message,
+      );
+      const { ok: _ok, ...errorBody } = revisionResult;
+      return Response.json(
+        { ok: false, ...errorBody, tripId: loaded.trip.id },
+        { status: statusForGenerationFailure(revisionResult.code) },
+      );
+    }
+
+    return Response.json({
+      ok: true,
+      tripId: loaded.trip.id,
+      itinerary: revisionResult.itinerary,
+    });
+  }
 
   let curatedContext = null;
   let curatedTripId = null;
