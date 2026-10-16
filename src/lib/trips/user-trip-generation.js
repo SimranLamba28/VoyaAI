@@ -1,6 +1,11 @@
 import { resolveTripDurationDays } from "@/lib/trips/trip-preferences";
 import { prisma } from "@/lib/prisma";
-import { serializeDayActivitiesPayload } from "@/lib/trips/itinerary-day-data";
+import {
+  parseDayActivities,
+  parseDayMealSuggestions,
+  serializeDayActivitiesPayload,
+} from "@/lib/trips/itinerary-day-data";
+import { parseTripItineraryMetadata } from "@/lib/trips/parse-itinerary-metadata";
 
 /**
  * Trip draft persistence for AI generation (used by POST /api/ai/generate):
@@ -8,13 +13,25 @@ import { serializeDayActivitiesPayload } from "@/lib/trips/itinerary-day-data";
  */
 
 export function parseGenerateItineraryRequest(body) {
-  const { tripId, curatedTripSlug, ...rest } = body;
+  const {
+    tripId,
+    curatedTripSlug,
+    revisionInstructions,
+    preview,
+    ...rest
+  } = body;
   return {
     tripId: typeof tripId === "string" && tripId.trim() ? tripId.trim() : undefined,
     curatedTripSlug:
       typeof curatedTripSlug === "string" && curatedTripSlug.trim()
         ? curatedTripSlug.trim()
         : undefined,
+    revisionInstructions:
+      typeof revisionInstructions === "string" &&
+      revisionInstructions.trim()
+        ? revisionInstructions.trim()
+        : undefined,
+    preview: preview === true,
     preferences: rest,
   };
 }
@@ -101,6 +118,87 @@ export async function loadCuratedTemplateForAi(curatedTripSlug) {
   };
 }
 
+function storedPreferencesFromTrip(trip) {
+  const raw = trip.preferences;
+  if (raw && typeof raw === "object" && !Array.isArray(raw)) {
+    return raw;
+  }
+  return null;
+}
+
+/** Map persisted TripItinerary rows to the AI itinerary JSON shape (inverse of saveGeneratedItinerary). */
+function storedItineraryToAiShape(trip, itinerary) {
+  if (!itinerary) {
+    return null;
+  }
+
+  const metadata = parseTripItineraryMetadata(itinerary.metadata);
+  const days = (itinerary.days ?? []).map((day) => ({
+    dayNumber: day.dayNumber,
+    title: day.title,
+    summary: typeof day.description === "string" ? day.description : "",
+    activities: parseDayActivities(day.activities),
+    mealSuggestions: parseDayMealSuggestions(day.activities),
+  }));
+
+  return {
+    title: itinerary.title ?? trip.title,
+    destination: trip.destination,
+    durationDays: trip.duration,
+    summary: typeof itinerary.description === "string" ? itinerary.description : "",
+    estimatedTotalBudgetInr: metadata.estimatedTotalBudgetInr,
+    budgetNotes: metadata.budgetNotes ?? "",
+    importantNotes: metadata.importantNotes,
+    days,
+  };
+}
+
+/**
+ * Load an owned trip for itinerary regeneration: preferences, optional curated template context,
+ * and the current itinerary in AI JSON shape. Returns null when the trip is missing or not owned.
+ */
+export async function loadUserTripForItineraryRegeneration(tripId, userId) {
+  const trip = await prisma.trip.findFirst({
+    where: { id: tripId, userId },
+    include: {
+      curatedTrip: { select: { slug: true } },
+      itinerary: {
+        include: {
+          days: { orderBy: { dayNumber: "asc" } },
+        },
+      },
+    },
+  });
+
+  if (!trip) {
+    return null;
+  }
+
+  const curatedTripSlug = trip.curatedTrip?.slug ?? null;
+  let curatedTripId = trip.curatedTripId ?? null;
+  let curatedContext = null;
+
+  if (curatedTripSlug) {
+    const curated = await loadCuratedTemplateForAi(curatedTripSlug);
+    if (curated) {
+      curatedTripId = curated.curatedTripId;
+      curatedContext = curated.context;
+    }
+  }
+
+  return {
+    trip: {
+      id: trip.id,
+      status: trip.status,
+      curatedTripId,
+    },
+    preferences: storedPreferencesFromTrip(trip),
+    curatedTripSlug,
+    curatedContext,
+    currentItinerary: storedItineraryToAiShape(trip, trip.itinerary),
+  };
+}
+
 /** Prepare the user's Trip draft before the AI runs. Returns null when tripId was sent but not owned by userId. */
 export async function saveUserTripBeforeGeneration(
   tripId,
@@ -148,7 +246,14 @@ export async function saveUserTripBeforeGeneration(
  * Maps a validated AI itinerary to Prisma rows and saves in one transaction.
  * Only call with output from validateItinerary / generateItinerary.
  */
-export async function saveGeneratedItinerary(tripId, userId, itinerary) {
+export async function saveGeneratedItinerary(
+  tripId,
+  userId,
+  itinerary,
+  options = {},
+) {
+  const preserveTripStatus = options.preserveTripStatus === true;
+
   const trip = await prisma.trip.findFirst({
     where: { id: tripId, userId },
     select: { id: true },
@@ -189,7 +294,7 @@ export async function saveGeneratedItinerary(tripId, userId, itinerary) {
     await tx.trip.update({
       where: { id: tripId },
       data: {
-        status: "draft",
+        ...(preserveTripStatus ? {} : { status: "draft" }),
         title,
         destination,
         duration: durationDays,
