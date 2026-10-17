@@ -181,7 +181,6 @@ export async function PATCH(request, { params }) {
       trimmedTripId,
       user.id,
       validation.itinerary,
-      { preserveTripStatus: true },
     );
 
     if (!saved) {

@@ -246,14 +246,7 @@ export async function saveUserTripBeforeGeneration(
  * Maps a validated AI itinerary to Prisma rows and saves in one transaction.
  * Only call with output from validateItinerary / generateItinerary.
  */
-export async function saveGeneratedItinerary(
-  tripId,
-  userId,
-  itinerary,
-  options = {},
-) {
-  const preserveTripStatus = options.preserveTripStatus === true;
-
+export async function saveGeneratedItinerary(tripId, userId, itinerary) {
   const trip = await prisma.trip.findFirst({
     where: { id: tripId, userId },
     select: { id: true },
@@ -294,7 +287,7 @@ export async function saveGeneratedItinerary(
     await tx.trip.update({
       where: { id: tripId },
       data: {
-        ...(preserveTripStatus ? {} : { status: "draft" }),
+        status: "saved",
         title,
         destination,
         duration: durationDays,
