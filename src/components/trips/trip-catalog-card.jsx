@@ -7,6 +7,7 @@ import {
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function TripCatalogCard({
@@ -14,7 +15,7 @@ export function TripCatalogCard({
   active,
   variant = "carousel",
   href,
-  linkLabel = "View trip →",
+  linkLabel = "View trip",
   statusBadge,
   updatedAtText,
   showBudget = true,
@@ -164,7 +165,7 @@ export function TripCatalogCard({
   return (
     <Card
       className={cn(
-        "relative mx-auto w-[250px] shrink-0 overflow-hidden rounded-[20px] border border-border/50 bg-background py-0 gap-0 md:w-[290px]",
+        "relative mx-auto flex h-full w-[250px] shrink-0 flex-col overflow-hidden rounded-[20px] border border-border/50 bg-background py-0 gap-0 md:w-[290px]",
         isCarousel
           ? cn(
               "transition-all duration-700 ease-out",
@@ -185,7 +186,7 @@ export function TripCatalogCard({
         />
       </div>
 
-      <CardContent className="p-4">
+      <CardContent className="flex flex-1 flex-col p-4">
         <CardTitle className="tracking-[0.02em] text-foreground">
           {trip.title}
         </CardTitle>
@@ -194,7 +195,7 @@ export function TripCatalogCard({
           {trip.location}
         </CardDescription>
 
-        <p className="mt-3 min-h-[3.75rem] text-xs leading-5 text-muted-foreground">
+        <p className="mt-3 min-h-[3.75rem] flex-1 text-xs leading-5 text-muted-foreground line-clamp-3">
           {trip.description}
         </p>
 
@@ -213,6 +214,29 @@ export function TripCatalogCard({
             {budgetText}
           </p>
         </div>
+
+        {tripHref ? (
+          <div className="mt-auto pt-4">
+            <Button
+              asChild
+              size="sm"
+              className={cn(
+                "w-full transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none",
+                isCarousel && !active
+                  ? "pointer-events-none translate-y-1 opacity-0"
+                  : "translate-y-0 opacity-100",
+              )}
+            >
+              <Link
+                href={tripHref}
+                tabIndex={isCarousel && !active ? -1 : undefined}
+                aria-hidden={isCarousel && !active ? true : undefined}
+              >
+                {linkLabel}
+              </Link>
+            </Button>
+          </div>
+        ) : null}
       </CardContent>
     </Card>
   );

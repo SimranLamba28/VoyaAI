@@ -34,7 +34,10 @@ export function CuratedTripCarousel({ trips }) {
   }, [api]);
 
   return (
-    <section className="overflow-x-clip py-16" aria-labelledby="curated-trips-heading">
+    <section
+      className="overflow-x-clip pt-10 pb-16 sm:pt-12"
+      aria-labelledby="curated-trips-heading"
+    >
       <div className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
         <div className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.12em] text-primary">
@@ -61,11 +64,11 @@ export function CuratedTripCarousel({ trips }) {
           }}
           className="w-full"
         >
-          <CarouselContent className="-ml-4 items-center py-6">
+          <CarouselContent className="-ml-4 items-stretch py-6">
             {trips.map((trip, index) => (
               <CarouselItem
                 key={trip.id}
-                className="basis-[250px] pl-4 md:basis-[290px]"
+                className="flex basis-[250px] pl-4 md:basis-[290px]"
               >
                 <TripCatalogCard
                   trip={trip}
