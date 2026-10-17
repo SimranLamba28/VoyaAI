@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 
-import { TripAiCta } from "./components/trip-ai-cta";
+import { TripCustomizeCta } from "./components/trip-ai-cta";
 import { TripHero } from "@/components/itinerary/trip-hero";
 import { TripItinerary } from "@/components/itinerary/trip-itinerary";
 import { TripOverview } from "@/components/itinerary/trip-overview";
@@ -50,8 +50,8 @@ export default async function CuratedTripDetailPage({ params }) {
         overviewLead={overviewLead}
         overviewSecondary={overviewSecondary}
       />
+      <TripCustomizeCta trip={trip} />
       <TripItinerary trip={trip} itineraryDays={itineraryDays} />
-      <TripAiCta trip={trip} budgetText={budgetText} />
     </main>
   );
 }
