@@ -43,7 +43,7 @@ export default async function PlanPage({ searchParams }) {
     if (userId) {
       const state = await getDraftResumeState(curatedDraftId, userId);
       if (state.kind === "ready") {
-        redirect(`/plan/draft/${state.tripId}`);
+        redirect(`/my-trips/${state.tripId}`);
       }
       if (state.kind === "resume") {
         curatedResume = {

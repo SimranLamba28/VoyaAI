@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-import { DraftItinerarySection } from "@/app/plan/draft/[tripId]/draft-itinerary-section";
+import { TripItinerarySection } from "@/app/my-trips/[tripId]/trip-itinerary-section";
 import { TripHero } from "@/components/itinerary/trip-hero";
 import { TripOverview } from "@/components/itinerary/trip-overview";
 import { auth } from "@/lib/auth";
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 const DEFAULT_HERO_IMAGE = "/images/Destinations/Italy.jpg";
 const pageWrap = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 
-async function getOwnedTripDraft(tripId, userId) {
+async function getOwnedUserTrip(tripId, userId) {
   return prisma.trip.findFirst({
     where: { id: tripId, userId },
     include: {
@@ -43,7 +43,7 @@ export async function generateMetadata({ params }) {
     return { title: "Your itinerary" };
   }
 
-  const trip = await getOwnedTripDraft(tripId, userId);
+  const trip = await getOwnedUserTrip(tripId, userId);
   if (!trip) {
     return { title: "Trip not found" };
   }
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function DraftItineraryPage({ params }) {
+export default async function UserTripPage({ params }) {
   const { tripId } = await params;
   const session = await auth.api.getSession({ headers: await headers() });
 
@@ -62,7 +62,7 @@ export default async function DraftItineraryPage({ params }) {
     redirect(`/plan/new?draft=${encodeURIComponent(tripId)}`);
   }
 
-  const trip = await getOwnedTripDraft(tripId, session.user.id);
+  const trip = await getOwnedUserTrip(tripId, session.user.id);
 
   if (!trip) {
     notFound();
@@ -115,8 +115,8 @@ export default async function DraftItineraryPage({ params }) {
         trip={heroTrip}
         destination={destination}
         budgetText={budgetText}
-        backHref="/plan"
-        backLabel="← Back to planner"
+        backHref="/my-trips"
+        backLabel="← Back to My Trips"
         destinationEyebrow={
           curatedDestination?.name
             ? curatedDestination.name
@@ -130,7 +130,7 @@ export default async function DraftItineraryPage({ params }) {
         overviewLead={overviewLead}
         overviewSecondary={overviewSecondary}
       />
-      <DraftItinerarySection
+      <TripItinerarySection
         tripId={trip.id}
         itineraryTitle={trip.itinerary.title ?? "Day by day"}
         savedDays={itineraryDays}

@@ -17,6 +17,9 @@ async function getUserTrips(userId) {
     where: {
       userId,
       status: { in: ["draft", "saved"] },
+      itinerary: {
+        days: { some: {} },
+      },
     },
     orderBy: { updatedAt: "desc" },
     select: {
@@ -24,14 +27,12 @@ async function getUserTrips(userId) {
       title: true,
       destination: true,
       duration: true,
-      status: true,
       updatedAt: true,
       curatedTrip: {
         select: { image: true, altText: true },
       },
       itinerary: {
         select: {
-          _count: { select: { days: true } },
           days: {
             take: 1,
             orderBy: { dayNumber: "asc" },
@@ -52,21 +53,6 @@ function tripHeroImage(trip) {
     return dayImage;
   }
   return DEFAULT_HERO_IMAGE;
-}
-
-function hasCompletedItinerary(trip) {
-  const dayCount = trip.itinerary?._count?.days ?? 0;
-  return dayCount > 0;
-}
-
-function statusBadgeForTrip(trip) {
-  if (!hasCompletedItinerary(trip)) {
-    return { text: "Incomplete", tone: "warning" };
-  }
-  if (trip.status === "saved") {
-    return { text: "Saved", tone: "default" };
-  }
-  return { text: "Draft", tone: "default" };
 }
 
 function formatUpdatedAt(date) {
@@ -111,24 +97,19 @@ export default async function MyTripsPage() {
           </h1>
 
           <p className="mt-4 max-w-lg text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
-            Trips you have started or generated. Open any trip to view your
-            itinerary or continue planning.
+            Your generated itineraries. Open a trip to view the day-by-day plan
+            or make changes.
           </p>
         </header>
 
         <UserTripsList
-          initialTrips={trips.map((trip) => {
-            const complete = hasCompletedItinerary(trip);
-
-            return {
-              id: trip.id,
-              cardTrip: toCardTrip(trip),
-              href: `/plan/draft/${trip.id}`,
-              linkLabel: complete ? "View trip →" : "Continue in planner →",
-              statusBadge: statusBadgeForTrip(trip),
-              updatedAtText: `Updated ${formatUpdatedAt(trip.updatedAt)}`,
-            };
-          })}
+          initialTrips={trips.map((trip) => ({
+            id: trip.id,
+            cardTrip: toCardTrip(trip),
+            href: `/my-trips/${trip.id}`,
+            linkLabel: "View trip →",
+            updatedAtText: `Updated ${formatUpdatedAt(trip.updatedAt)}`,
+          }))}
         />
       </div>
     </main>

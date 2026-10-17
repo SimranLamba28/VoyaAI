@@ -31,7 +31,7 @@ export default async function PlanNewTripPage({ searchParams }) {
     if (userId) {
       const state = await getDraftResumeState(draftTripId, userId);
       if (state.kind === "ready") {
-        redirect(`/plan/draft/${state.tripId}`);
+        redirect(`/my-trips/${state.tripId}`);
       }
       if (state.kind === "resume") {
         if (state.curatedTripSlug) {

@@ -158,7 +158,7 @@ export async function generateItineraryAndGoToDraft({
   if (result.ok) {
     setGeneratedSnapshot(preferencesSnapshot);
     if (result.tripId) {
-      router.push(`/plan/draft/${result.tripId}`);
+      router.push(`/my-trips/${result.tripId}`);
     }
   }
   return result;
