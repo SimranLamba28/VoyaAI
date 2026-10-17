@@ -1,6 +1,7 @@
 import { prepareTripPreferencesForGeneration } from "@/lib/trips/trip-preferences";
 import { generateItinerary } from "@/lib/ai/generate-itinerary";
 import { requireAuthedUser } from "@/lib/api/require-auth";
+import { prisma } from "@/lib/prisma";
 import {
   loadCuratedTemplateForAi,
   loadUserTripForItineraryRegeneration,
@@ -260,12 +261,22 @@ export async function POST(request) {
   }
 
   const activeTripId = draft.trip.id;
+  const createdNewTrip = !requestedTripId;
 
   const result = await generateItinerary(preferences, curatedContext);
 
   if (!result.ok) {
     console.error("Itinerary generation failed:", result.code, result.message);
     const { ok: _ok, ...errorBody } = result;
+    if (createdNewTrip) {
+      await prisma.trip.deleteMany({
+        where: { id: activeTripId, userId: user.id, itinerary: null },
+      });
+      return Response.json(
+        { ok: false, ...errorBody },
+        { status: statusForGenerationFailure(result.code) },
+      );
+    }
     return Response.json(
       { ok: false, ...errorBody, tripId: activeTripId },
       { status: statusForGenerationFailure(result.code) },
@@ -279,25 +290,35 @@ export async function POST(request) {
       result.itinerary,
     );
     if (!committed) {
+      if (createdNewTrip) {
+        await prisma.trip.deleteMany({
+          where: { id: activeTripId, userId: user.id, itinerary: null },
+        });
+      }
       return Response.json(
         {
           ok: false,
           code: "TRIP_NOT_FOUND",
           message: "Trip not found.",
-          tripId: activeTripId,
+          ...(createdNewTrip ? {} : { tripId: activeTripId }),
         },
         { status: 404 },
       );
     }
   } catch (error) {
     console.error("Failed to persist generated itinerary:", error);
+    if (createdNewTrip) {
+      await prisma.trip.deleteMany({
+        where: { id: activeTripId, userId: user.id, itinerary: null },
+      });
+    }
     return Response.json(
       {
         ok: false,
         code: "PERSISTENCE_ERROR",
         message:
           "Your itinerary was generated but could not be saved. Please try again.",
-        tripId: activeTripId,
+        ...(createdNewTrip ? {} : { tripId: activeTripId }),
       },
       { status: 500 },
     );
