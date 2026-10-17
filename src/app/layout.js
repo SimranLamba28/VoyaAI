@@ -1,4 +1,5 @@
 import { Inter, Geist_Mono } from "next/font/google";
+import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
 import "./globals.css";
 
@@ -30,9 +31,10 @@ export default function RootLayout({ children }) {
       className={`${inter.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-full bg-background text-foreground">
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <Navbar />
-        {children}
+        <div className="flex flex-1 flex-col">{children}</div>
+        <Footer />
       </body>
     </html>
   );

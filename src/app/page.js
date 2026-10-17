@@ -1,6 +1,8 @@
+import { HomeAbout } from "@/components/marketing/home-about";
 import { HomeHero } from "@/components/marketing/home-hero";
 import { DestinationCarousel } from "@/components/marketing/destination-carousel";
 import { prisma } from "@/lib/prisma";
+import { HomeTravelFaqs } from "@/components/marketing/home-travel-faqs";
 import { CuratedTripCarousel } from "@/components/trips/curated-trip-carousel";
 
 export default async function Home() {
@@ -21,8 +23,10 @@ export default async function Home() {
   return (
     <main>
       <HomeHero />
+      <HomeAbout />
       <DestinationCarousel destinations={destinations} />
       <CuratedTripCarousel trips={curatedTrips} />
+      <HomeTravelFaqs />
     </main>
   );
 }

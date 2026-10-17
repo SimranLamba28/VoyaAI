@@ -14,7 +14,7 @@ export function DestinationCarousel({ destinations }) {
   return (
     <section
       id="destinations"
-      className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      className="px-4 pt-8 pb-12 sm:px-6 sm:pt-10 sm:pb-16 lg:px-8 lg:pt-12 lg:pb-20"
     >
       <div
         className="mx-auto"
