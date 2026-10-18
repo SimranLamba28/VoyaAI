@@ -1,273 +1,1692 @@
 [
-    {
-      "tripSlug": "japan-explorer",
-      "title": "Japan Explorer",
-      "description": "A 7-day journey through Tokyo, Kyoto, and Osaka.",
-      "days": [
-        {
-          "dayNumber": 1,
-          "title": "Arrive in Tokyo",
-          "description": "Settle into Tokyo and experience the energy of Shibuya.",
-          "image": "/images/trips/japan/japan explorer/day1japanexplorer.jpg",
-          "activities": [
-            {
-              "title": "Arrive and check in",
-              "description": "Travel from the airport to your hotel and settle in.",
-              "location": "Tokyo",
-              "startTime": "14:00",
-              "type": "Arrival",
-              "displayOrder": 1
-            },
-            {
-              "title": "Explore Shibuya",
-              "description": "Walk through Shibuya and experience the famous crossing.",
-              "location": "Shibuya, Tokyo",
-              "startTime": "17:00",
-              "type": "Sightseeing",
-              "displayOrder": 2
-            },
-            {
-              "title": "Shibuya Sky",
-              "description": "Enjoy panoramic views of Tokyo from the observation deck.",
-              "location": "Shibuya, Tokyo",
-              "startTime": "19:00",
-              "type": "Experience",
-              "displayOrder": 3
-            }
-          ]
-        },
-        {
-            "dayNumber": 2,
-            "title": "Discover Traditional Tokyo",
-            "description": "Explore Tokyo's historic neighborhoods, peaceful shrines, and lively local streets.",
-            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Meiji Shrine",
-                "description": "Start the morning at one of Tokyo's most peaceful and iconic Shinto shrines.",
-                "location": "Shibuya, Tokyo",
-                "startTime": "09:00",
-                "type": "Sightseeing",
-                "displayOrder": 1
-              },
-              {
-                "title": "Explore Harajuku",
-                "description": "Walk through Harajuku's colorful streets and discover its shops, cafés, and local culture.",
-                "location": "Harajuku, Tokyo",
-                "startTime": "11:00",
-                "type": "Explore",
-                "displayOrder": 2
-              },
-              {
-                "title": "Visit Asakusa",
-                "description": "Experience one of Tokyo's oldest districts and wander through the historic streets surrounding Senso-ji.",
-                "location": "Asakusa, Tokyo",
-                "startTime": "15:00",
-                "type": "Sightseeing",
-                "displayOrder": 3
-              },
-              {
-                "title": "Senso-ji Temple",
-                "description": "Visit Tokyo's famous Buddhist temple and explore Nakamise-dori's traditional shops.",
-                "location": "Asakusa, Tokyo",
-                "startTime": "16:00",
-                "type": "Experience",
-                "displayOrder": 4
-              }
-            ]
+  {
+    "tripSlug": "japan-explorer",
+    "title": "Japan Explorer",
+    "description": "A 7-day journey through Tokyo, Kyoto, and Osaka.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Tokyo",
+        "description": "Settle into Tokyo and experience the energy of Shibuya.",
+        "image": "/images/trips/japan/japan explorer/day1japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Travel from the airport to your hotel and settle in.",
+            "location": "Tokyo",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
           },
           {
-            "dayNumber": 3,
-            "title": "From Tokyo to Kyoto",
-            "description": "Leave Tokyo behind and begin the next chapter of the journey in Kyoto, Japan's cultural heart.",
-            "image": "/images/trips/japan/japan explorer/day3japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Shinkansen to Kyoto",
-                "description": "Take the high-speed train from Tokyo to Kyoto and enjoy the changing scenery along the way.",
-                "location": "Tokyo → Kyoto",
-                "startTime": "09:00",
-                "type": "Transport",
-                "displayOrder": 1
-              },
-              {
-                "title": "Check in and settle in",
-                "description": "Arrive in Kyoto, check into your accommodation, and take some time to settle into the city.",
-                "location": "Kyoto",
-                "startTime": "13:00",
-                "type": "Arrival",
-                "displayOrder": 2
-              },
-              {
-                "title": "Explore Gion",
-                "description": "Wander through Kyoto's atmospheric historic district, known for traditional wooden machiya houses and narrow streets.",
-                "location": "Gion, Kyoto",
-                "startTime": "16:00",
-                "type": "Explore",
-                "displayOrder": 3
-              },
-              {
-                "title": "Evening in Kyoto",
-                "description": "Enjoy a relaxed evening discovering local food and the atmosphere of Kyoto after sunset.",
-                "location": "Kyoto",
-                "startTime": "19:00",
-                "type": "Experience",
-                "displayOrder": 4
-              }
-            ]
+            "title": "Explore Shibuya",
+            "description": "Walk through Shibuya and experience the famous crossing.",
+            "location": "Shibuya, Tokyo",
+            "startTime": "17:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
           },
           {
-            "dayNumber": 4,
-            "title": "Kyoto's Timeless Temples",
-            "description": "Discover some of Kyoto's most iconic temples and wander through its historic eastern neighborhoods.",
-            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Fushimi Inari Shrine",
-                "description": "Walk beneath the thousands of vermilion torii gates winding up the mountain.",
-                "location": "Fushimi, Kyoto",
-                "startTime": "08:00",
-                "type": "Sightseeing",
-                "displayOrder": 1
-              },
-              {
-                "title": "Kiyomizu-dera",
-                "description": "Visit one of Kyoto's most celebrated temples and take in views across the city.",
-                "location": "Higashiyama, Kyoto",
-                "startTime": "11:00",
-                "type": "Sightseeing",
-                "displayOrder": 2
-              },
-              {
-                "title": "Explore Higashiyama",
-                "description": "Walk through the atmospheric historic streets surrounding Kiyomizu-dera.",
-                "location": "Higashiyama, Kyoto",
-                "startTime": "14:00",
-                "type": "Explore",
-                "displayOrder": 3
-              },
-              {
-                "title": "Evening in Pontocho",
-                "description": "End the day with dinner and an evening stroll through one of Kyoto's atmospheric dining districts.",
-                "location": "Pontocho, Kyoto",
-                "startTime": "19:00",
-                "type": "Food",
-                "displayOrder": 4
-              }
-            ]
-          },
-          {
-            "dayNumber": 5,
-            "title": "Arashiyama & Kyoto Culture",
-            "description": "Slow down and experience Kyoto's bamboo groves, gardens, and traditional neighborhoods.",
-            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Arashiyama Bamboo Grove",
-                "description": "Walk through the famous bamboo forest and enjoy the peaceful atmosphere of the surrounding area.",
-                "location": "Arashiyama, Kyoto",
-                "startTime": "08:00",
-                "type": "Sightseeing",
-                "displayOrder": 1
-              },
-              {
-                "title": "Tenryu-ji Temple",
-                "description": "Explore the historic Zen temple and its beautifully landscaped gardens.",
-                "location": "Arashiyama, Kyoto",
-                "startTime": "10:00",
-                "type": "Culture",
-                "displayOrder": 2
-              },
-              {
-                "title": "Explore Arashiyama",
-                "description": "Take your time discovering local cafés, shops, and riverside views.",
-                "location": "Arashiyama, Kyoto",
-                "startTime": "13:00",
-                "type": "Explore",
-                "displayOrder": 3
-              },
-              {
-                "title": "Traditional Kyoto Dinner",
-                "description": "Enjoy a relaxed evening with local Kyoto cuisine.",
-                "location": "Kyoto",
-                "startTime": "19:00",
-                "type": "Food",
-                "displayOrder": 4
-              }
-            ]
-          },
-          {
-            "dayNumber": 6,
-            "title": "Kyoto to Osaka",
-            "description": "Continue to Osaka and trade Kyoto's quiet streets for the energy, food, and nightlife of Japan's lively second city.",
-            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Travel to Osaka",
-                "description": "Take the train from Kyoto to Osaka and begin the final chapter of the journey.",
-                "location": "Kyoto → Osaka",
-                "startTime": "09:00",
-                "type": "Transport",
-                "displayOrder": 1
-              },
-              {
-                "title": "Osaka Castle",
-                "description": "Explore one of Osaka's most recognizable landmarks and learn about the city's history.",
-                "location": "Osaka",
-                "startTime": "11:00",
-                "type": "Sightseeing",
-                "displayOrder": 2
-              },
-              {
-                "title": "Dotonbori",
-                "description": "Discover Osaka's colorful entertainment district and its famous riverside streets.",
-                "location": "Dotonbori, Osaka",
-                "startTime": "17:00",
-                "type": "Explore",
-                "displayOrder": 3
-              },
-              {
-                "title": "Osaka Street Food",
-                "description": "Try some of Osaka's famous local specialties during an evening food adventure.",
-                "location": "Dotonbori, Osaka",
-                "startTime": "19:00",
-                "type": "Food",
-                "displayOrder": 4
-              }
-            ]
-          },
-          {
-            "dayNumber": 7,
-            "title": "Osaka & Farewell",
-            "description": "Spend a relaxed final morning in Osaka before wrapping up your Japan adventure.",
-            "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
-            "activities": [
-              {
-                "title": "Morning in Osaka",
-                "description": "Enjoy a relaxed final morning exploring the city at your own pace.",
-                "location": "Osaka",
-                "startTime": "09:00",
-                "type": "Explore",
-                "displayOrder": 1
-              },
-              {
-                "title": "Last-minute shopping",
-                "description": "Pick up souvenirs and enjoy a final wander through Osaka's lively shopping streets.",
-                "location": "Osaka",
-                "startTime": "11:00",
-                "type": "Shopping",
-                "displayOrder": 2
-              },
-              {
-                "title": "Departure",
-                "description": "Head to the airport and begin your journey home.",
-                "location": "Osaka",
-                "startTime": "15:00",
-                "type": "Departure",
-                "displayOrder": 3
-              }
-            ]
+            "title": "Shibuya Sky",
+            "description": "Enjoy panoramic views of Tokyo from the observation deck.",
+            "location": "Shibuya, Tokyo",
+            "startTime": "19:00",
+            "type": "Experience",
+            "displayOrder": 3
           }
-      ]
-    }
-  ]
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Discover Traditional Tokyo",
+        "description": "Explore Tokyo's historic neighborhoods, peaceful shrines, and lively local streets.",
+        "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Meiji Shrine",
+            "description": "Start the morning at one of Tokyo's most peaceful and iconic Shinto shrines.",
+            "location": "Shibuya, Tokyo",
+            "startTime": "09:00",
+            "type": "Sightseeing",
+            "displayOrder": 1
+          },
+          {
+            "title": "Explore Harajuku",
+            "description": "Walk through Harajuku's colorful streets and discover its shops, cafés, and local culture.",
+            "location": "Harajuku, Tokyo",
+            "startTime": "11:00",
+            "type": "Explore",
+            "displayOrder": 2
+          },
+          {
+            "title": "Visit Asakusa",
+            "description": "Experience one of Tokyo's oldest districts and wander through the historic streets surrounding Senso-ji.",
+            "location": "Asakusa, Tokyo",
+            "startTime": "15:00",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          },
+          {
+            "title": "Senso-ji Temple",
+            "description": "Visit Tokyo's famous Buddhist temple and explore Nakamise-dori's traditional shops.",
+            "location": "Asakusa, Tokyo",
+            "startTime": "16:00",
+            "type": "Experience",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "From Tokyo to Kyoto",
+        "description": "Leave Tokyo behind and begin the next chapter of the journey in Kyoto, Japan's cultural heart.",
+        "image": "/images/trips/japan/japan explorer/day3japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Shinkansen to Kyoto",
+            "description": "Take the high-speed train from Tokyo to Kyoto and enjoy the changing scenery along the way.",
+            "location": "Tokyo → Kyoto",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Check in and settle in",
+            "description": "Arrive in Kyoto, check into your accommodation, and take some time to settle into the city.",
+            "location": "Kyoto",
+            "startTime": "13:00",
+            "type": "Arrival",
+            "displayOrder": 2
+          },
+          {
+            "title": "Explore Gion",
+            "description": "Wander through Kyoto's atmospheric historic district, known for traditional wooden machiya houses and narrow streets.",
+            "location": "Gion, Kyoto",
+            "startTime": "16:00",
+            "type": "Explore",
+            "displayOrder": 3
+          },
+          {
+            "title": "Evening in Kyoto",
+            "description": "Enjoy a relaxed evening discovering local food and the atmosphere of Kyoto after sunset.",
+            "location": "Kyoto",
+            "startTime": "19:00",
+            "type": "Experience",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Kyoto's Timeless Temples",
+        "description": "Discover some of Kyoto's most iconic temples and wander through its historic eastern neighborhoods.",
+        "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Fushimi Inari Shrine",
+            "description": "Walk beneath the thousands of vermilion torii gates winding up the mountain.",
+            "location": "Fushimi, Kyoto",
+            "startTime": "08:00",
+            "type": "Sightseeing",
+            "displayOrder": 1
+          },
+          {
+            "title": "Kiyomizu-dera",
+            "description": "Visit one of Kyoto's most celebrated temples and take in views across the city.",
+            "location": "Higashiyama, Kyoto",
+            "startTime": "11:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Explore Higashiyama",
+            "description": "Walk through the atmospheric historic streets surrounding Kiyomizu-dera.",
+            "location": "Higashiyama, Kyoto",
+            "startTime": "14:00",
+            "type": "Explore",
+            "displayOrder": 3
+          },
+          {
+            "title": "Evening in Pontocho",
+            "description": "End the day with dinner and an evening stroll through one of Kyoto's atmospheric dining districts.",
+            "location": "Pontocho, Kyoto",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Arashiyama & Kyoto Culture",
+        "description": "Slow down and experience Kyoto's bamboo groves, gardens, and traditional neighborhoods.",
+        "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Arashiyama Bamboo Grove",
+            "description": "Walk through the famous bamboo forest and enjoy the peaceful atmosphere of the surrounding area.",
+            "location": "Arashiyama, Kyoto",
+            "startTime": "08:00",
+            "type": "Sightseeing",
+            "displayOrder": 1
+          },
+          {
+            "title": "Tenryu-ji Temple",
+            "description": "Explore the historic Zen temple and its beautifully landscaped gardens.",
+            "location": "Arashiyama, Kyoto",
+            "startTime": "10:00",
+            "type": "Culture",
+            "displayOrder": 2
+          },
+          {
+            "title": "Explore Arashiyama",
+            "description": "Take your time discovering local cafés, shops, and riverside views.",
+            "location": "Arashiyama, Kyoto",
+            "startTime": "13:00",
+            "type": "Explore",
+            "displayOrder": 3
+          },
+          {
+            "title": "Traditional Kyoto Dinner",
+            "description": "Enjoy a relaxed evening with local Kyoto cuisine.",
+            "location": "Kyoto",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Kyoto to Osaka",
+        "description": "Continue to Osaka and trade Kyoto's quiet streets for the energy, food, and nightlife of Japan's lively second city.",
+        "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Travel to Osaka",
+            "description": "Take the train from Kyoto to Osaka and begin the final chapter of the journey.",
+            "location": "Kyoto → Osaka",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Osaka Castle",
+            "description": "Explore one of Osaka's most recognizable landmarks and learn about the city's history.",
+            "location": "Osaka",
+            "startTime": "11:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Dotonbori",
+            "description": "Discover Osaka's colorful entertainment district and its famous riverside streets.",
+            "location": "Dotonbori, Osaka",
+            "startTime": "17:00",
+            "type": "Explore",
+            "displayOrder": 3
+          },
+          {
+            "title": "Osaka Street Food",
+            "description": "Try some of Osaka's famous local specialties during an evening food adventure.",
+            "location": "Dotonbori, Osaka",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 7,
+        "title": "Osaka & Farewell",
+        "description": "Spend a relaxed final morning in Osaka before wrapping up your Japan adventure.",
+        "image": "/images/trips/japan/japan explorer/day2japanexplorer.jpg",
+        "activities": [
+          {
+            "title": "Morning in Osaka",
+            "description": "Enjoy a relaxed final morning exploring the city at your own pace.",
+            "location": "Osaka",
+            "startTime": "09:00",
+            "type": "Explore",
+            "displayOrder": 1
+          },
+          {
+            "title": "Last-minute shopping",
+            "description": "Pick up souvenirs and enjoy a final wander through Osaka's lively shopping streets.",
+            "location": "Osaka",
+            "startTime": "11:00",
+            "type": "Shopping",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Head to the airport and begin your journey home.",
+            "location": "Osaka",
+            "startTime": "15:00",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tripSlug": "swiss-alps-escape",
+    "title": "Swiss Alps Escape",
+    "description": "An 8-day journey through Zurich, Lucerne, and the Bernese Oberland, pairing lake cities, classic Swiss cuisine, and focused mountain days in the Jungfrau region.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Zurich",
+        "description": "Settle into Switzerland's largest city and orient yourself in the medieval Altstadt above the Limmat.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Travel from Zurich Airport (ZRH) by train or tram to your hotel and unpack before heading out on foot.",
+            "location": "Zurich",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
+          },
+          {
+            "title": "Lindenhof",
+            "description": "Climb to this quiet hilltop park for views over the Limmat, Grossmünster, and the rooftops of the Old Town—the site of a former Roman castle and a favourite local viewpoint.",
+            "location": "Lindenhof, Altstadt, Zurich",
+            "startTime": "16:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Limmatquai and Rathausbrücke",
+            "description": "Stroll the riverfront lanes between Fraumünster and the guild houses, crossing the Rathaus bridge for classic postcard angles of the waterfront.",
+            "location": "Limmatquai, Zurich",
+            "startTime": "17:30",
+            "type": "Explore",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Zurich Churches and Swiss Classics",
+        "description": "Pair Romanesque landmarks with a taste of Zurich's best-known dishes, from plant-based buffet dining to elegant Geschnetzeltes.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Grossmünster",
+            "description": "Visit Zurich's twin-towered Protestant church, associated with the Reformation in the city; climb the Karlsturm tower when open for sweeping views over the lake and Alps on clear days.",
+            "location": "Grossmünster, Zurich",
+            "startTime": "09:00",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Fraumünster and St. Peter",
+            "description": "See Marc Chagall's stained-glass windows in the Fraumünster abbey church, then pass St. Peter's clock tower—the largest church clock face in Europe.",
+            "location": "Fraumünster, Zurich",
+            "startTime": "10:30",
+            "type": "Culture",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Haus Hiltl",
+            "description": "Eat at the Guinness-record vegetarian restaurant (founded 1898), where the buffet spans Swiss, Indian, and Mediterranean plates—an easy introduction to rösti-style potatoes and seasonal vegetable dishes even if you are not vegetarian.",
+            "location": "Haus Hiltl, Sihlstrasse 28, Zurich",
+            "startTime": "12:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Kronenhalle",
+            "description": "Reserve ahead for this storied dining room hung with original art, known for Zürcher Geschnetzeltes—veal strips in a creamy mushroom sauce served with rösti—and refined Swiss-French cooking.",
+            "location": "Kronenhalle, Rämistrasse 4, Zurich",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "Zurich to Lucerne",
+        "description": "Ride the efficient SBB mainline to Lucerne and explore the lake city's covered bridges and lion monument.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Train to Lucerne",
+            "description": "Take a direct SBB train from Zurich HB to Lucerne (roughly one hour); stow luggage at your hotel near the lake or old town.",
+            "location": "Zurich HB to Lucerne",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Chapel Bridge and Water Tower",
+            "description": "Walk Lucerne's 14th-century Kapellbrücke, rebuilt after the 1993 fire, and study the painted roof panels depicting local history beside the octagonal Wasserturm.",
+            "location": "Kapellbrücke, Lucerne",
+            "startTime": "11:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Restaurant Swiss Chuchi",
+            "description": "Try classic Lucerne fondue or raclette in a timber-beamed dining room focused on Swiss cheese dishes and regional comfort food.",
+            "location": "Restaurant Swiss Chuchi, Stadthofquai 6, Lucerne",
+            "startTime": "12:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Lion Monument (Löwendenkmal)",
+            "description": "See the sandstone lion carved into the cliff face—a memorial to Swiss Guards killed in Paris in 1792—set in a sheltered grotto park just north of the old town.",
+            "location": "Löwendenkmal, Lucerne",
+            "startTime": "15:00",
+            "type": "Culture",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Lake Lucerne and the Old Town",
+        "description": "Combine a lake cruise with medieval lanes, without adding a distant mountain excursion before your transfer to Interlaken.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Lake Lucerne paddle steamer",
+            "description": "Board a historic SGV steamship or motor vessel for a scenic cruise on the Vierwaldstättersee; timetables vary by season, so choose a shorter round trip if you prefer more time ashore.",
+            "location": "Lucerne boat landing, Lake Lucerne",
+            "startTime": "09:30",
+            "type": "Experience",
+            "displayOrder": 1
+          },
+          {
+            "title": "Spreuer Bridge",
+            "description": "Cross Lucerne's other covered wooden bridge, decorated with 17th-century \"Dance of Death\" panels, linking the Mühlenplatz area to the Reuss riverfront.",
+            "location": "Spreuerbrücke, Lucerne",
+            "startTime": "13:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Musegg Wall towers",
+            "description": "Walk a section of Lucerne's intact city wall and climb open towers such as the Zytturm for lake and Alpine views; the route is typically accessible in warmer months and may be limited in winter.",
+            "location": "Museggmauer, Lucerne",
+            "startTime": "15:00",
+            "type": "Explore",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Luzern–Interlaken Express",
+        "description": "Turn the transfer into a panorama ride through lakes, waterfalls, and the Brünig Pass, then settle in Interlaken between the lakes.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Luzern–Interlaken Express",
+            "description": "Ride Zentralbahn's panoramic train (about 1 hour 50 minutes) past five lakes and the Brünig Pass; a normal SBB ticket or Swiss Travel Pass covers the route, while optional seat reservations can secure window seats on the lake side.",
+            "location": "Lucerne to Interlaken Ost",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Check in and Höhematte",
+            "description": "Drop bags at your hotel, then walk the car-free Höhematte meadow for unobstructed views of the Eiger, Mönch, and Jungfrau above town.",
+            "location": "Höhematte, Interlaken",
+            "startTime": "12:30",
+            "type": "Arrival",
+            "displayOrder": 2
+          },
+          {
+            "title": "Aare river promenade",
+            "description": "Follow the turquoise Aare between Lake Thun and Lake Brienz, watching paragliders land in summer and enjoying gelato or coffee on the quay.",
+            "location": "Unterseen and Interlaken West",
+            "startTime": "16:00",
+            "type": "Relaxation",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Lauterbrunnen Valley",
+        "description": "Spend a full day in the valley of 72 waterfalls, with Staubbach as the headline stop.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Train to Lauterbrunnen",
+            "description": "Ride the Berner Oberland-Bahn from Interlaken Ost through the narrow valley to the village floor, surrounded by sheer cliffs and pasture.",
+            "location": "Interlaken Ost to Lauterbrunnen",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Staubbach Falls",
+            "description": "View the 297-metre cascade plunging past the village church; a marked trail leads closer when open and conditions are dry—expect spray on the path.",
+            "location": "Staubbach Falls, Lauterbrunnen",
+            "startTime": "10:00",
+            "type": "Nature",
+            "displayOrder": 2
+          },
+          {
+            "title": "Trümmelbach Falls",
+            "description": "Ride the lift inside the mountain to hear (and feel) glacial meltwater thunder through ten cascades; the site usually operates in the warmer months and closes in winter.",
+            "location": "Trümmelbachfälle, Lauterbrunnen Valley",
+            "startTime": "13:30",
+            "type": "Nature",
+            "displayOrder": 3
+          },
+          {
+            "title": "Valley walk to Stechelberg",
+            "description": "Stroll the flat valley path toward Stechelberg beneath the Mürren and Schilthorn cable-car lines, with cowbells and waterfall views en route.",
+            "location": "Lauterbrunnen to Stechelberg",
+            "startTime": "15:30",
+            "type": "Explore",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 7,
+        "title": "Grindelwald and Harder Kulm",
+        "description": "Choose one clear-weather viewpoint above Interlaken and one village base in the Jungfrau region—without stacking multiple summit railways in a single day.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Harder Kulm funicular",
+            "description": "Ascend from Interlaken Ost on the Harderbahn to the Two Lakes Bridge viewpoint; operations depend on weather and seasonal schedules, so have a café backup in town if clouds sit low.",
+            "location": "Harder Kulm, Interlaken",
+            "startTime": "08:30",
+            "type": "Experience",
+            "displayOrder": 1
+          },
+          {
+            "title": "Train to Grindelwald",
+            "description": "Continue by BOB train to Grindelwald village beneath the north face of the Eiger, changing at Zweilütschinen.",
+            "location": "Interlaken Ost to Grindelwald",
+            "startTime": "11:00",
+            "type": "Transport",
+            "displayOrder": 2
+          },
+          {
+            "title": "Grindelwald First Cliff Walk",
+            "description": "When the gondola to Grindelwald First is running (typically summer hiking season and parts of winter), walk the metal viewing platform above the valley for glacier and peak panoramas; skip if high winds close the lift.",
+            "location": "Grindelwald First, Jungfrau Region",
+            "startTime": "13:00",
+            "type": "Adventure",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner in Grindelwald",
+            "description": "Return to the village for Älplermagronen (Swiss macaroni with cheese and onions) or rosti at a local Gasthaus before the last train back to Interlaken.",
+            "location": "Dorfstrasse, Grindelwald",
+            "startTime": "18:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 8,
+        "title": "Farewell to Switzerland",
+        "description": "Allow a generous buffer for the cross-country rail link to Zurich Airport.",
+        "image": "/images/destinations/switzerland.jpg",
+        "activities": [
+          {
+            "title": "Breakfast in Interlaken",
+            "description": "Pick up pastries and coffee at a bakery overlooking the Höhematte before packing for departure.",
+            "location": "Interlaken",
+            "startTime": "08:00",
+            "type": "Relaxation",
+            "displayOrder": 1
+          },
+          {
+            "title": "Train to Zurich Airport",
+            "description": "Ride SBB via Bern or the Lucerne route (about two to two-and-a-half hours depending on connection) to Zürich Flughafen; check live timetables for your travel date.",
+            "location": "Interlaken Ost to Zurich Airport",
+            "startTime": "09:30",
+            "type": "Transport",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Check in for your onward flight or rail connection from Zurich Airport.",
+            "location": "Zurich Airport (ZRH)",
+            "startTime": "13:30",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tripSlug": "greek-island-escape",
+    "title": "Greek Island Escape",
+    "description": "A 6-day island route through Santorini's caldera villages and Mykonos Town, with researched tavernas, archaeological sites, and realistic ferry connections.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Santorini",
+        "description": "Land on the caldera rim and ease into Fira's cliffside lanes before heading north for sunset.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Transfer from Santorini (Thira) Airport or Athinios port to your accommodation; caldera hotels often involve steps or short shuttle rides.",
+            "location": "Santorini",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
+          },
+          {
+            "title": "Fira caldera walk",
+            "description": "Stroll the pedestrian path along the caldera edge through Fira, passing boutiques and chapels with continuous views of the submerged volcano and cruise ships below.",
+            "location": "Fira, Santorini",
+            "startTime": "16:00",
+            "type": "Explore",
+            "displayOrder": 2
+          },
+          {
+            "title": "Sunset in Oia",
+            "description": "Take a bus or taxi to Oia before dusk and join the crowd at the castle ruins for the famous caldera sunset; arrive early in peak season to claim a viewing spot.",
+            "location": "Oia, Santorini",
+            "startTime": "18:30",
+            "type": "Experience",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Ammoudi Fish Tavern",
+            "description": "Descend the steps to Ammoudi Bay below Oia for grilled octopus and whole fish at waterfront tavernas such as Dimitris Ammoudi Taverna, where boats dock beside your table.",
+            "location": "Ammoudi Bay, Oia, Santorini",
+            "startTime": "20:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Pyrgos, Wine, and Kamari",
+        "description": "Circle the island's interior villages and black-sand coast with Santorini specialties on the menu.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Pyrgos Kallistis",
+            "description": "Climb the medieval kasteli (castle) lanes of Pyrgos, the island's former capital, for 360-degree views and blue-domed churches without Oia's crowds.",
+            "location": "Pyrgos, Santorini",
+            "startTime": "09:00",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Santo Wines tasting",
+            "description": "Visit this caldera-side winery in Pyrgos to sample Assyrtiko and learn how volcanic soil and night harvesting shape Santorini's crisp whites; book tastings in advance in summer.",
+            "location": "Santo Wines, Pyrgos, Santorini",
+            "startTime": "11:30",
+            "type": "Experience",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Metaxi Mas",
+            "description": "Drive to Exo Gonia for rustic plates such as fava (split-pea puree), tomatokeftedes (tomato fritters), and slow-cooked goat in a stone-walled taverna praised for authentic island cooking.",
+            "location": "Metaxi Mas, Exo Gonia, Santorini",
+            "startTime": "13:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Kamari Beach",
+            "description": "Spend the afternoon on Santorini's long black-sand beach, with shaded cafés and calm swimming when the Aegean is settled.",
+            "location": "Kamari Beach, Santorini",
+            "startTime": "16:00",
+            "type": "Relaxation",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "Akrotiri and the South Coast",
+        "description": "Uncover Bronze Age ruins and the island's dramatic red cliffs before a relaxed evening in Fira.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Akrotiri Archaeological Site",
+            "description": "Walk covered walkways over the Minoan-era town preserved by volcanic ash—often called the \"Pompeii of the Aegean\"—with multi-storey buildings and fresco replicas explained on site.",
+            "location": "Akrotiri Archaeological Site, Santorini",
+            "startTime": "09:00",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Red Beach viewpoint",
+            "description": "Stop at the designated viewpoint above Red Beach's iron-rich cliffs; access to the sand itself is often restricted due to rockfall risk—follow current signage rather than unofficial paths.",
+            "location": "Red Beach, Akrotiri, Santorini",
+            "startTime": "11:30",
+            "type": "Nature",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at To Psaraki",
+            "description": "Eat at this Vlychada marina taverna for line-caught fish, seafood pasta, and island salads with capers and cherry tomatoes overlooking the fishing boats.",
+            "location": "To Psaraki, Vlychada, Santorini",
+            "startTime": "13:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Evening in Fira",
+            "description": "Return to Fira for a leisurely dinner on the caldera—try local white eggplant dishes or white-wine-braised seafood while the cliffs light up after sunset.",
+            "location": "Fira, Santorini",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Santorini to Mykonos",
+        "description": "Cross the Cyclades by sea with flexible timing, then explore Mykonos Town's waterfront maze.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Ferry to Mykonos",
+            "description": "Sail from Athinios or the new port at Fira to Mykonos on a high-speed or conventional ferry; schedules are seasonal and weather-dependent, so book a mid-morning departure that leaves buffer for delays.",
+            "location": "Santorini to Mykonos",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Check in and settle in",
+            "description": "Transfer from the new port at Tourlos or the old port in town to your hotel; Mykonos Town is walkable but hilly.",
+            "location": "Mykonos",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 2
+          },
+          {
+            "title": "Little Venice",
+            "description": "Wander Alefkandra's balconied houses built over the sea, where cafés and bars face the sunset across the Aegean.",
+            "location": "Little Venice, Mykonos Town",
+            "startTime": "17:30",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          },
+          {
+            "title": "Kato Mili windmills",
+            "description": "Photograph the row of 16th-century windmills above the old harbour, especially golden hour light on the thatched caps and whitewashed walls.",
+            "location": "Kato Mili, Mykonos Town",
+            "startTime": "18:45",
+            "type": "Sightseeing",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Mykonos Town and Ornos",
+        "description": "Balance heritage lanes with a sheltered beach afternoon and a seafood dinner.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Paraportiani Church",
+            "description": "See the asymmetrical cluster of five small churches fused into one whitewashed icon beside the sea in Mykonos Town.",
+            "location": "Panagia Paraportiani, Mykonos Town",
+            "startTime": "09:00",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Bakaliko bakery breakfast",
+            "description": "Start with loukoumades (honey dough balls) or savory cheese pies at this Old Town bakery known for traditional Cycladic recipes and takeaway treats.",
+            "location": "Bakaliko, Mykonos Town",
+            "startTime": "09:45",
+            "type": "Food",
+            "displayOrder": 2
+          },
+          {
+            "title": "Ornos Beach",
+            "description": "Take a short bus or taxi to family-friendly Ornos for swimming and lunch at a beach taverna before the afternoon breeze picks up.",
+            "location": "Ornos Beach, Mykonos",
+            "startTime": "12:00",
+            "type": "Relaxation",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Kounelas Fish Taverna",
+            "description": "Eat where locals go for the day's catch—grilled seabream, fried calamari, and horta greens—in a simple town taverna a few streets back from the harbour.",
+            "location": "Kounelas Fish Taverna, Mykonos Town",
+            "startTime": "19:30",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Farewell to Mykonos",
+        "description": "Enjoy a slow morning in the Cycladic lanes before your flight or ferry onward.",
+        "image": "/images/destinations/greece.jpg",
+        "activities": [
+          {
+            "title": "Matoyianni Street",
+            "description": "Browse the marble-paved shopping lane for local art, sandals, and ceramics while the town is still quiet.",
+            "location": "Matoyianni, Mykonos Town",
+            "startTime": "09:00",
+            "type": "Shopping",
+            "displayOrder": 1
+          },
+          {
+            "title": "Coffee at the Old Port",
+            "description": "Sit with a Greek coffee or fresh juice overlooking fishing boats and the church of St. Nicholas before checking out.",
+            "location": "Mykonos Old Port",
+            "startTime": "10:30",
+            "type": "Relaxation",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Transfer to Mykonos Airport (JMK) or the ferry port for your onward connection.",
+            "location": "Mykonos",
+            "startTime": "12:30",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tripSlug": "iceland-adventure",
+    "title": "Iceland Adventure",
+    "description": "An 8-day south Iceland route from Reykjavik through the Golden Circle and South Coast to glacier country, with realistic driving days and overnight stops.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Reykjavik",
+        "description": "Get oriented in the world's northernmost capital before a harbour-side seafood supper.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Take the Flybus or rental car from Keflavik (KEF) to Reykjavik and settle into your hotel in the 101 district.",
+            "location": "Reykjavik",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
+          },
+          {
+            "title": "Hallgrímskirkja",
+            "description": "Visit the expressionist church whose basalt-column facade towers over the city; ride the elevator to the bell tower when open for views across Faxaflói Bay.",
+            "location": "Hallgrímskirkja, Reykjavik",
+            "startTime": "16:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Sægreifinn (The Sea Baron)",
+            "description": "Queue at the Old Harbour shack for humarsúpa—creamy Icelandic langoustine soup with vegetables and spices—then add grilled fish skewers if still hungry; hours vary by season.",
+            "location": "Sægreifinn, Geirsgata 8, Reykjavik",
+            "startTime": "17:00",
+            "type": "Food",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Reykjavik Waterfront and Culture",
+        "description": "Pair Harpa's architecture with harbour walks and a modern Icelandic tasting menu when it fits your schedule.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Harpa Concert Hall",
+            "description": "Step inside the glass honeycomb facade on the waterfront; free to explore the lobby, with optional tours or performances listed on Harpa's calendar.",
+            "location": "Harpa, Reykjavik",
+            "startTime": "09:30",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Sun Voyager sculpture",
+            "description": "Walk east along the shore to Jón Gunnar Árnason's steel ship sculpture, framed by Mount Esja across the bay on clear days.",
+            "location": "Sólfar (Sun Voyager), Reykjavik",
+            "startTime": "11:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "National Museum of Iceland",
+            "description": "Browse exhibits from settlement-era artefacts to modern design, grounding later drives in Iceland's Viking and independence stories.",
+            "location": "Þjóðminjasafn Íslands, Reykjavik",
+            "startTime": "13:30",
+            "type": "Culture",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Matur og Drykkur",
+            "description": "Book ahead for this Michelin Guide-listed restaurant serving seasonal tasting menus inspired by historic Icelandic recipes using local fish, lamb, and foraged herbs; dinner service is typically Wednesday–Sunday evenings.",
+            "location": "Matur og Drykkur, Mýrargata 31, Reykjavik",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "The Golden Circle",
+        "description": "Loop Iceland's classic trio of geology and history in a long but manageable day trip from Reykjavik.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Þingvellir National Park",
+            "description": "Walk between the North American and Eurasian tectonic plates in the rift valley where Iceland's parliament first assembled in 930 CE; boardwalks can be icy November–March.",
+            "location": "Þingvellir National Park, South Iceland",
+            "startTime": "09:00",
+            "type": "Nature",
+            "displayOrder": 1
+          },
+          {
+            "title": "Geysir geothermal area",
+            "description": "Watch Strokkur erupt every few minutes beside bubbling mud pots and steaming vents in Haukadalur valley.",
+            "location": "Geysir geothermal area, Haukadalur",
+            "startTime": "11:30",
+            "type": "Nature",
+            "displayOrder": 2
+          },
+          {
+            "title": "Gullfoss waterfall",
+            "description": "Follow the marked paths to upper and lower viewpoints of the double cascade on the Hvítá river; platforms may close in high wind or ice.",
+            "location": "Gullfoss, South Iceland",
+            "startTime": "13:30",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          },
+          {
+            "title": "Friðheimar tomato greenhouse lunch",
+            "description": "Dine inside a geothermal greenhouse among tomato vines—try the famous tomato soup with fresh bread—and learn how Iceland grows produce year-round.",
+            "location": "Friðheimar, Reykholt, South Iceland",
+            "startTime": "16:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "South Coast Waterfalls to Vík",
+        "description": "Drive the Ring Road east with two iconic falls before bedding down near Vík.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Seljalandsfoss",
+            "description": "Circle the 60-metre falls on the marked path behind the curtain of water; wear waterproof layers and expect slippery rocks outside summer.",
+            "location": "Seljalandsfoss, South Iceland",
+            "startTime": "09:30",
+            "type": "Nature",
+            "displayOrder": 1
+          },
+          {
+            "title": "Skógafoss",
+            "description": "Climb the metal stairs beside the 62-metre wall of water for a misty top viewpoint, or photograph from the black-stone riverbed below.",
+            "location": "Skógafoss, South Iceland",
+            "startTime": "11:30",
+            "type": "Nature",
+            "displayOrder": 2
+          },
+          {
+            "title": "Skógar Folk Museum",
+            "description": "Stretch your legs among turf-roofed houses and fishing boats that illustrate South Coast life before the tourism boom.",
+            "location": "Skógasafn, Skógar",
+            "startTime": "13:30",
+            "type": "Culture",
+            "displayOrder": 3
+          },
+          {
+            "title": "Overnight in Vík",
+            "description": "Check into accommodation in Vík í Mýrdal, stocking up on fuel and snacks—services thin out farther east.",
+            "location": "Vík, South Iceland",
+            "startTime": "16:30",
+            "type": "Arrival",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Reynisfjara and Dyrhólaey",
+        "description": "Focus on the dramatic coastline around Vík with strict safety awareness at the black-sand beach.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Reynisfjara black-sand beach",
+            "description": "View Reynisdrangar sea stacks and hexagonal basalt columns from a safe distance inland—sneaker waves are unpredictable year-round and climbing the columns is prohibited.",
+            "location": "Reynisfjara Beach, near Vík",
+            "startTime": "09:00",
+            "type": "Nature",
+            "displayOrder": 1
+          },
+          {
+            "title": "Vík í Mýrdal church",
+            "description": "Photograph the red-roofed church on the hill above town with the Reynisdrangar pillars in the background.",
+            "location": "Víkurkirkja, Vík",
+            "startTime": "11:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Dyrhólaey promontory",
+            "description": "Drive to the arch-shaped headland for puffins (late spring–early summer) and wide beach views; upper roads close seasonally for nesting birds—check road.is before you go.",
+            "location": "Dyrhólaey, South Iceland",
+            "startTime": "13:30",
+            "type": "Nature",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner in Vík",
+            "description": "Try locally caught arctic char or lamb stew at a village restaurant, pairing with Icelandic craft beer if available.",
+            "location": "Vík, South Iceland",
+            "startTime": "18:30",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Skaftafell and Jökulsárlón",
+        "description": "Push east to glacier country with an overnight near Höfn rather than rushing back to Vík the same evening.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Drive to Skaftafell",
+            "description": "Allow about two hours from Vík on Route 1, watching for sheep and sudden weather shifts; fill fuel in Kirkjubæjarklaustur if needed.",
+            "location": "Vík to Skaftafell, Vatnajökull National Park",
+            "startTime": "08:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Svartifoss hike",
+            "description": "Walk the marked 5.7 km return trail to the basalt-column waterfall in Skaftafell; trail may be snow-covered outside summer—carry microspikes in shoulder seasons.",
+            "location": "Skaftafell, Vatnajökull National Park",
+            "startTime": "10:30",
+            "type": "Adventure",
+            "displayOrder": 2
+          },
+          {
+            "title": "Jökulsárlón Glacier Lagoon",
+            "description": "Photograph blue icebergs calving from Breiðamerkurjökull; optional amphibian boat tours run when ice conditions permit—never climb on floating ice.",
+            "location": "Jökulsárlón, Southeast Iceland",
+            "startTime": "14:30",
+            "type": "Experience",
+            "displayOrder": 3
+          },
+          {
+            "title": "Overnight near Höfn",
+            "description": "Continue 80 km east to Höfn í Hornafirði for the night, breaking up the long return drive to Reykjavik.",
+            "location": "Höfn, Southeast Iceland",
+            "startTime": "17:30",
+            "type": "Arrival",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 7,
+        "title": "Return to Reykjavik",
+        "description": "Make the full Ring Road drive west with photo stops and a relaxed capital evening.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Scenic drive west on Route 1",
+            "description": "Budget five to six hours including breaks to retrace the south coast toward Reykjavik; check vedur.is and road.is for wind or closure alerts.",
+            "location": "Höfn to Reykjavik",
+            "startTime": "08:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Seljalandsfoss revisit or Skógafoss stop",
+            "description": "Pause at whichever waterfall you missed earlier or revisit in different light if time and weather allow.",
+            "location": "South Iceland",
+            "startTime": "13:00",
+            "type": "Nature",
+            "displayOrder": 2
+          },
+          {
+            "title": "Evening on Laugavegur",
+            "description": "Celebrate the road trip with Icelandic hot dogs at Bæjarins Beztu Pylsur or coffee on the main shopping street.",
+            "location": "Laugavegur, Reykjavik",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 8,
+        "title": "Farewell to Iceland",
+        "description": "Allow 45–60 minutes to reach Keflavik for international departures.",
+        "image": "/images/destinations/iceland.jpg",
+        "activities": [
+          {
+            "title": "Breakfast in Reykjavik",
+            "description": "Pick up rye bread and pastries at a local bakery before checking out.",
+            "location": "Reykjavik",
+            "startTime": "08:00",
+            "type": "Relaxation",
+            "displayOrder": 1
+          },
+          {
+            "title": "Transfer to Keflavik Airport",
+            "description": "Drive or take the airport bus southwest across the lava fields to KEF.",
+            "location": "Reykjavik to Keflavik Airport (KEF)",
+            "startTime": "09:30",
+            "type": "Transport",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Check in for your flight home from Iceland.",
+            "location": "Keflavik Airport (KEF)",
+            "startTime": "12:00",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tripSlug": "italian-journey",
+    "title": "Italian Journey",
+    "description": "An 8-day route through Rome, Florence, and Venice with timed museum visits, regional trattorias, and realistic train transfers.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Rome",
+        "description": "Ease into the centro storico with baroque squares and a classic Roman pasta dinner.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Transfer from Fiumicino (FCO) or Termini station to your hotel in the historic centre.",
+            "location": "Rome",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
+          },
+          {
+            "title": "Piazza Navona",
+            "description": "Admire Bernini's Fountain of the Four Rivers and the surrounding palazzi where street artists perform beside outdoor cafés.",
+            "location": "Piazza Navona, Rome",
+            "startTime": "16:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Pantheon exterior and Piazza della Rotonda",
+            "description": "Circle the ancient Roman temple's portico and granite columns; visit the interior when the basilica is open to see the coffered dome and Raphael's tomb.",
+            "location": "Pantheon, Rome",
+            "startTime": "17:15",
+            "type": "Culture",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Roscioli Salumeria con Cucina",
+            "description": "Reserve for rigorously sourced carbonara, cacio e pepe, or amatriciana in a salumeria-turned-trattoria near Campo de' Fiori, paired with wines from the family's cellar.",
+            "location": "Roscioli, Via dei Giubbonari, Rome",
+            "startTime": "19:30",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Ancient Rome",
+        "description": "Dedicate a full morning to the Colosseum and Forum with a break before Capitoline views.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Colosseum timed entry",
+            "description": "Explore the Flavian amphitheatre with a pre-booked ticket or guided tour; arrive at your slot to avoid the midday heat and crowds.",
+            "location": "Colosseum, Rome",
+            "startTime": "08:30",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Roman Forum and Palatine Hill",
+            "description": "Walk the Via Sacra past the Arch of Titus, Temple of Saturn, and House of Augustus on the combined ticket with the Colosseum.",
+            "location": "Roman Forum, Rome",
+            "startTime": "10:30",
+            "type": "History",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Flavio al Velavevodetto",
+            "description": "Head to Testaccio market territory for cacio e pepe, tripe, or oxtail stew at this terrace trattoria carved into Monte Testaccio's pottery shards.",
+            "location": "Flavio al Velavevodetto, Testaccio, Rome",
+            "startTime": "13:00",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Capitoline Museums",
+            "description": "Finish the day on Michelangelo's piazza overlooking the Forum, browsing ancient sculpture including the bronze she-wolf of Rome.",
+            "location": "Capitoline Museums, Rome",
+            "startTime": "15:30",
+            "type": "Culture",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "Vatican City",
+        "description": "Reserve most of the day for the museums and basilica, saving energy for Trastevere at night.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Vatican Museums and Sistine Chapel",
+            "description": "Follow the museum route to Michelangelo's ceiling and Raphael Rooms; book skip-the-line entry for an early slot because the galleries easily take three to four hours.",
+            "location": "Vatican Museums, Vatican City",
+            "startTime": "08:00",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "St. Peter's Basilica",
+            "description": "Enter the basilica to see Bernini's baldachin and Michelangelo's Pietà; dome climbs require a separate ticket and have limited daily capacity.",
+            "location": "St. Peter's Basilica, Vatican City",
+            "startTime": "12:30",
+            "type": "Culture",
+            "displayOrder": 2
+          },
+          {
+            "title": "Castel Sant'Angelo",
+            "description": "Cross the Tiber to Hadrian's mausoleum-turned-papal fortress for terrace views down the river toward St. Peter's.",
+            "location": "Castel Sant'Angelo, Rome",
+            "startTime": "15:00",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          },
+          {
+            "title": "Dinner at Da Enzo al 29",
+            "description": "Join the queue (or reserve if available) in Trastevere for cacio e pepe, artichokes alla giudia, and tiramisu at this family-run trattoria on Via dei Vascellari.",
+            "location": "Da Enzo al 29, Trastevere, Rome",
+            "startTime": "19:30",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Rome to Florence",
+        "description": "Ride the high-speed Frecciarossa to Tuscany and explore the cathedral quarter on foot.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Frecciarossa to Florence",
+            "description": "Board at Roma Termini for the roughly 1.5-hour run to Firenze Santa Maria Novella; stow luggage at your hotel near the centro.",
+            "location": "Rome Termini to Florence SMN",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Piazza del Duomo",
+            "description": "Marvel at Brunelleschi's red-tiled dome, Giotto's campanile, and the polychrome marble facade of the cathedral; book a dome climb separately if you want the city panorama.",
+            "location": "Piazza del Duomo, Florence",
+            "startTime": "12:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Mercato Centrale",
+            "description": "Sample lampredotto sandwiches, pecorino, and Chianti pours from stalls on the ground floor or the upstairs food hall overlooking San Lorenzo.",
+            "location": "Mercato Centrale, Florence",
+            "startTime": "13:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Ponte Vecchio at dusk",
+            "description": "Cross the medieval jewellers' bridge over the Arno and continue along the Lungarno for sunset reflections on the water.",
+            "location": "Ponte Vecchio, Florence",
+            "startTime": "18:00",
+            "type": "Explore",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Florence Art and Views",
+        "description": "Pair the Uffizi with civic sculpture and a classic bistecca lunch.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Uffizi Galleries",
+            "description": "See Botticelli's Birth of Venus and Primavera, plus works by Leonardo and Caravaggio along the horseshoe-shaped palace corridors; reserve timed tickets weeks ahead in peak season.",
+            "location": "Uffizi Galleries, Florence",
+            "startTime": "08:15",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Piazza della Signoria",
+            "description": "Study the copy of Michelangelo's David, the Loggia dei Lanzi's sculptures, and Palazzo Vecchio's tower dominating Florence's political heart.",
+            "location": "Piazza della Signoria, Florence",
+            "startTime": "12:00",
+            "type": "History",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Trattoria Mario",
+            "description": "Share communal tables near the Mercato Centrale for ribollita, pappa al pomodoro, or bistecca alla Fiorentina carved to order for two.",
+            "location": "Trattoria Mario, Via Rosina, Florence",
+            "startTime": "13:00",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Piazzale Michelangelo",
+            "description": "Climb or bus to the terrace for the classic postcard view of the Duomo, Arno, and hills at golden hour.",
+            "location": "Piazzale Michelangelo, Florence",
+            "startTime": "17:30",
+            "type": "Experience",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Florence to Venice",
+        "description": "Glide into La Serenissima and orient yourself around St. Mark's basin.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Frecciarossa to Venice",
+            "description": "Ride from Florence to Venezia Santa Lucia in about two hours, then walk or take a vaporetto to your sestiere.",
+            "location": "Florence SMN to Venezia Santa Lucia",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "St. Mark's Square (Piazza San Marco)",
+            "description": "Admire the Byzantine mosaics of St. Mark's Basilica and the Campanile rising over the pigeons and café orchestras—note that the basilica may close for services or flooding (acqua alta).",
+            "location": "Piazza San Marco, Venice",
+            "startTime": "13:00",
+            "type": "Sightseeing",
+            "displayOrder": 2
+          },
+          {
+            "title": "Doge's Palace exterior walk",
+            "description": "Circle the pink-and-white Gothic palace along the waterfront before your dedicated interior visit tomorrow; photograph the Bridge of Sighs from the canal.",
+            "location": "Doge's Palace, Venice",
+            "startTime": "15:00",
+            "type": "History",
+            "displayOrder": 3
+          },
+          {
+            "title": "Spritz at Caffè Florian",
+            "description": "Optional splurge on a historic café drink with live music under the arcades—Venice's oldest café, operating since 1720.",
+            "location": "Caffè Florian, Piazza San Marco, Venice",
+            "startTime": "17:00",
+            "type": "Experience",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 7,
+        "title": "Venice Markets and Cicchetti",
+        "description": "Explore the Rialto heartland and graze Venetian small plates away from the busiest tourist strips.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Doge's Palace",
+            "description": "Tour the Scala d'Oro, council chambers, and prison cells connected by the Bridge of Sighs; reserve the Secret Itineraries tour separately if you want hidden passages.",
+            "location": "Doge's Palace, Venice",
+            "startTime": "09:00",
+            "type": "History",
+            "displayOrder": 1
+          },
+          {
+            "title": "Rialto Market",
+            "description": "Browse the Pescheria fish stalls and produce vendors on weekday mornings when wholesalers are active, then wander the surrounding sottoportici.",
+            "location": "Mercato di Rialto, Venice",
+            "startTime": "11:30",
+            "type": "Explore",
+            "displayOrder": 2
+          },
+          {
+            "title": "Cicchetti at Cantina Do Spade",
+            "description": "Stand at the bar in San Polo for bacalà mantecato on polenta, sarde in saor, and ombra (small glasses of house wine) in a bacaro dating to 1453.",
+            "location": "Cantina Do Spade, San Polo, Venice",
+            "startTime": "13:00",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Cannaregio evening stroll",
+            "description": "Walk the quieter northern canals past laundry lines and neighbourhood wine bars toward the Jewish Ghetto plaques before a relaxed dinner nearby.",
+            "location": "Cannaregio, Venice",
+            "startTime": "18:30",
+            "type": "Explore",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 8,
+        "title": "Farewell to Italy",
+        "description": "Squeeze in last-minute Venetian views before the trip to Marco Polo Airport.",
+        "image": "/images/destinations/italy.jpg",
+        "activities": [
+          {
+            "title": "Morning at Zattere",
+            "description": "Walk the sunny promenade along the Giudecca Canal for gelato from Gelateria Nico while gondolas pass offshore.",
+            "location": "Fondamenta delle Zattere, Venice",
+            "startTime": "08:30",
+            "type": "Explore",
+            "displayOrder": 1
+          },
+          {
+            "title": "Alilaguna or water taxi to the airport",
+            "description": "Allow at least an hour for the boat transfer from San Marco or Zattere to Venice Marco Polo (VCE), longer if fog delays services.",
+            "location": "Venice to Marco Polo Airport",
+            "startTime": "10:00",
+            "type": "Transport",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Check in for your flight or onward rail connection from Venice.",
+            "location": "Venice Marco Polo Airport (VCE)",
+            "startTime": "12:30",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "tripSlug": "thailand-getaway",
+    "title": "Thailand Getaway",
+    "description": "A 7-day journey through Bangkok, Phuket, and Krabi with named street-food stops, heritage neighbourhoods, and weather-aware boat transfers.",
+    "days": [
+      {
+        "dayNumber": 1,
+        "title": "Arrive in Bangkok",
+        "description": "Land in the capital and dive straight into Yaowarat's neon-lit Chinatown food scene.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Arrive and check in",
+            "description": "Take the Airport Rail Link or taxi from Suvarnabhumi (BKK) or Don Mueang to your hotel, then freshen up before evening eating.",
+            "location": "Bangkok",
+            "startTime": "14:00",
+            "type": "Arrival",
+            "displayOrder": 1
+          },
+          {
+            "title": "Wat Traimit (Golden Buddha)",
+            "description": "See the 5.5-tonne solid-gold Buddha at Chinatown's edge—a manageable first temple visit before the crowds of the riverside wats.",
+            "location": "Wat Traimit, Bangkok",
+            "startTime": "16:00",
+            "type": "Culture",
+            "displayOrder": 2
+          },
+          {
+            "title": "Guay Jub Ouan Pochana",
+            "description": "Queue for Michelin Bib Gourmand guay jub—rolled rice noodles in peppery clear pork broth with crispy pork belly—at this open-front shophouse on Yaowarat Road (typically closed Mondays).",
+            "location": "Guay Jub Ouan Pochana, 408 Yaowarat Road, Bangkok",
+            "startTime": "18:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "Sweettime Yaowarat",
+            "description": "Finish with Thai-Chinese desserts such as black sesame tang yuan in ginger broth or iced water-chestnut rubies in coconut milk at the pink-neon stall on Yaowarat (evening hours, closed Mondays).",
+            "location": "Sweettime, 436 Yaowarat Road, Bangkok",
+            "startTime": "20:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 2,
+        "title": "Riverside Temples and Yaowarat Seafood",
+        "description": "Visit Bangkok's royal and temple landmarks in the morning, then return to Chinatown for grilled seafood.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Grand Palace and Wat Phra Kaew",
+            "description": "Tour the royal complex and Temple of the Emerald Buddha with shoulders and knees covered; arrive at opening to beat heat and tour groups.",
+            "location": "Grand Palace, Bangkok",
+            "startTime": "08:30",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Wat Pho (Temple of the Reclining Buddha)",
+            "description": "Walk five minutes south to see the 46-metre gilded reclining Buddha and traditional massage school pavilions.",
+            "location": "Wat Pho, Bangkok",
+            "startTime": "10:30",
+            "type": "Culture",
+            "displayOrder": 2
+          },
+          {
+            "title": "Wat Arun",
+            "description": "Ferry across the Chao Phraya to the Temple of Dawn and climb the prang spires for river views when the steps are open.",
+            "location": "Wat Arun, Bangkok",
+            "startTime": "12:30",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          },
+          {
+            "title": "T&K Seafood",
+            "description": "Dine at the green-shirt seafood institution on Phadung Dao Road for grilled river prawns, tom yum goong, and crab curry with jasmine rice—confirm prices on the printed menu before ordering.",
+            "location": "T&K Seafood, Phadung Dao Road, Yaowarat, Bangkok",
+            "startTime": "19:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 3,
+        "title": "Bangkok to Phuket",
+        "description": "Fly south to Thailand's largest island and stretch your legs along the Andaman shore.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Flight to Phuket",
+            "description": "Book a morning domestic flight from Bangkok to Phuket International Airport (HKT); numerous carriers operate the roughly 1.5-hour route daily.",
+            "location": "Bangkok to Phuket",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Check in and rest",
+            "description": "Transfer to your hotel—Patong, Kata, or Old Town depending on preference—and recover from travel.",
+            "location": "Phuket",
+            "startTime": "13:00",
+            "type": "Arrival",
+            "displayOrder": 2
+          },
+          {
+            "title": "Sunset at Promthep Cape",
+            "description": "Drive to the island's southern tip for lighthouse views over the Andaman Sea; parking fills near sunset in high season.",
+            "location": "Promthep Cape, Phuket",
+            "startTime": "17:30",
+            "type": "Sightseeing",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 4,
+        "title": "Phuket Old Town Heritage",
+        "description": "Focus on Sino-Portuguese architecture, museum exhibits, and southern Thai flavours.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Thai Hua Museum",
+            "description": "Tour the restored 1930s schoolhouse on Krabi Road to learn how Chinese migrants shaped Phuket's tin-mining economy and festival calendar.",
+            "location": "Thai Hua Museum, Phuket Old Town",
+            "startTime": "09:30",
+            "type": "Culture",
+            "displayOrder": 1
+          },
+          {
+            "title": "Phuket Old Town walking loop",
+            "description": "Photograph the colourful shophouses on Soi Romanee, Dibuk Road, and Thalang Road with their ornate five-foot ways and Hokkien shrines.",
+            "location": "Phuket Old Town",
+            "startTime": "11:00",
+            "type": "Explore",
+            "displayOrder": 2
+          },
+          {
+            "title": "Lunch at Tu Kab Khao",
+            "description": "Try Phuket classics such as moo hong (braised pork belly), nam prik kung siap (dried shrimp chili paste), and crab curry in a heritage house restaurant featured in local tourism guides.",
+            "location": "Tu Kab Khao, Phuket Old Town",
+            "startTime": "12:30",
+            "type": "Food",
+            "displayOrder": 3
+          },
+          {
+            "title": "One Chun Café & Restaurant",
+            "description": "Share plates of crab omelette and stir-fried morning glory in another Old Town favourite set inside a restored shophouse with vintage décor.",
+            "location": "One Chun Café, Phuket Old Town",
+            "startTime": "18:00",
+            "type": "Food",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 5,
+        "title": "Phuket to Krabi",
+        "description": "Cross the peninsula by road or seasonal ferry to reach Ao Nang's limestone scenery.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Transfer to Krabi",
+            "description": "Choose a hotel-arranged van (about three to four hours via bridges) or, when operating, a passenger ferry from Rassada Pier to Phi Phi or direct Krabi services—confirm schedules for your travel month.",
+            "location": "Phuket to Krabi Province",
+            "startTime": "08:30",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Check in at Ao Nang",
+            "description": "Settle along Ao Nang's beach road, where longtail boats depart for nearby islands when the sea is calm.",
+            "location": "Ao Nang, Krabi",
+            "startTime": "13:30",
+            "type": "Arrival",
+            "displayOrder": 2
+          },
+          {
+            "title": "Ao Nang Beach sunset",
+            "description": "Walk the sandy bay backed by karst cliffs, watching rock climbers on Railey-facing walls as fishing boats return.",
+            "location": "Ao Nang Beach, Krabi",
+            "startTime": "17:30",
+            "type": "Relaxation",
+            "displayOrder": 3
+          }
+        ]
+      },
+      {
+        "dayNumber": 6,
+        "title": "Railay Peninsula",
+        "description": "Spend the day on boat-access-only beaches when operators deem the Andaman safe.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Longtail boat to Railay",
+            "description": "Charter a shared longtail from Ao Nang Beach to Railay West; captains may cancel in rough seas—have a flexible backup plan on land.",
+            "location": "Ao Nang to Railay, Krabi",
+            "startTime": "09:00",
+            "type": "Transport",
+            "displayOrder": 1
+          },
+          {
+            "title": "Railay West Beach",
+            "description": "Swim and relax on the west-facing bay framed by sheer limestone walls popular with climbers worldwide.",
+            "location": "Railay West, Krabi",
+            "startTime": "10:00",
+            "type": "Relaxation",
+            "displayOrder": 2
+          },
+          {
+            "title": "Phra Nang Cave Beach",
+            "description": "Walk the short jungle path from Railay East to this sheltered beach with a sacred cave shrine; go before afternoon tour boats peak.",
+            "location": "Phra Nang Beach, Krabi",
+            "startTime": "12:30",
+            "type": "Nature",
+            "displayOrder": 3
+          },
+          {
+            "title": "Return boat to Ao Nang",
+            "description": "Catch an afternoon longtail back before operators wind down for the day, leaving time to shower before dinner.",
+            "location": "Railay to Ao Nang, Krabi",
+            "startTime": "16:00",
+            "type": "Transport",
+            "displayOrder": 4
+          }
+        ]
+      },
+      {
+        "dayNumber": 7,
+        "title": "Farewell to Thailand",
+        "description": "Enjoy a calm Krabi morning before your flight from the coast.",
+        "image": "/images/destinations/thailand.jpg",
+        "activities": [
+          {
+            "title": "Breakfast at Ao Nang",
+            "description": "Order khao tom (rice soup) or mango sticky rice at a beachfront café while watching longtails launch.",
+            "location": "Ao Nang, Krabi",
+            "startTime": "08:00",
+            "type": "Food",
+            "displayOrder": 1
+          },
+          {
+            "title": "Last swim or market stroll",
+            "description": "Dip in the Andaman or browse Ao Nang's souvenir alleys if your departure time allows.",
+            "location": "Ao Nang Beach, Krabi",
+            "startTime": "09:30",
+            "type": "Relaxation",
+            "displayOrder": 2
+          },
+          {
+            "title": "Departure",
+            "description": "Transfer to Krabi International Airport (KBV) for your onward flight.",
+            "location": "Krabi International Airport (KBV)",
+            "startTime": "11:30",
+            "type": "Departure",
+            "displayOrder": 3
+          }
+        ]
+      }
+    ]
+  }
+]
