@@ -6,7 +6,9 @@ import {
 } from "@/lib/ai/itinerary-schema";
 
 const OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions";
-const ITINERARY_MODEL = "nvidia/nemotron-3-super-120b-a12b:free"; 
+const ITINERARY_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
+const OPENROUTER_TIMEOUT_MS = 120_000;
+const MAX_GENERATION_ATTEMPTS = 2;
 
 const SYSTEM_PROMPT = `You are VoyaAI's travel planning assistant. Create a realistic, well-paced itinerary from the user's preferences.
 
@@ -26,9 +28,95 @@ Rules:
 - Respect pace (relaxed / balanced / packed), interests, must-sees, and constraints.
 - importantNotes: practical tips (may be [] if none).`;
 
+export function extractJsonFromModelContent(content) {
+  const trimmed = content.trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  const wholeFence = trimmed.match(/^```(?:json)?\s*\n?([\s\S]*?)\n?```\s*$/i);
+  if (wholeFence) {
+    return wholeFence[1].trim();
+  }
+
+  const embeddedFence = trimmed.match(/```(?:json)?\s*\n?([\s\S]*?)\n?```/i);
+  if (embeddedFence) {
+    return embeddedFence[1].trim();
+  }
+
+  const firstBrace = trimmed.indexOf("{");
+  const lastBrace = trimmed.lastIndexOf("}");
+  if (firstBrace !== -1 && lastBrace > firstBrace) {
+    return trimmed.slice(firstBrace, lastBrace + 1);
+  }
+
+  return trimmed;
+}
+
+export function parseAndValidateModelItinerary(content, expectedDurationDays) {
+  if (typeof content !== "string" || !content.trim()) {
+    return {
+      ok: false,
+      code: "INVALID_RESPONSE",
+      message: "The model response did not include itinerary content.",
+    };
+  }
+
+  const jsonText = extractJsonFromModelContent(content);
+  if (!jsonText) {
+    return {
+      ok: false,
+      code: "INVALID_RESPONSE",
+      message: "The model response did not include itinerary content.",
+    };
+  }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(jsonText);
+  } catch {
+    return {
+      ok: false,
+      code: "MALFORMED_JSON",
+      message: "The model returned content that is not valid JSON.",
+    };
+  }
+
+  const validation = validateItinerary(parsed, expectedDurationDays);
+  if (!validation.valid) {
+    return {
+      ok: false,
+      code: "INVALID_ITINERARY",
+      message: validation.error,
+    };
+  }
+
+  return { ok: true, itinerary: validation.itinerary };
+}
+
+function buildValidationRetryUserMessage(
+  validationError,
+  expectedDurationDays,
+) {
+  return `Your previous JSON failed validation: ${validationError}
+
+Return one corrected itinerary as a single JSON object only (no markdown). It must satisfy every rule in the system prompt, including:
+- A non-empty title
+- durationDays exactly ${expectedDurationDays}
+- days.length exactly ${expectedDurationDays}
+- dayNumber values 1 through ${expectedDurationDays} in order
+- At least one activity on every day`;
+}
+
+function buildMalformedJsonRetryUserMessage() {
+  return `Your previous response was not valid JSON. Return only a single JSON object matching the itinerary schema from the system prompt. No markdown fences or extra text.`;
+}
+
 function getOpenRouterErrorMessage(responseBody) {
   const body =
-    responseBody && typeof responseBody === "object" && !Array.isArray(responseBody)
+    responseBody &&
+    typeof responseBody === "object" &&
+    !Array.isArray(responseBody)
       ? responseBody
       : {};
 
@@ -75,7 +163,7 @@ function getOpenRouterErrorMessage(responseBody) {
     upstreamMessage !== baseMessage &&
     baseMessage === "Provider returned error"
       ? upstreamMessage
-      : upstreamMessage ?? baseMessage;
+      : (upstreamMessage ?? baseMessage);
 
   return providerName ? `[${providerName}] ${detail}` : detail;
 }
@@ -182,39 +270,26 @@ Traveler preferences (JSON):
 ${JSON.stringify(payload, null, 2)}`;
   }
 
-  return `Plan a new trip using these preferences (JSON):\n${JSON.stringify(payload, null, 2)}`;
+  return `Plan a new trip using these preferences (JSON).
+
+Rules:
+- The itinerary MUST have exactly ${resolvedDurationDays} day(s): durationDays must be ${resolvedDurationDays} and days.length must be ${resolvedDurationDays}.
+- Match destination, pace, budget, interests, must-sees, and constraints from the preferences.
+
+${JSON.stringify(payload, null, 2)}`;
 }
 
 function failure(code, message, details) {
   return { ok: false, code, message, ...(details ? { details } : {}) };
 }
 
-/**
- * Generate a structured itinerary via OpenRouter (server-only).
- *
- * @param {object} preferences - Trip questionnaire fields; durationDays must be resolved.
- * @param {object|null} [curatedContext] - Optional curated template context from loadCuratedTemplateForAi.
- * @param {object|null} [revisionContext] - Optional regeneration input. When both fields are valid,
- *   the model revises the stored plan instead of planning from scratch:
- *   - revisionInstructions: non-empty string describing what to change.
- *   - currentItinerary: existing itinerary in the same JSON shape as the model output
- *     (e.g. from loadUserTripForItineraryRegeneration).
- */
-export async function generateItinerary(
-  preferences,
-  curatedContext = null,
-  revisionContext = null,
-) {
-  const resolvedPreferences = preferences ?? {};
-  const resolvedDurationDays = Number(resolvedPreferences.durationDays);
-  const revision = normalizeRevisionContext(revisionContext);
-  if (!Number.isInteger(resolvedDurationDays) || resolvedDurationDays < 1) {
-    return failure(
-      "INVALID_DURATION",
-      "Trip length must be resolved before generating an itinerary.",
-    );
-  }
+function isRetryableParseFailure(result) {
+  return (
+    result.code === "MALFORMED_JSON" || result.code === "INVALID_ITINERARY"
+  );
+}
 
+async function requestOpenRouterCompletion(messages, fetchFn) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey || !apiKey.trim()) {
     return failure(
@@ -225,24 +300,13 @@ export async function generateItinerary(
 
   const body = {
     model: ITINERARY_MODEL,
-    messages: [
-      { role: "system", content: SYSTEM_PROMPT },
-      {
-        role: "user",
-        content: buildUserPrompt(
-          resolvedPreferences,
-          curatedContext,
-          resolvedDurationDays,
-          revision,
-        ),
-      },
-    ],
+    messages,
     response_format: { type: "json_object" },
   };
 
   let response;
   try {
-    response = await fetch(OPENROUTER_CHAT_URL, {
+    response = await fetchFn(OPENROUTER_CHAT_URL, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -254,8 +318,16 @@ export async function generateItinerary(
         "X-Title": process.env.OPENROUTER_APP_NAME ?? "VoyaAI",
       },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(OPENROUTER_TIMEOUT_MS),
     });
   } catch (error) {
+    if (error?.name === "TimeoutError" || error?.name === "AbortError") {
+      console.error("OpenRouter request timed out");
+      return failure(
+        "NETWORK_ERROR",
+        "The itinerary request timed out. Please try again.",
+      );
+    }
     console.error("OpenRouter request failed:", error?.message ?? error);
     return failure(
       "NETWORK_ERROR",
@@ -301,22 +373,91 @@ export async function generateItinerary(
     );
   }
 
-  let parsed;
-  try {
-    parsed = JSON.parse(content);
-  } catch {
-    console.error("Failed to parse model content as JSON");
+  return { ok: true, content };
+}
+
+// revisionContext, when valid, revises currentItinerary instead of planning from scratch.
+export async function generateItinerary(
+  preferences,
+  curatedContext = null,
+  revisionContext = null,
+  options = {},
+) {
+  const fetchFn = options.fetchFn ?? fetch;
+  const resolvedPreferences = preferences ?? {};
+  const resolvedDurationDays = Number(resolvedPreferences.durationDays);
+  const revision = normalizeRevisionContext(revisionContext);
+  if (!Number.isInteger(resolvedDurationDays) || resolvedDurationDays < 1) {
     return failure(
-      "MALFORMED_JSON",
-      "The model returned content that is not valid JSON.",
+      "INVALID_DURATION",
+      "Trip length must be resolved before generating an itinerary.",
     );
   }
 
-  const validation = validateItinerary(parsed, resolvedDurationDays);
-  if (!validation.valid) {
-    console.error("Itinerary validation failed:", validation.error);
-    return failure("INVALID_ITINERARY", validation.error);
+  const messages = [
+    { role: "system", content: SYSTEM_PROMPT },
+    {
+      role: "user",
+      content: buildUserPrompt(
+        resolvedPreferences,
+        curatedContext,
+        resolvedDurationDays,
+        revision,
+      ),
+    },
+  ];
+
+  let lastParseFailure = null;
+
+  for (let attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt++) {
+    const completion = await requestOpenRouterCompletion(messages, fetchFn);
+    if (!completion.ok) {
+      return completion;
+    }
+
+    const parsed = parseAndValidateModelItinerary(
+      completion.content,
+      resolvedDurationDays,
+    );
+    if (parsed.ok) {
+      return parsed;
+    }
+
+    lastParseFailure = parsed;
+
+    const canRetry =
+      attempt < MAX_GENERATION_ATTEMPTS - 1 && isRetryableParseFailure(parsed);
+
+    if (!canRetry) {
+      console.error(
+        "Itinerary generation failed:",
+        parsed.code,
+        parsed.message,
+      );
+      return parsed;
+    }
+
+    console.warn(
+      "Itinerary validation failed; retrying once:",
+      parsed.code,
+      parsed.message,
+    );
+
+    messages.push({ role: "assistant", content: completion.content });
+    messages.push({
+      role: "user",
+      content:
+        parsed.code === "MALFORMED_JSON"
+          ? buildMalformedJsonRetryUserMessage()
+          : buildValidationRetryUserMessage(
+              parsed.message,
+              resolvedDurationDays,
+            ),
+    });
   }
 
-  return { ok: true, itinerary: validation.itinerary };
+  return (
+    lastParseFailure ??
+    failure("INVALID_ITINERARY", "Itinerary generation failed.")
+  );
 }

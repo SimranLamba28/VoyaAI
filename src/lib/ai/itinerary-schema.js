@@ -1,14 +1,7 @@
 import "server-only";
 
-/**
- * Canonical AI itinerary JSON contract.
- * Enforced by validateItinerary() after the model responds.
- *
- * Field mapping when persisting to Prisma:
- * - summary → TripItinerary.description
- * - day.summary → TripItineraryDay.description
- * - estimatedTotalBudgetInr, budgetNotes, importantNotes → TripItinerary.metadata
- */
+// Model output shape. When saving: summary → TripItinerary.description;
+// day.summary → TripItineraryDay.description; budget fields → TripItinerary.metadata.
 
 export const ITINERARY_JSON_EXAMPLE = {
   title: "Coastal Goa Escape",
@@ -19,9 +12,7 @@ export const ITINERARY_JSON_EXAMPLE = {
   estimatedTotalBudgetInr: 45000,
   budgetNotes:
     "Includes mid-range hotels, local meals, and activities; excludes flights.",
-  importantNotes: [
-    "Carry sunscreen and light cotton clothing year-round.",
-  ],
+  importantNotes: ["Carry sunscreen and light cotton clothing year-round."],
   days: [
     {
       dayNumber: 1,
@@ -179,14 +170,6 @@ export function validateItinerary(data, expectedDurationDays) {
   }
   if (data.days.length === 0) {
     return { valid: false, error: "days must not be empty" };
-  }
-  if (
-    Number.isInteger(expectedDurationDays) &&
-    expectedDurationDays > 0 &&
-    data.days.length === expectedDurationDays &&
-    data.durationDays !== expectedDurationDays
-  ) {
-    data.durationDays = expectedDurationDays;
   }
   if (data.days.length !== data.durationDays) {
     return {
