@@ -7,11 +7,6 @@ import {
 } from "@/lib/trips/itinerary-day-data";
 import { parseTripItineraryMetadata } from "@/lib/trips/parse-itinerary-metadata";
 
-/**
- * Trip draft persistence for AI generation (used by POST /api/ai/generate):
- * parse request → upsert Trip row → generate AI → commit TripItinerary + days on Trip.
- */
-
 export function parseGenerateItineraryRequest(body) {
   const {
     tripId,
@@ -71,7 +66,6 @@ export function userTripFieldsFromPreferences(preferences) {
   };
 }
 
-/** One curated-trip query for both DB id and AI context. */
 export async function loadCuratedTemplateForAi(curatedTripSlug) {
   const trip = await prisma.curatedTrip.findUnique({
     where: { slug: curatedTripSlug },
@@ -126,7 +120,7 @@ function storedPreferencesFromTrip(trip) {
   return null;
 }
 
-/** Map persisted TripItinerary rows to the AI itinerary JSON shape (inverse of saveGeneratedItinerary). */
+// Inverse of saveGeneratedItinerary — same JSON shape the model uses.
 function storedItineraryToAiShape(trip, itinerary) {
   if (!itinerary) {
     return null;
@@ -141,22 +135,31 @@ function storedItineraryToAiShape(trip, itinerary) {
     mealSuggestions: parseDayMealSuggestions(day.activities),
   }));
 
+  const storedDuration =
+    Number.isInteger(trip.duration) && trip.duration > 0 ? trip.duration : null;
+  const durationDays =
+    days.length > 0 ? days.length : storedDuration ?? 1;
+
+  const metadataBudget = metadata.estimatedTotalBudgetInr;
+  const estimatedTotalBudgetInr =
+    metadataBudget != null
+      ? metadataBudget
+      : Number.isInteger(trip.budgetMin) && trip.budgetMin >= 0
+        ? trip.budgetMin
+        : 0;
+
   return {
     title: itinerary.title ?? trip.title,
     destination: trip.destination,
-    durationDays: trip.duration,
+    durationDays,
     summary: typeof itinerary.description === "string" ? itinerary.description : "",
-    estimatedTotalBudgetInr: metadata.estimatedTotalBudgetInr,
+    estimatedTotalBudgetInr,
     budgetNotes: metadata.budgetNotes ?? "",
     importantNotes: metadata.importantNotes,
     days,
   };
 }
 
-/**
- * Load an owned trip for itinerary regeneration: preferences, optional curated template context,
- * and the current itinerary in AI JSON shape. Returns null when the trip is missing or not owned.
- */
 export async function loadUserTripForItineraryRegeneration(tripId, userId) {
   const trip = await prisma.trip.findFirst({
     where: { id: tripId, userId },
@@ -199,7 +202,6 @@ export async function loadUserTripForItineraryRegeneration(tripId, userId) {
   };
 }
 
-/** Prepare the user's Trip draft before the AI runs. Returns null when tripId was sent but not owned by userId. */
 export async function saveUserTripBeforeGeneration(
   tripId,
   userId,
@@ -242,10 +244,6 @@ export async function saveUserTripBeforeGeneration(
   return { trip };
 }
 
-/**
- * Maps a validated AI itinerary to Prisma rows and saves in one transaction.
- * Only call with output from validateItinerary / generateItinerary.
- */
 export async function saveGeneratedItinerary(tripId, userId, itinerary) {
   const trip = await prisma.trip.findFirst({
     where: { id: tripId, userId },
