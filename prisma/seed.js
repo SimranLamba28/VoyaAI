@@ -115,7 +115,7 @@ async function main() {
           update: {
             title: day.title,
             description: day.description,
-            image: day.image,
+            imageUrl: day.image,
             activities: day.activities,
           },
           create: {
@@ -123,7 +123,7 @@ async function main() {
             dayNumber: day.dayNumber,
             title: day.title,
             description: day.description,
-            image: day.image,
+            imageUrl: day.image,
             activities: day.activities,
           },
         });
