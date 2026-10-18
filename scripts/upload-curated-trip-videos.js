@@ -17,22 +17,14 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-const videosRoot = path.join(
-  process.cwd(),
-  "public/videos/trips"
-);
+const videosRoot = path.join(process.cwd(), "public/videos/trips");
 
 function slugify(value) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-");
+  return value.toLowerCase().trim().replace(/\s+/g, "-");
 }
 
 function getPlacement(fileName) {
-  const match = fileName.match(
-    /before[-_]?day[-_]?(\d+)/i
-  );
+  const match = fileName.match(/before[-_]?day[-_]?(\d+)/i);
 
   if (!match) return null;
 
@@ -57,10 +49,7 @@ async function main() {
     .filter((entry) => entry.isDirectory());
 
   for (const country of countries) {
-    const countryPath = path.join(
-      videosRoot,
-      country.name
-    );
+    const countryPath = path.join(videosRoot, country.name);
 
     const tripFolders = fs
       .readdirSync(countryPath, { withFileTypes: true })
@@ -79,65 +68,44 @@ async function main() {
       });
 
       if (!trip) {
-        console.log(
-          `No CuratedTrip found for "${tripSlug}". Skipping.`
-        );
+        console.log(`No CuratedTrip found for "${tripSlug}". Skipping.`);
         continue;
       }
 
-      const tripPath = path.join(
-        countryPath,
-        tripFolder.name
-      );
+      const tripPath = path.join(countryPath, tripFolder.name);
 
       const files = fs
         .readdirSync(tripPath, { withFileTypes: true })
         .filter((entry) => entry.isFile())
-        .filter((entry) =>
-          /\.(mp4|webm|mov)$/i.test(entry.name)
-        );
+        .filter((entry) => /\.(mp4|webm|mov)$/i.test(entry.name));
 
       for (const file of files) {
         const placement = getPlacement(file.name);
 
         if (!placement) {
-          console.log(
-            `Could not determine placement from: ${file.name}`
-          );
+          console.log(`Could not determine placement from: ${file.name}`);
           continue;
         }
 
-        const existingMedia =
-          await prisma.tripMedia.findFirst({
-            where: {
-              curatedTripId: trip.id,
-              placement,
-            },
-          });
+        const existingMedia = await prisma.tripMedia.findFirst({
+          where: {
+            curatedTripId: trip.id,
+            placement,
+          },
+        });
 
-        if (existingMedia) {
-          console.log(
-            `${placement} already exists. Skipping.`
-          );
+        if (existingMedia?.url?.includes("res.cloudinary.com")) {
+          console.log(`${placement} already exists. Skipping.`);
           continue;
         }
 
-        const filePath = path.join(
-          tripPath,
-          file.name
-        );
+        const filePath = path.join(tripPath, file.name);
 
-        const publicId =
-          `voyaai/curated-trips/${tripSlug}/${placement}`;
+        const publicId = `voyaai/curated-trips/${tripSlug}/${placement}`;
 
-        console.log(
-          `Uploading ${file.name} → ${publicId}`
-        );
+        console.log(`Uploading ${file.name} → ${publicId}`);
 
-        const result = await uploadVideo(
-          filePath,
-          publicId
-        );
+        const result = await uploadVideo(filePath, publicId);
 
         await prisma.tripMedia.create({
           data: {
@@ -149,9 +117,7 @@ async function main() {
           },
         });
 
-        console.log(
-          `✓ ${placement} complete`
-        );
+        console.log(`✓ ${placement} complete`);
       }
     }
   }

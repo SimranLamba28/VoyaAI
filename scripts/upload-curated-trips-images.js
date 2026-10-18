@@ -17,16 +17,10 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-const tripsRoot = path.join(
-  process.cwd(),
-  "public/images/trips"
-);
+const tripsRoot = path.join(process.cwd(), "public/images/trips");
 
 function slugify(value) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-");
+  return value.toLowerCase().trim().replace(/\s+/g, "-");
 }
 
 function getDayNumber(fileName) {
@@ -53,10 +47,7 @@ async function main() {
     .filter((entry) => entry.isDirectory());
 
   for (const country of countries) {
-    const countryPath = path.join(
-      tripsRoot,
-      country.name
-    );
+    const countryPath = path.join(tripsRoot, country.name);
 
     const tripFolders = fs
       .readdirSync(countryPath, { withFileTypes: true })
@@ -79,80 +70,59 @@ async function main() {
 
       if (!trip) {
         console.log(
-          `No CuratedTrip found in database for "${tripSlug}". Skipping.`
+          `No CuratedTrip found in database for "${tripSlug}". Skipping.`,
         );
         continue;
       }
 
       if (!trip.itinerary) {
-        console.log(
-          `No itinerary found for "${tripSlug}". Skipping.`
-        );
+        console.log(`No itinerary found for "${tripSlug}". Skipping.`);
         continue;
       }
 
-      const tripPath = path.join(
-        countryPath,
-        tripFolder.name
-      );
+      const tripPath = path.join(countryPath, tripFolder.name);
 
       const files = fs
         .readdirSync(tripPath, { withFileTypes: true })
         .filter((entry) => entry.isFile())
-        .filter((entry) =>
-          /\.(jpg|jpeg|png|webp)$/i.test(entry.name)
-        );
+        .filter((entry) => /\.(jpg|jpeg|png|webp)$/i.test(entry.name));
 
       for (const file of files) {
         const dayNumber = getDayNumber(file.name);
 
         if (!dayNumber) {
-          console.log(
-            `Could not determine day number from: ${file.name}`
-          );
+          console.log(`Could not determine day number from: ${file.name}`);
           continue;
         }
 
-        const itineraryDay =
-          await prisma.itineraryDay.findUnique({
-            where: {
-              itineraryId_dayNumber: {
-                itineraryId: trip.itinerary.id,
-                dayNumber,
-              },
+        const itineraryDay = await prisma.itineraryDay.findUnique({
+          where: {
+            itineraryId_dayNumber: {
+              itineraryId: trip.itinerary.id,
+              dayNumber,
             },
-          });
+          },
+        });
 
         if (!itineraryDay) {
           console.log(
-            `Day ${dayNumber} not found in DB for ${tripSlug}. Skipping.`
+            `Day ${dayNumber} not found in DB for ${tripSlug}. Skipping.`,
           );
           continue;
         }
 
-        if (itineraryDay.imageUrl) {
-          console.log(
-            `Day ${dayNumber} already has an image. Skipping.`
-          );
+        if (itineraryDay.imageUrl?.includes("res.cloudinary.com")) {
+          console.log(`Day ${dayNumber} already has an image. Skipping.`);
           continue;
         }
 
-        const filePath = path.join(
-          tripPath,
-          file.name
-        );
+        const filePath = path.join(tripPath, file.name);
 
-        const publicId =
-          `voyaai/curated-trips/${tripSlug}/day-${dayNumber}`;
+        const publicId = `voyaai/curated-trips/${tripSlug}/day-${dayNumber}`;
 
-        console.log(
-          `Uploading ${file.name} → ${publicId}`
-        );
+        console.log(`Uploading ${file.name} → ${publicId}`);
 
-        const result = await uploadImage(
-          filePath,
-          publicId
-        );
+        const result = await uploadImage(filePath, publicId);
 
         await prisma.itineraryDay.update({
           where: {
@@ -164,9 +134,7 @@ async function main() {
           },
         });
 
-        console.log(
-          `✓ Day ${dayNumber} complete`
-        );
+        console.log(`✓ Day ${dayNumber} complete`);
       }
     }
   }
