@@ -20,7 +20,7 @@ function getMealSuggestions(day) {
   return parseDayMealSuggestions(day.activities);
 }
 
-/** 0 = content + image (image right), 1 = reversed, 2 = cinematic */
+// 0 = content + image (image right), 1 = reversed, 2 = cinematic
 function getDayLayoutVariant(dayNumber) {
   return (dayNumber - 1) % 3;
 }

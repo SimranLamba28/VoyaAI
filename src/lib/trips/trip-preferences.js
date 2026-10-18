@@ -40,7 +40,6 @@ export function resolveTripDurationDays(preferences, defaultDurationDays = null)
   return null;
 }
 
-/** Resolve duration for API / generation. Returns an error message when invalid. */
 export function prepareTripPreferencesForGeneration(preferences, options = {}) {
   const defaultDurationDays = options.defaultDurationDays ?? null;
   const start = trimDate(preferences.startDate);

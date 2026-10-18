@@ -47,7 +47,7 @@ export async function DELETE(request, { params }) {
   }
 
   try {
-    // TripItinerary and TripItineraryDay rows cascade from Trip (see Prisma schema).
+    // Child itinerary rows cascade when the trip is deleted.
     await prisma.trip.delete({
       where: { id: ownedTrip.id },
     });

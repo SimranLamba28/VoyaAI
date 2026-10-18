@@ -20,7 +20,6 @@ export function DestinationCarousel({ destinations }) {
         className="mx-auto"
         style={{ maxWidth: DESIGN.maxWidth }}
       >
-        {/* Heading */}
         <div className="mb-8 sm:mb-10">
           <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary sm:text-xs">
             Explore
@@ -39,7 +38,6 @@ export function DestinationCarousel({ destinations }) {
           </p>
         </div>
 
-        {/* Carousel */}
         <div className="relative">
           <Carousel
             opts={{

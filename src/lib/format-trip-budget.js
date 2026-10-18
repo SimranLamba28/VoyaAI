@@ -6,7 +6,6 @@ function inrFormatter(currency = "INR") {
   });
 }
 
-/** Budget line for curated catalog trips (min–max range on CuratedTrip). */
 export function formatCuratedTripBudgetText(trip) {
   const formatter = inrFormatter(trip.currency ?? "INR");
 
@@ -19,10 +18,6 @@ export function formatCuratedTripBudgetText(trip) {
   return "Budget varies";
 }
 
-/**
- * Budget line for a user's personal trip (AI estimate in metadata, then Trip row).
- * Pass parsed metadata from parseTripItineraryMetadata when available.
- */
 export function formatUserTripBudgetText(trip, metadata = null) {
   const formatter = inrFormatter(trip.currency ?? "INR");
 
