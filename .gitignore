@@ -44,3 +44,22 @@ next-env.d.ts
 
 .cursor/
 .cursorignore
+
+
+# Local source media uploaded to Cloudinary
+/public/images/trips/Greece/
+/public/images/trips/Iceland/
+/public/images/trips/Italy/
+/public/images/trips/Switzerland/
+/public/images/trips/Thailand/
+
+/public/videos/Trips/Greece/
+/public/videos/Trips/Iceland/
+/public/videos/Trips/Italy/
+/public/videos/Trips/Switzerland/
+/public/videos/Trips/Thailand/
+
+# Local development and test files
+/tests/
+/scripts/verify-trip-draft.mjs
+/src/app/dev/ai-itinerary-test/
