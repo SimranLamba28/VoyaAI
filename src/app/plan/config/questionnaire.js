@@ -4,7 +4,7 @@ export const INITIAL_TRIP_PREFERENCES = {
   startDate: "",
   endDate: "",
   travelerType: "",
-  travelerCount: "2",
+  travelerCount: "1",
   budgetInr: "",
   interests: [],
   pace: "",
