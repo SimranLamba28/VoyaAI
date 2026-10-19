@@ -9,7 +9,7 @@ import {
 import { DESIGN } from "@/constants/design";
 
 const ABOUT_IMAGE = {
-  src: "/images/Destinations/New-zealand.jpg",
+  src: "/images/destinations/new-zealand.jpg",
   alt: "Scenic mountain lake and peaks in New Zealand",
 };
 

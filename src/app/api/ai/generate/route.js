@@ -10,6 +10,8 @@ import {
   saveUserTripBeforeGeneration,
 } from "@/lib/trips/user-trip-generation";
 
+export const maxDuration = 240;
+
 function statusForGenerationFailure(code) {
   switch (code) {
     case "MISSING_API_KEY":

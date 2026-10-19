@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { parseTripItineraryMetadata } from "@/lib/trips/parse-itinerary-metadata";
 import { cn } from "@/lib/utils";
 
-const DEFAULT_HERO_IMAGE = "/images/Destinations/Italy.jpg";
+const DEFAULT_HERO_IMAGE = "/images/destinations/italy.jpg";
 const pageWrap = "mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8";
 
 async function getOwnedUserTrip(tripId, userId) {

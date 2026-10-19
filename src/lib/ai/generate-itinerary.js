@@ -6,7 +6,7 @@ import {
 } from "@/lib/ai/itinerary-schema";
 
 const OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions";
-const ITINERARY_MODEL = "nvidia/nemotron-3-super-120b-a12b:free";
+const ITINERARY_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free";
 const OPENROUTER_TIMEOUT_MS = 120_000;
 const MAX_GENERATION_ATTEMPTS = 2;
 
@@ -17,10 +17,11 @@ Respond with a single valid JSON object only. No markdown fences, comments, or t
 Match this structure exactly (field names, nesting, and types). Use empty arrays where there are no meal suggestions. Use empty strings for optional activity location or timeOfDay when not applicable.
 
 Example (2-day trip; your response must match the requested durationDays and day count):
-${JSON.stringify(ITINERARY_JSON_EXAMPLE, null, 2)}
+${JSON.stringify(ITINERARY_JSON_EXAMPLE)}
 
 Rules:
 - Top-level keys only: title, destination, durationDays, summary, estimatedTotalBudgetInr, budgetNotes, days, importantNotes.
+- destination must be a non-empty string (never ""); use the traveler's destination from the user message when given.
 - durationDays must equal days.length; each day has dayNumber 1..durationDays in order.
 - Each day needs at least one activity; mealSuggestions may be [].
 - mealType must be breakfast, lunch, dinner, or snack.
@@ -53,7 +54,11 @@ export function extractJsonFromModelContent(content) {
   return trimmed;
 }
 
-export function parseAndValidateModelItinerary(content, expectedDurationDays) {
+export function parseAndValidateModelItinerary(
+  content,
+  expectedDurationDays,
+  fallbackContext = null,
+) {
   if (typeof content !== "string" || !content.trim()) {
     return {
       ok: false,
@@ -74,6 +79,13 @@ export function parseAndValidateModelItinerary(content, expectedDurationDays) {
   let parsed;
   try {
     parsed = JSON.parse(jsonText);
+    if (fallbackContext) {
+      parsed = applyKnownDestinationFallback(
+        parsed,
+        fallbackContext.preferences,
+        fallbackContext.revision,
+      );
+    }
   } catch {
     return {
       ok: false,
@@ -102,6 +114,7 @@ function buildValidationRetryUserMessage(
 
 Return one corrected itinerary as a single JSON object only (no markdown). It must satisfy every rule in the system prompt, including:
 - A non-empty title
+- A non-empty destination string (never "")
 - durationDays exactly ${expectedDurationDays}
 - days.length exactly ${expectedDurationDays}
 - dayNumber values 1 through ${expectedDurationDays} in order
@@ -207,6 +220,52 @@ function normalizeRevisionContext(revision) {
   return { revisionInstructions, currentItinerary };
 }
 
+function destinationFieldInstruction(preferences, revision) {
+  const fromPrefs =
+    typeof preferences?.destination === "string"
+      ? preferences.destination.trim()
+      : "";
+  if (fromPrefs) {
+    return `- Set destination exactly to: ${JSON.stringify(fromPrefs)}`;
+  }
+  const fromCurrent =
+    revision?.currentItinerary &&
+    typeof revision.currentItinerary.destination === "string"
+      ? revision.currentItinerary.destination.trim()
+      : "";
+  if (fromCurrent) {
+    return `- Set destination exactly to: ${JSON.stringify(fromCurrent)}`;
+  }
+  return `- destination must be a non-empty string naming the trip location (infer from template or context if preferences omit it).`;
+}
+
+function applyKnownDestinationFallback(parsed, preferences, revision) {
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+    return parsed;
+  }
+  if (
+    typeof parsed.destination === "string" &&
+    parsed.destination.trim().length > 0
+  ) {
+    return parsed;
+  }
+
+  const fromPrefs =
+    typeof preferences?.destination === "string"
+      ? preferences.destination.trim()
+      : "";
+  const fromCurrent =
+    revision?.currentItinerary &&
+    typeof revision.currentItinerary.destination === "string"
+      ? revision.currentItinerary.destination.trim()
+      : "";
+  const fallback = fromPrefs || fromCurrent;
+  if (fallback) {
+    parsed.destination = fallback;
+  }
+  return parsed;
+}
+
 function buildUserPrompt(
   preferences,
   curatedContext,
@@ -227,17 +286,20 @@ function buildUserPrompt(
     constraints: preferences.constraints ?? "",
   };
 
+  const destinationRule = destinationFieldInstruction(payload, revision);
+
   if (revision) {
     const curatedSection = curatedContext
       ? `
 This trip was originally based on a curated template (for context only; follow the revision instructions and preferences first):
-${JSON.stringify(curatedContext, null, 2)}
+${JSON.stringify(curatedContext)}
 `
       : "";
 
     return `Revise the traveler's existing itinerary according to their instructions.
 
 Rules:
+${destinationRule}
 - The itinerary MUST have exactly ${resolvedDurationDays} day(s): durationDays must be ${resolvedDurationDays} and days.length must be ${resolvedDurationDays}.
 - Keep honoring the traveler preferences (destination, pace, budget, interests, must-sees, constraints) unless the revision instructions clearly require a conflicting change.
 - Apply the revision instructions; leave other days and details stable when the user only asked to change part of the trip.
@@ -248,35 +310,37 @@ Revision instructions:
 ${revision.revisionInstructions}
 
 Current itinerary (JSON):
-${JSON.stringify(revision.currentItinerary, null, 2)}
+${JSON.stringify(revision.currentItinerary)}
 
 Traveler preferences (JSON):
-${JSON.stringify(payload, null, 2)}${curatedSection}`;
+${JSON.stringify(payload)}${curatedSection}`;
   }
 
   if (curatedContext) {
     return `Personalize a trip for this traveler using the curated template below as inspiration only—not as a fixed schedule.
 
 Rules:
+${destinationRule}
 - The itinerary MUST have exactly ${resolvedDurationDays} day(s): durationDays must be ${resolvedDurationDays} and days.length must be ${resolvedDurationDays}.
 - templateDurationDays on the template may differ; select, combine, or skip template activities to fit the requested length.
 - Keep the same destination and general route where it fits their preferences; adjust pacing, activities, and budget to match their answers.
 - Do not invent a completely unrelated trip.
 
 Curated trip template (JSON):
-${JSON.stringify(curatedContext, null, 2)}
+${JSON.stringify(curatedContext)}
 
 Traveler preferences (JSON):
-${JSON.stringify(payload, null, 2)}`;
+${JSON.stringify(payload)}`;
   }
 
   return `Plan a new trip using these preferences (JSON).
 
 Rules:
+${destinationRule}
 - The itinerary MUST have exactly ${resolvedDurationDays} day(s): durationDays must be ${resolvedDurationDays} and days.length must be ${resolvedDurationDays}.
 - Match destination, pace, budget, interests, must-sees, and constraints from the preferences.
 
-${JSON.stringify(payload, null, 2)}`;
+${JSON.stringify(payload)}`;
 }
 
 function failure(code, message, details) {
@@ -418,6 +482,7 @@ export async function generateItinerary(
     const parsed = parseAndValidateModelItinerary(
       completion.content,
       resolvedDurationDays,
+      { preferences: resolvedPreferences, revision },
     );
     if (parsed.ok) {
       return parsed;

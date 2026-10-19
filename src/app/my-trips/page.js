@@ -5,7 +5,7 @@ import { UserTripsList } from "@/components/trips/user-trips-list";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-const DEFAULT_HERO_IMAGE = "/images/Destinations/Italy.jpg";
+const DEFAULT_HERO_IMAGE = "/images/destinations/italy.jpg";
 
 export const metadata = {
   title: "My Trips",

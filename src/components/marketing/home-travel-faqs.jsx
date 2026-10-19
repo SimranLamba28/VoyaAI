@@ -12,7 +12,7 @@ import { DESIGN } from "@/constants/design";
 import { cn } from "@/lib/utils";
 
 const FAQ_IMAGE = {
-  src: "/images/Destinations/Switzerland.jpg",
+  src: "/images/destinations/switzerland.jpg",
   alt: "Alpine lake and mountains in Switzerland",
 };
 
