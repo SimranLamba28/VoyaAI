@@ -7,7 +7,7 @@ const globalForPrisma = globalThis;
 function getPool() {
   if (!globalForPrisma.pgPool) {
     globalForPrisma.pgPool = new pg.Pool({
-      connectionString: process.env.DIRECT_URL,
+      connectionString: process.env.DATABASE_URL,
     });
   }
   return globalForPrisma.pgPool;
