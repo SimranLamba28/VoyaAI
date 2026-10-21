@@ -15,7 +15,7 @@ export function HomeHero() {
         }}
       >
         <Image
-          src="../public/images/home-hero.jpg"
+          src="/images/home-hero.jpg"
           alt="Snow-capped mountains above a pine forest and alpine lake"
           fill
           fetchPriority="high"
