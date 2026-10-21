@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Location01Icon } from "@hugeicons/core-free-icons";
@@ -11,9 +14,7 @@ import {
 function getActivities(day) {
   const raw = parseDayActivities(day.activities);
 
-  return [...raw].sort(
-    (a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0)
-  );
+  return [...raw].sort((a, b) => (a.displayOrder ?? 0) - (b.displayOrder ?? 0));
 }
 
 function getMealSuggestions(day) {
@@ -32,32 +33,68 @@ function dayItineraryFrameClassName(variant) {
     "group relative overflow-hidden rounded-[18px]",
     isCinematic
       ? "min-h-[16rem] w-full sm:min-h-[20rem] lg:min-h-[26rem]"
-      : "min-h-[16rem] w-full sm:min-h-[18rem] lg:min-h-0 lg:aspect-[4/5] lg:min-h-[28rem]"
+      : "min-h-[16rem] w-full sm:min-h-[18rem] lg:min-h-0 lg:aspect-[4/5] lg:min-h-[28rem]",
   );
 }
 
-function EditorialVideo({ src, alt }) {
-  if (!src) return null;
+function getOptimizedVideoUrl(url) {
+  if (!url || !url.includes("res.cloudinary.com")) {
+    return url;
+  }
 
-  const variant = 2;
+  return url.replace("/video/upload/", "/video/upload/q_auto,f_auto/");
+}
+
+function DayEditorialMedia({ videoUrl, imageUrl, alt, variant }) {
+  const [failedVideoUrl, setFailedVideoUrl] = useState(null);
+  const isCinematic = variant === 2;
+
+  if (!videoUrl && !imageUrl) {
+    return null;
+  }
+
+  const showVideo = Boolean(videoUrl) && failedVideoUrl !== videoUrl;
+
+  if (showVideo) {
+    return (
+      <div className={dayItineraryFrameClassName(variant)}>
+        <video
+          key={videoUrl}
+          suppressHydrationWarning
+          src={getOptimizedVideoUrl(videoUrl)}
+          preload="none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          aria-label={alt}
+          onError={() => {
+            setFailedVideoUrl((current) =>
+              current === videoUrl ? current : videoUrl,
+            );
+          }}
+        />
+        {isCinematic ? (
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/25 via-transparent to-transparent"
+            aria-hidden="true"
+          />
+        ) : null}
+      </div>
+    );
+  }
+
+  if (imageUrl) {
+    return <DayItineraryImage src={imageUrl} alt={alt} variant={variant} />;
+  }
 
   return (
-    <div className={dayItineraryFrameClassName(variant)}>
-      <video
-        suppressHydrationWarning
-        src={src}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 h-full w-full object-cover"
-        aria-label={alt}
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foreground/25 via-transparent to-transparent"
-        aria-hidden="true"
-      />
-    </div>
+    <div
+      className={dayItineraryFrameClassName(variant)}
+      aria-label={alt}
+      role="img"
+    />
   );
 }
 
@@ -95,12 +132,7 @@ function ItineraryDayActivities({ day, activities, compact }) {
   }
 
   return (
-    <ul
-      className={cn(
-        "space-y-0",
-        compact ? "mt-4 sm:mt-5" : "mt-6 sm:mt-8",
-      )}
-    >
+    <ul className={cn("space-y-0", compact ? "mt-4 sm:mt-5" : "mt-6 sm:mt-8")}>
       {activities.map((activity, activityIndex) => (
         <li
           key={`${day.id}-${activityIndex}`}
@@ -123,9 +155,7 @@ function ItineraryDayActivities({ day, activities, compact }) {
           />
 
           {activity.type || activity.timeOfDay?.trim() ? (
-            <span
-              className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-primary"
-            >
+            <span className="inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-[0.14em] text-primary">
               {activity.type ?? activity.timeOfDay}
             </span>
           ) : null}
@@ -133,9 +163,7 @@ function ItineraryDayActivities({ day, activities, compact }) {
           <p
             className={cn(
               "mt-2 font-medium leading-snug text-foreground",
-              compact
-                ? "text-[17px] sm:text-lg"
-                : "text-base sm:text-[17px]",
+              compact ? "text-[17px] sm:text-lg" : "text-base sm:text-[17px]",
             )}
           >
             {activity.title}
@@ -255,11 +283,7 @@ function ItineraryDayHeader({ day, compact }) {
 
 function getEditorialVideoUrl(dayNumber, media) {
   const placement =
-    dayNumber === 3
-      ? "before-day-3"
-      : dayNumber === 6
-        ? "before-day-6"
-        : null;
+    dayNumber === 3 ? "before-day-3" : dayNumber === 6 ? "before-day-6" : null;
 
   if (!placement) return null;
 
@@ -282,7 +306,7 @@ export function ItineraryDay({ day, dayIndex, media, compact = false }) {
         dayIndex > 0 &&
           (compact
             ? "mt-6 border-t border-border/35 pt-6 sm:mt-7 sm:pt-7"
-            : "mt-10 border-t border-border/35 pt-10 sm:mt-11 sm:pt-11 lg:mt-12 lg:pt-12")
+            : "mt-10 border-t border-border/35 pt-10 sm:mt-11 sm:pt-11 lg:mt-12 lg:pt-12"),
       )}
     >
       <article>
@@ -294,11 +318,10 @@ export function ItineraryDay({ day, dayIndex, media, compact = false }) {
                 : "space-y-8 sm:space-y-9 lg:space-y-10",
             )}
           >
-            {videoUrl ? (
-              <EditorialVideo src={videoUrl} alt={imageAlt} />
-            ) : day.imageUrl ? (
-              <DayItineraryImage
-                src={day.imageUrl}
+            {hasDayVisual ? (
+              <DayEditorialMedia
+                videoUrl={videoUrl}
+                imageUrl={day.imageUrl}
                 alt={imageAlt}
                 variant={layout}
               />
@@ -317,16 +340,14 @@ export function ItineraryDay({ day, dayIndex, media, compact = false }) {
           <div
             className={cn(
               "grid items-start gap-7 sm:gap-8",
-              hasDayVisual
-                ? "lg:grid-cols-2 lg:gap-8 xl:gap-10"
-                : "max-w-3xl",
+              hasDayVisual ? "lg:grid-cols-2 lg:gap-8 xl:gap-10" : "max-w-3xl",
               compact && hasDayVisual && "gap-5 sm:gap-6 lg:gap-8",
             )}
           >
             <div
               className={cn(
                 "min-w-0",
-                layout === 1 && hasDayVisual && "lg:order-2"
+                layout === 1 && hasDayVisual && "lg:order-2",
               )}
             >
               <ItineraryDayHeader day={day} compact={compact} />
@@ -339,18 +360,13 @@ export function ItineraryDay({ day, dayIndex, media, compact = false }) {
             </div>
 
             {hasDayVisual ? (
-              <div
-                className={cn("min-w-0", layout === 1 && "lg:order-1")}
-              >
-                {videoUrl ? (
-                  <EditorialVideo src={videoUrl} alt={imageAlt} />
-                ) : (
-                  <DayItineraryImage
-                    src={day.imageUrl}
-                    alt={imageAlt}
-                    variant={layout}
-                  />
-                )}
+              <div className={cn("min-w-0", layout === 1 && "lg:order-1")}>
+                <DayEditorialMedia
+                  videoUrl={videoUrl}
+                  imageUrl={day.imageUrl}
+                  alt={imageAlt}
+                  variant={layout}
+                />
               </div>
             ) : null}
           </div>
