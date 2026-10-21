@@ -5,7 +5,7 @@
 VoyaAI is an AI-powered travel planning web app built with Next.js. Explore destinations, discover curated trips, generate personalized itineraries, and save your plans for later. You can also revise saved itineraries using natural-language instructions and preview the changes before saving them.
 
 <p align="center">
-  <img src="docs/images/hero.png" alt="VoyaAI homepage" width="800" />
+  <img src="docs/images/homeHero.png" alt="VoyaAI homepage" width="800" />
 </p>
 
 <p align="center">
@@ -28,15 +28,15 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 
 ## Screenshots
 
-*Screenshots are optional until added. Save your images under `docs/images/` and update the paths below.*
+_Screenshots are optional until added. Save your images under `docs/images/` and update the paths below._
 
-| Destination discovery | AI-generated itinerary |
-|---|---|
-| ![Destination discovery](docs/images/destinations.png) | ![Generated itinerary](docs/images/itinerary.png) |
+| Destination discovery  
+| ------------------------------------------------------ | ------------------------------------------------- |
+| ![Destination discovery](docs/images/destinations.png) |
 
-| Trip planning | My Trips |
-|---|---|
-| ![AI trip planner](docs/images/planner.png) | ![My Trips](docs/images/my-trips.png) |
+| Trip planning                                 | My Trips                             |
+| --------------------------------------------- | ------------------------------------ |
+| ![AI trip planner](docs/images/aiPlanner.png) | ![My Trips](docs/images/myTrips.png) |
 
 ## Features
 
@@ -51,18 +51,18 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 
 ## Tech stack
 
-| Technology | Purpose |
-|---|---|
-| [Next.js](https://nextjs.org/) | App Router, pages, server rendering, and API routes |
-| [React](https://react.dev/) | Interactive user interface |
-| JavaScript | Application logic and components |
-| [Tailwind CSS](https://tailwindcss.com/) | Styling and responsive layouts |
-| [shadcn/ui](https://ui.shadcn.com/) and [Radix UI](https://www.radix-ui.com/) | UI components and accessible interaction primitives |
-| [Prisma](https://www.prisma.io/) | Database access and schema management |
-| [PostgreSQL](https://www.postgresql.org/) | Persistent application data |
-| [Better Auth](https://www.better-auth.com/) | Authentication and Google sign-in |
-| [OpenRouter](https://openrouter.ai/) | Access to the language model used for itinerary generation |
-| [Cloudinary](https://cloudinary.com/) | Image hosting and media management |
+| Technology                                                                    | Purpose                                                    |
+| ----------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [Next.js](https://nextjs.org/)                                                | App Router, pages, server rendering, and API routes        |
+| [React](https://react.dev/)                                                   | Interactive user interface                                 |
+| JavaScript                                                                    | Application logic and components                           |
+| [Tailwind CSS](https://tailwindcss.com/)                                      | Styling and responsive layouts                             |
+| [shadcn/ui](https://ui.shadcn.com/) and [Radix UI](https://www.radix-ui.com/) | UI components and accessible interaction primitives        |
+| [Prisma](https://www.prisma.io/)                                              | Database access and schema management                      |
+| [PostgreSQL](https://www.postgresql.org/)                                     | Persistent application data                                |
+| [Better Auth](https://www.better-auth.com/)                                   | Authentication and Google sign-in                          |
+| [OpenRouter](https://openrouter.ai/)                                          | Access to the language model used for itinerary generation |
+| [Cloudinary](https://cloudinary.com/)                                         | Image hosting and media management                         |
 
 ## How it works
 
@@ -116,23 +116,23 @@ Replace `<your-repository-url>` with your GitHub repository URL.
 
 Create a local environment file and configure the variables required by the application. Never commit secrets or real credentials.
 
-| Variable | Purpose |
-|---|---|
-| `DATABASE_URL` | PostgreSQL connection used by the application at runtime |
-| `DIRECT_URL` | Database connection used for Prisma CLI operations |
-| `BETTER_AUTH_SECRET` | Authentication secret |
-| `BETTER_AUTH_URL` | Application base URL for authentication |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
-| `OPENROUTER_API_KEY` | API key for AI itinerary generation |
-| `BETTER_AUTH_TRUSTED_ORIGINS` | Trusted application origins, when configured |
-| `NEXT_PUBLIC_APP_URL` | Public application URL, when used |
-| `OPENROUTER_HTTP_REFERER` | Optional OpenRouter request metadata |
-| `OPENROUTER_APP_NAME` | Optional OpenRouter application title |
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary account name, when needed |
-| `CLOUDINARY_API_KEY` | Cloudinary API key, when needed |
-| `CLOUDINARY_API_SECRET` | Cloudinary API secret, when needed |
-| `DEV_ALLOWED_ORIGINS` | Additional development origins, when configured |
+| Variable                      | Purpose                                                  |
+| ----------------------------- | -------------------------------------------------------- |
+| `DATABASE_URL`                | PostgreSQL connection used by the application at runtime |
+| `DIRECT_URL`                  | Database connection used for Prisma CLI operations       |
+| `BETTER_AUTH_SECRET`          | Authentication secret                                    |
+| `BETTER_AUTH_URL`             | Application base URL for authentication                  |
+| `GOOGLE_CLIENT_ID`            | Google OAuth client ID                                   |
+| `GOOGLE_CLIENT_SECRET`        | Google OAuth client secret                               |
+| `OPENROUTER_API_KEY`          | API key for AI itinerary generation                      |
+| `BETTER_AUTH_TRUSTED_ORIGINS` | Trusted application origins, when configured             |
+| `NEXT_PUBLIC_APP_URL`         | Public application URL, when used                        |
+| `OPENROUTER_HTTP_REFERER`     | Optional OpenRouter request metadata                     |
+| `OPENROUTER_APP_NAME`         | Optional OpenRouter application title                    |
+| `CLOUDINARY_CLOUD_NAME`       | Cloudinary account name, when needed                     |
+| `CLOUDINARY_API_KEY`          | Cloudinary API key, when needed                          |
+| `CLOUDINARY_API_SECRET`       | Cloudinary API secret, when needed                       |
+| `DEV_ALLOWED_ORIGINS`         | Additional development origins, when configured          |
 
 Check the application's configuration for the exact required variables and defaults before running it. Cloudinary credentials may only be needed for media-related workflows.
 
@@ -158,12 +158,12 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ### Useful commands
 
-| Command | Purpose |
-|---|---|
-| `npm run dev` | Start the development server |
+| Command         | Purpose                                              |
+| --------------- | ---------------------------------------------------- |
+| `npm run dev`   | Start the development server                         |
 | `npm run build` | Generate the Prisma client and build the application |
-| `npm run start` | Run the production build |
-| `npm run lint` | Run ESLint, if configured |
+| `npm run start` | Run the production build                             |
+| `npm run lint`  | Run ESLint, if configured                            |
 
 ## Project structure
 
