@@ -7,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
 import { DESIGN } from "@/constants/design";
 
 export function DestinationCarousel({ destinations }) {
@@ -16,10 +15,7 @@ export function DestinationCarousel({ destinations }) {
       id="destinations"
       className="px-4 pt-8 pb-12 sm:px-6 sm:pt-10 sm:pb-16 lg:px-8 lg:pt-12 lg:pb-20"
     >
-      <div
-        className="mx-auto"
-        style={{ maxWidth: DESIGN.maxWidth }}
-      >
+      <div className="mx-auto" style={{ maxWidth: DESIGN.maxWidth }}>
         <div className="mb-8 sm:mb-10">
           <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-primary sm:text-xs">
             Explore
@@ -55,9 +51,7 @@ export function DestinationCarousel({ destinations }) {
                   className="basis-[132px] pl-3 sm:basis-[156px] sm:pl-4 md:basis-[172px] md:pl-5 lg:basis-[188px]"
                 >
                   <article className="group/card flex flex-col items-center text-center">
-                    <div
-                      className="relative aspect-[3.5/5] w-full overflow-hidden rounded-[20px] bg-muted shadow-sm transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transition-none group-hover/card:-translate-y-1 group-hover/card:shadow-md group-active/card:scale-[0.98] motion-reduce:group-hover/card:translate-y-0 motion-reduce:group-active/card:scale-100"
-                    >
+                    <div className="relative aspect-[3.5/5] w-full overflow-hidden rounded-[20px] bg-muted shadow-sm transition-[transform,box-shadow] duration-300 ease-out motion-reduce:transition-none group-hover/card:-translate-y-1 group-hover/card:shadow-md group-active/card:scale-[0.98] motion-reduce:group-hover/card:translate-y-0 motion-reduce:group-active/card:scale-100">
                       <Image
                         src={destination.heroImageUrl}
                         alt={destination.altText ?? destination.name}
@@ -80,15 +74,10 @@ export function DestinationCarousel({ destinations }) {
               ))}
             </CarouselContent>
 
-            <CarouselPrevious
-              className="left-0 hidden size-10 border-border/60 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-opacity duration-200 hover:bg-background disabled:pointer-events-none disabled:opacity-0 md:flex md:opacity-70 md:hover:opacity-100 md:focus-visible:opacity-100"
-            />
+            <CarouselPrevious className="left-0 hidden size-10 border-border/60 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-opacity duration-200 hover:bg-background disabled:pointer-events-none disabled:opacity-0 md:flex md:opacity-70 md:hover:opacity-100 md:focus-visible:opacity-100" />
 
-            <CarouselNext
-              className="right-0 hidden size-10 border-border/60 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-opacity duration-200 hover:bg-background disabled:pointer-events-none disabled:opacity-0 md:flex md:opacity-70 md:hover:opacity-100 md:focus-visible:opacity-100"
-            />
+            <CarouselNext className="right-0 hidden size-10 border-border/60 bg-background/90 text-foreground shadow-md backdrop-blur-sm transition-opacity duration-200 hover:bg-background disabled:pointer-events-none disabled:opacity-0 md:flex md:opacity-70 md:hover:opacity-100 md:focus-visible:opacity-100" />
           </Carousel>
-
         </div>
       </div>
     </section>

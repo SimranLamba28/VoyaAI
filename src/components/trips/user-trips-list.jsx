@@ -15,9 +15,7 @@ export function UserTripsList({ initialTrips }) {
 
   if (trips.length === 0) {
     return (
-      <div
-        className="rounded-[18px] border border-border/40 bg-muted/30 px-6 py-12 text-center sm:px-10 sm:py-14"
-      >
+      <div className="rounded-[18px] border border-border/40 bg-muted/30 px-6 py-12 text-center sm:px-10 sm:py-14">
         <p className="text-base font-medium tracking-tight text-foreground">
           No trips yet
         </p>

@@ -70,10 +70,7 @@ export function CuratedTripCarousel({ trips }) {
                 key={trip.id}
                 className="flex basis-[250px] pl-4 md:basis-[290px]"
               >
-                <TripCatalogCard
-                  trip={trip}
-                  active={index === selectedIndex}
-                />
+                <TripCatalogCard trip={trip} active={index === selectedIndex} />
               </CarouselItem>
             ))}
           </CarouselContent>
