@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
-export function DestinationCard({ destination, className, priority=false }) {
+export function DestinationCard({ destination, className, priority = false }) {
   return (
     <Link
       href={`/trips?destination=${destination.slug}`}
@@ -14,14 +14,14 @@ export function DestinationCard({ destination, className, priority=false }) {
         className={cn(
           "relative overflow-hidden rounded-[20px] border border-border/50 bg-background py-0 gap-0",
           "shadow-sm transition-[transform,box-shadow] duration-300 ease-out",
-          "hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+          "hover:-translate-y-1 hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         )}
       >
         <div className="relative aspect-[5/6] overflow-hidden">
           <Image
             src={destination.heroImageUrl}
             alt={destination.altText ?? destination.country}
-            loading={priority?"eager":"lazy"}
+            loading={priority ? "eager" : "lazy"}
             fill
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 ease-out group-hover/card:scale-[1.05] motion-reduce:transition-none motion-reduce:group-hover/card:scale-100"
@@ -41,14 +41,14 @@ export function DestinationCard({ destination, className, priority=false }) {
               className={cn(
                 "grid transition-[grid-template-rows] duration-300 ease-out",
                 "grid-rows-[0fr] group-hover/card:grid-rows-[1fr]",
-                "motion-reduce:grid-rows-[1fr]"
+                "motion-reduce:grid-rows-[1fr]",
               )}
             >
               <div className="overflow-hidden">
                 <div
                   className={cn(
                     "opacity-0 transition-opacity duration-300 ease-out group-hover/card:opacity-100",
-                    "motion-reduce:opacity-100 motion-reduce:transition-none"
+                    "motion-reduce:opacity-100 motion-reduce:transition-none",
                   )}
                 >
                   {destination.description ? (
