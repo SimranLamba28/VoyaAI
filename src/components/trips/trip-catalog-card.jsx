@@ -30,7 +30,7 @@ export function TripCatalogCard({
   const budgetText =
     trip.budgetMin != null && trip.budgetMax != null
       ? `${formatter.format(trip.budgetMin)} – ${formatter.format(
-          trip.budgetMax
+          trip.budgetMax,
         )}`
       : "Budget varies";
 
@@ -42,13 +42,13 @@ export function TripCatalogCard({
         className={cn(
           "group/card relative overflow-hidden rounded-[18px] border border-border/40 bg-background py-0 gap-0",
           "shadow-sm transition-[box-shadow,transform] duration-300 ease-out",
-          "hover:-translate-y-px hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+          "hover:-translate-y-px hover:shadow-md motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         )}
       >
         <div
           className={cn(
             "absolute inset-y-0 left-0 overflow-hidden",
-            "w-[42%] sm:w-[40%] lg:w-[34%]"
+            "w-[42%] sm:w-[40%] lg:w-[34%]",
           )}
         >
           <Image
@@ -68,7 +68,7 @@ export function TripCatalogCard({
           className={cn(
             "relative flex min-w-0 flex-col",
             "pl-[44%] sm:pl-[41%] lg:pl-[36%]",
-            "py-3.5 pr-3.5 sm:py-4 sm:pr-5 md:py-4 md:pr-6"
+            "py-3.5 pr-3.5 sm:py-4 sm:pr-5 md:py-4 md:pr-6",
           )}
         >
           {(statusBadge || updatedAtText) && (
@@ -145,15 +145,18 @@ export function TripCatalogCard({
           ) : null}
 
           {tripHref ? (
-            <Link
-              href={tripHref}
+            <Button
+              asChild
+              variant="secondary"
+              size="sm"
               className={cn(
-                "mt-3 inline-block w-fit text-[13px] text-muted-foreground underline-offset-4",
-                "transition-colors hover:text-foreground hover:underline sm:mt-3.5 sm:text-sm",
+                "mt-3 h-8 min-h-8 w-fit rounded-full",
+                "bg-slate-200 px-3 py-1.5 text-xs text-slate-700",
+                "hover:bg-sky-100 sm:mt-3.5",
               )}
             >
-              {linkLabel}
-            </Link>
+              <Link href={tripHref}>{linkLabel}</Link>
+            </Button>
           ) : null}
         </div>
       </Card>
@@ -171,9 +174,9 @@ export function TripCatalogCard({
               "transition-all duration-700 ease-out",
               active
                 ? "scale-100 opacity-100 shadow-lg"
-                : "translate-y-2 scale-[0.94] opacity-65 shadow-sm"
+                : "translate-y-2 scale-[0.94] opacity-65 shadow-sm",
             )
-          : "shadow-sm"
+          : "shadow-sm",
       )}
     >
       <div className="relative aspect-[4/3] overflow-hidden">
@@ -191,18 +194,14 @@ export function TripCatalogCard({
           {trip.title}
         </CardTitle>
 
-        <CardDescription className="mt-1">
-          {trip.location}
-        </CardDescription>
+        <CardDescription className="mt-1">{trip.location}</CardDescription>
 
         <p className="mt-3 min-h-[3.75rem] flex-1 text-xs leading-5 text-muted-foreground line-clamp-3">
           {trip.description}
         </p>
 
         <div className="mt-4 flex items-center justify-between text-xs">
-          <span className="text-muted-foreground">
-            {trip.duration} days
-          </span>
+          <span className="text-muted-foreground">{trip.duration} days</span>
         </div>
 
         <div className="mt-3">
@@ -210,9 +209,7 @@ export function TripCatalogCard({
             Estimated budget
           </span>
 
-          <p className="text-sm font-medium text-foreground">
-            {budgetText}
-          </p>
+          <p className="text-sm font-medium text-foreground">{budgetText}</p>
         </div>
 
         {tripHref ? (
