@@ -28,15 +28,13 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 
 ## Screenshots
 
-_Screenshots are optional until added. Save your images under `docs/images/` and update the paths below._
+|                 Destination discovery                  |                AI trip planner                |
+| :----------------------------------------------------: | :-------------------------------------------: |
+| ![Destination discovery](docs/images/destinations.png) | ![AI trip planner](docs/images/aiPlanner.png) |
 
-| Destination discovery  
-| ------------------------------------------------------ | ------------------------------------------------- |
-| ![Destination discovery](docs/images/destinations.png) |
-
-| Trip planning                                 | My Trips                             |
-| --------------------------------------------- | ------------------------------------ |
-| ![AI trip planner](docs/images/aiPlanner.png) | ![My Trips](docs/images/myTrips.png) |
+|               My Trips               |
+| :----------------------------------: |
+| ![My Trips](docs/images/myTrips.png) |
 
 ## Features
 
