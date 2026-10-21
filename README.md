@@ -66,19 +66,6 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 
 VoyaAI combines curated travel data with AI-generated itineraries. The model produces structured output, which is validated by the application before it is saved.
 
-```mermaid
-flowchart TD
-    A[User enters travel preferences] --> B[API validates request and session]
-    B --> C[Prepare trip preferences]
-    C --> D[Load optional curated context]
-    D --> E[Generate itinerary with OpenRouter]
-    E --> F{Valid itinerary?}
-    F -->|No| G[Retry when eligible or return error]
-    G --> E
-    F -->|Yes| H[Save itinerary to PostgreSQL]
-    H --> I[Display saved trip in My Trips]
-```
-
 ### Itinerary generation
 
 1. The user completes the trip-planning questionnaire.
