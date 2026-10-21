@@ -57,7 +57,8 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 | [Tailwind CSS](https://tailwindcss.com/)                                      | Styling and responsive layouts                             |
 | [shadcn/ui](https://ui.shadcn.com/) and [Radix UI](https://www.radix-ui.com/) | UI components and accessible interaction primitives        |
 | [Prisma](https://www.prisma.io/)                                              | Database access and schema management                      |
-| [PostgreSQL](https://www.postgresql.org/)                                     | Persistent application data                                |
+| [PostgreSQL](https://www.postgresql.org/)                                     | Relational database for persistent application data        |
+| [Supabase](https://supabase.com/)                                             | Hosted PostgreSQL database                                 |
 | [Better Auth](https://www.better-auth.com/)                                   | Authentication and Google sign-in                          |
 | [OpenRouter](https://openrouter.ai/)                                          | Access to the language model used for itinerary generation |
 | [Cloudinary](https://cloudinary.com/)                                         | Image hosting and media management                         |
