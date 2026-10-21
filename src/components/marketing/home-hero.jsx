@@ -4,11 +4,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { DESIGN } from "@/constants/design";
 
-const HERO_IMAGE = {
-  src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2400&q=80",
-  alt: "Snow-capped mountains above a pine forest and alpine lake",
-};
-
 export function HomeHero() {
   return (
     <section className="px-4 pb-6 pt-3 sm:px-6 sm:pb-8 sm:pt-4 lg:px-8 lg:pb-10">
@@ -20,9 +15,10 @@ export function HomeHero() {
         }}
       >
         <Image
-          src={HERO_IMAGE.src}
-          alt={HERO_IMAGE.alt}
+          src="../public/images/home-hero.jpg"
+          alt="Snow-capped mountains above a pine forest and alpine lake"
           fill
+          fetchPriority="high"
           priority
           sizes="(min-width: 1280px) 1280px, 100vw"
           className="object-cover"
