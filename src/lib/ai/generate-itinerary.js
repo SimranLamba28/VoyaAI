@@ -6,7 +6,7 @@ import {
 } from "@/lib/ai/itinerary-schema";
 
 const OPENROUTER_CHAT_URL = "https://openrouter.ai/api/v1/chat/completions";
-const ITINERARY_MODEL = "minimax/minimax-m3.1-flash:free";
+const ITINERARY_MODEL = "nvidia/nemotron-3-ultra-550b-a55b:free";
 const OPENROUTER_TIMEOUT_MS = 120_000;
 const MAX_GENERATION_ATTEMPTS = 2;
 
