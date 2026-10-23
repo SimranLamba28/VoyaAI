@@ -400,13 +400,18 @@ async function requestOpenRouterCompletion(messages, fetchFn) {
   }
 
   let responseBody;
+  const contentType = response.headers.get("content-type");
+  const responseText = await response.text();
+
   try {
-    responseBody = await response.json();
+    responseBody = JSON.parse(responseText);
   } catch {
-    console.error(
-      "OpenRouter returned a non-JSON body with status",
-      response.status,
-    );
+    console.error("OpenRouter returned a non-JSON body:", {
+      status: response.status,
+      contentType,
+      bodyPreview: responseText.slice(0, 300),
+    });
+
     return failure(
       "INVALID_RESPONSE",
       "OpenRouter returned a response that could not be parsed as JSON.",
