@@ -45,7 +45,6 @@ VoyaAI is an AI-powered travel planning web app built with Next.js. Explore dest
 - **Google authentication** — Sign in to generate and manage your trips.
 - **Save and manage trips** — Revisit saved itineraries in My Trips.
 - **AI-powered revisions** — Request changes in natural language, preview the updated itinerary, and save only when you're satisfied.
-- **Responsive interface** — Plan trips across desktop and mobile screen sizes.
 
 ## Tech stack
 
